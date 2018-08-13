@@ -1,0 +1,9 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =7
+let g:netrw_dirhist_1='/home/arjun/.vimrc'
+let g:netrw_dirhist_2='/home/arjun/.vimrc/.vimrc'
+let g:netrw_dirhist_3='/home/arjun/.vimrc/.vimrc/.vimrc'
+let g:netrw_dirhist_4='/home/arjun/.vimrc/.vimrc/.vimrc/.vimrc'
+let g:netrw_dirhist_5='/home/arjun/.vimrc/.vimrc/.vimrc/.vimrc/.vimrc'
+let g:netrw_dirhist_6='/home/arjun/.vimrc'
+let g:netrw_dirhist_7='/home/arjun/.bashrc'
