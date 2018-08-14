@@ -92,6 +92,18 @@ bindsym $mod+a focus parent
 # focus the child container
 #bindsym $mod+d focus child
 
+# Initialize workspace
+set $w1 1
+set $w2 2
+set $w3 3
+set $w4 4
+set $w5 5
+set $w6 6
+set $w7 7
+set $w8 8
+set $w9 9
+set $w10 10
+
 # switch to workspace
 bindsym $mod+1 workspace 1
 bindsym $mod+2 workspace 2
@@ -178,4 +190,4 @@ bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
 # Wallpaper
-exec_always feh --bg-scale /home/arjun/Pictures/Wallpapers/painting.jpg
+exec_always feh --bg-scale /home/arjun/Pictures/Wallpapers/godfatherjun_pixel.png
