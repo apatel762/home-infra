@@ -226,4 +226,7 @@ bindsym XF86AudioPrev exec playerctl previous
 
 # Wallpaper
 exec_always feh --bg-scale /home/arjun/Pictures/Wallpapers/godfatherjun_pixel.png
+
 exec --no-startup-id compton -f
+
+exec gtk-redshift
