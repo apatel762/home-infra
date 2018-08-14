@@ -10,3 +10,5 @@ alias i3config='vim ~/.config/i3/config'
 alias vimrc='vim ~/.vimrc'
 alias bashrc='vim ~/.bashrc'
 alias aliasadd='vim ~/.bash_aliases'
+
+alias dotfiles='cd ~/dotfiles'

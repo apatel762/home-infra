@@ -175,6 +175,25 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
+# COLOURS
+set $light-brown #F2C298
+set $brown       #DAA472
+set $dark-brown  #7E6958
+set $black       #081B1C
+set $white       #DEEBB9
+set $dark-blue   #54659F
+set $light-blue  #9B9FC1
+set $red         #973B3B
+
+# class                 border  backgr. text    indicator child_border
+client.focused          #4c7899 #285577 #ffffff #2e9ef4   #285577
+client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
+client.unfocused        #333333 #222222 #888888 #292d2e   #222222
+client.urgent           #2f343a #900000 #ffffff #900000   #900000
+client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+
+client.background       #ffffff
+
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
