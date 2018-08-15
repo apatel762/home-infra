@@ -204,6 +204,19 @@ client.background       #ffffff
 # }
 bar {
         status_command i3blocks
+        position top
+        font pango:Terminus 10
+        colors {
+               background $black
+               statusline $white
+               separator  $dark-brown
+
+                                   #border,      background, text
+               focused_workspace   $light-brown  $black      $white
+               active_workspace    $light-brown  $black      $white
+               inactive_workspace  $black        $black      $white
+               urgent_workspace    $red          $black      $white
+        }
 }
 
 # key binding to lock the screen
