@@ -108,8 +108,8 @@ bindsym $mod+a focus parent
 set $w1 "1. Vivaldi"
 set $w2 "2. Terminals"
 set $w3 "3. Music"
-set $w4 4
-set $w5 5
+set $w4 "4. Anki"
+set $w5 "5. Other"
 set $w6 6
 set $w7 7
 set $w8 8
