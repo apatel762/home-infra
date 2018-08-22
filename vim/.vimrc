@@ -1,5 +1,6 @@
 " Line numbers
 set number
+set relativenumber
 
 " Indentation without any hard tabs
 set autoindent
