@@ -26,8 +26,8 @@ syntax on
 " Close vim if NERDTree is the last thing open
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-" Integrate the Asynchronous Linting Engine with Airline
-let g:airline#extensions#ale#enabled = 1
+let NERDTreeShowHidden=1                 " Show hidden files - NERDTree
+let g:airline#extensions#ale#enabled = 1 " Integrate the ALE with Airline
 
 " HOTKEYS
 map <C-n> :NERDTreeToggle<CR>
