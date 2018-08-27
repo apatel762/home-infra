@@ -29,5 +29,11 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 let NERDTreeShowHidden=1                 " Show hidden files - NERDTree
 let g:airline#extensions#ale#enabled = 1 " Integrate the ALE with Airline
 
+" AUTOCOMPLETE
+" Press <C-x> then <C-o> to activate
+autocmd FileType html set omnifunc=htmlcomplete#CompleteTags 
+autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+
 " HOTKEYS
 map <C-n> :NERDTreeToggle<CR>
