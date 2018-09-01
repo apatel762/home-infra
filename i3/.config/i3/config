@@ -145,6 +145,8 @@ assign [class="Vivaldi-stable"] $w1
 exec vivaldi
 for_window [class="Spotify"] move to workspace $w3
 exec spotify
+for_window [class="Anki"] move to workspace $w4
+exec Anki
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
