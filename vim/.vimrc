@@ -72,6 +72,7 @@
 
 """ PYTHON
     autocmd FileType python inoremap ,fn def<Space><++>(<++>):<Enter><Tab>'''<Enter><++><Enter>'''<Enter><++><Esc>?def<Enter>
-    autocmd FileType python inoremap ,ft def<Space>test_<++>(self):<Enter><Tab><++><Enter>self.assertEqual(result, <++>)<Esc>?def<Enter>
+    autocmd FileType python inoremap ,ft def<Space>test_<++>(self):<Enter><Tab><++><Enter>self.assert<++>(result, <++>)<Esc>?def<Enter>
     autocmd FileType python inoremap ,cn class<Space><++>:<Enter><Tab>'''<Enter><++><Enter>'''<Enter>def<Space>__init__(self<++>):<Enter><Tab><++><Esc>?class<Enter>
     autocmd FileType python inoremap ,ct class<Space>Test<++>(unittest.TestCase):<Enter><Enter><Tab><++><Esc>?class<Enter>
+    autocmd FileType python inoremap ,m if<Space>__name__<Space>==<Space>'__main__':<Enter><Tab>
