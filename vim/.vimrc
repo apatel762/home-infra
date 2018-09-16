@@ -73,11 +73,21 @@
 """ PYTHON
     autocmd FileType python inoremap ,fn def<Space><++>(<++>):<Enter><Tab>'''<Enter><++><Enter>'''<Enter><++><Esc>?def<Enter>
     autocmd FileType python inoremap ,ft def<Space>test_<++>(self):<Enter><Tab><++><Enter>self.assert<++>(result, <++>)<Esc>?def<Enter>
+
     autocmd FileType python inoremap ,cn class<Space><++>:<Enter><Tab>'''<Enter><++><Enter>'''<Enter>def<Space>__init__(self<++>):<Enter><Tab><++><Esc>?class<Enter>
     autocmd FileType python inoremap ,ct class<Space>Test<++>(unittest.TestCase):<Enter><Enter><Tab><++><Esc>?class<Enter>
+
     autocmd FileType python inoremap ,m if<Space>__name__<Space>==<Space>'__main__':<Enter><Tab>
+
     autocmd FileType python inoremap ,if if<Space><++>:<Enter><Tab><++><Enter><Backspace>elif<Space><++>:<Enter><Tab><++><Enter><Backspace>else:<Enter><Tab><++><Esc>?if<Enter>n
     autocmd FileType python inoremap ,for for<Space><++><Space>in<Space><++>:<Enter><Tab><++><Esc>?for<Enter>
     autocmd FileType python inoremap ,try try:<Enter><Tab><++><Enter><Backspace>except<Space><++><Space>as<Space><++>:<Enter><Tab><++><Enter><Backspace>else:<Enter><Tab><++><Enter><Backspace>finally:<Enter><Tab><++><Esc>?try<Enter>
     autocmd FileType python inoremap ,wa with<Space><++><Space>as<Space><++>:<Enter><Tab><++><Esc>?with<Enter>
+
     autocmd FileType python inoremap ,p print(<++>)<Esc>?print<Enter><Space><Tab>
+
+    autocmd FileType python inoremap ,lc [<++><Space>for<Space><++><Space>in<Space><++><Space>if<Space><++>]
+    autocmd FileType python inoremap ,sc {<++><Space>for<Space><++><Space>in<Space><++><Space>if<Space><++>}
+    autocmd FileType python inoremap ,dc {<++>:<Space><++><Space>for<Space><++><Space>in<Space><++>}
+
+    autocmd FileType python inoremap ,la lambda<Space><++>:<Space><++>
