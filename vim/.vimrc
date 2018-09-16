@@ -80,11 +80,12 @@
     autocmd FileType python inoremap ,m if<Space>__name__<Space>==<Space>'__main__':<Enter><Tab>
 
     autocmd FileType python inoremap ,if if<Space><++>:<Enter><Tab><++><Enter><Backspace>elif<Space><++>:<Enter><Tab><++><Enter><Backspace>else:<Enter><Tab><++><Esc>?if<Enter>n
+    autocmd FileType python inoremap ,w while<Space><++>:<Enter><Tab><++><Esc>?while<Enter>
     autocmd FileType python inoremap ,for for<Space><++><Space>in<Space><++>:<Enter><Tab><++><Esc>?for<Enter>
     autocmd FileType python inoremap ,try try:<Enter><Tab><++><Enter><Backspace>except<Space><++><Space>as<Space><++>:<Enter><Tab><++><Enter><Backspace>else:<Enter><Tab><++><Enter><Backspace>finally:<Enter><Tab><++><Esc>?try<Enter>
     autocmd FileType python inoremap ,wa with<Space><++><Space>as<Space><++>:<Enter><Tab><++><Esc>?with<Enter>
 
-    autocmd FileType python inoremap ,p print(<++>)<Esc>?print<Enter><Space><Tab>
+    autocmd FileType python inoremap ,p print(<++>)<Esc>?print<Enter><Esc>/<++><Enter>"_c4l
 
     autocmd FileType python inoremap ,lc [<++><Space>for<Space><++><Space>in<Space><++><Space>if<Space><++>]
     autocmd FileType python inoremap ,sc {<++><Space>for<Space><++><Space>in<Space><++><Space>if<Space><++>}
