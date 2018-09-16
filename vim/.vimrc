@@ -57,3 +57,19 @@
 
 " HOTKEYS
     map <C-n> :NERDTreeToggle<CR>
+
+ "____        _                  _
+"/ ___| _ __ (_)_ __  _ __   ___| |_ ___
+"\___ \| '_ \| | '_ \| '_ \ / _ \ __/ __|
+ "___) | | | | | |_) | |_) |  __/ |_\__ \
+"|____/|_| |_|_| .__/| .__/ \___|\__|___/
+              "|_|   |_|
+
+" Navigating with guides
+    inoremap <Space><Tab> <Esc>/<++><Enter>"_c4l
+    vnoremap <Space><Tab> <Esc>/<++><Enter>"_c4l
+    map <Space><Tab> <Esc>/<++><Enter>"_c4l
+
+""" PYTHON
+    autocmd FileType python inoremap ,f def<Space><++>(<++>):<Enter><Tab>'''<Enter><++><Enter>'''<Enter><++><Esc>?def<Enter>
+    autocmd FileType python inoremap ,c something
