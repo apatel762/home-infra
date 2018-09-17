@@ -87,8 +87,8 @@
 
     autocmd FileType python inoremap ,p print(<++>)<Esc>?print<Enter><Esc>/<++><Enter>"_c4l
 
-    autocmd FileType python inoremap ,lc [<++><Space>for<Space><++><Space>in<Space><++><Space>if<Space><++>]
-    autocmd FileType python inoremap ,sc {<++><Space>for<Space><++><Space>in<Space><++><Space>if<Space><++>}
-    autocmd FileType python inoremap ,dc {<++>:<Space><++><Space>for<Space><++><Space>in<Space><++>}
+    autocmd FileType python inoremap ,lc [<++><Space>for<Space><++><Space>in<Space><++><Space>if<Space><++>]<Esc>?[<Enter>
+    autocmd FileType python inoremap ,sc {<++><Space>for<Space><++><Space>in<Space><++><Space>if<Space><++>}<Esc>?{<Enter>
+    autocmd FileType python inoremap ,dc {<++>:<Space><++><Space>for<Space><++><Space>in<Space><++>}<Esc>?{<Enter>
 
     autocmd FileType python inoremap ,la lambda<Space><++>:<Space><++>
