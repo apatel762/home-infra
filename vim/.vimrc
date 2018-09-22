@@ -18,19 +18,19 @@
     set softtabstop=4
 
 " Various improvements to the UI
-    set ruler                      " Show current cursor position in lower right
-    set showcmd                    " Show incomplete vim commands in lower right
+    set ruler                      " Show line and col number (bottom right)
+    set showcmd                    " Show partial command (bottom right)
     set cursorline                 " Highlight the current line
     
     set wildmode=longest,list,full " AUTOCOMPLETE
     set wildmenu                   " Graphical menu for vim autocomplete
 
-    set lazyredraw                 " Redraw the screen less - leads to faster macros
-    set updatetime=100             " Set vim's update timer to 100ms (Default: 4000)
+    set lazyredraw                 " Redraw the screen less - faster macros
+    set updatetime=100             " Update timer = 100ms (Default: 4000)
     set showmatch                  " Highlight matching [{()}]
     set incsearch                  " Search as characters are entered
 
-" Highlight any characters in column 79 (used to help with keeping lines short)
+" Highlight any characters in column 79 (for keeping lines short)
     highlight ColorColumn ctermbg=magenta
     call matchadd('ColorColumn', '\%79v', 100)
 
