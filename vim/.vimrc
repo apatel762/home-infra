@@ -4,8 +4,37 @@
 "  \ V /| | | | | | | | | (__
 "   \_/ |_|_| |_| |_|_|  \___|
 
+" REQUIRED SETUP FOR Vundle
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+"
 " Plugin management
-    execute pathogen#infect()
+    set nocompatible                  " be iMproved, required
+    filetype off                      " required
+
+" Set the runtime path to include Vundle and initialize
+    set rtp+=~/.vim/bundle/Vundle.vim
+    call vundle#begin()
+
+" Let Vundle manage Vundle, required
+    Plugin 'VundleVim/Vundle.vim'
+
+" PLUGINS
+    Plugin 'w0rp/ale'                 " Asynchronous Linting Engine
+    Plugin 'mattn/emmet-vim'          " Emmet-vim
+    Plugin 'scrooloose/nerdtree'      " NERDTree
+    Plugin 'vim-airline/vim-airline'  " Airline
+    Plugin 'airblade/vim-gitgutter'   " Git gutter
+
+    call vundle#end()                 " required
+    filetype plugin indent on         " required
+
 
 " Line numbers
     set number
@@ -61,6 +90,9 @@
 
 " HOTKEYS
     map <C-n> :NERDTreeToggle<CR>
+
+" Execute the current line of text as a shell command
+    noremap Q !!$SHELL<CR>
 
  "____        _                  _
 "/ ___| _ __ (_)_ __  _ __   ___| |_ ___
