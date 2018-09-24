@@ -31,6 +31,7 @@
     Plugin 'scrooloose/nerdtree'      " NERDTree
     Plugin 'vim-airline/vim-airline'  " Airline
     Plugin 'airblade/vim-gitgutter'   " Git gutter
+    Plugin 'ervandew/supertab'        " SuperTab
 
     call vundle#end()                 " required
     filetype plugin indent on         " required
