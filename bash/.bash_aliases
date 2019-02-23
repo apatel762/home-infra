@@ -12,3 +12,5 @@ alias bashrc='vim ~/.bashrc'
 alias aliasadd='vim ~/.bash_aliases'
 
 alias dotfiles='pushd ~/dotfiles'
+
+alias c='clear'
