@@ -16,3 +16,8 @@ alias dotfiles='pushd ~/dotfiles'
 alias c='clear'
 
 alias vim='vi'
+alias desktop='cd ~/Desktop/'
+alias documents='cd ~/Documents/'
+alias downloads='cd ~/Downloads/'
+
+alias srcbp='source ~/.bashrc'
