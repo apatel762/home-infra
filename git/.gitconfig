@@ -14,6 +14,8 @@ ui = auto
 hist = log --all --graph --decorate --oneline
 last = log --all --graph --decorate --oneline -10
 
+    s = status --short --branch
+
 # Using meld as a difftool
 [diff]
 tool = meld
