@@ -12,7 +12,7 @@ ui = auto
 [alias]
 # Fancy looking commit log
 hist = log --all --graph --decorate --oneline
-last = hist -10
+last = log --all --graph --decorate --oneline -10
 
 # Using meld as a difftool
 [diff]
