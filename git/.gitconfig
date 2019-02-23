@@ -1,45 +1,45 @@
 [user]
-email = arjun492.ap@gmail.com
-name = Arjun Patel
+        email = arjun492.ap@gmail.com
+        name = Arjun Patel
 
 [core]
-# editor = subl -n -w
-editor = vim
+        # editor = subl -n -w
+        editor = vim
 
 [color]
-ui = auto
+        ui = auto
 
 [alias]
-# Fancy looking commit log
-hist = log --all --graph --decorate --oneline
-last = log --all --graph --decorate --oneline -10
+        # Fancy looking commit log
+        hist = log --all --graph --decorate --oneline
+        last = log --all --graph --decorate --oneline -10
 
-    s = status --short --branch
+        s = status --short --branch
 
 # Using meld as a difftool
 [diff]
-tool = meld
+        tool = meld
 
 [difftool]
-prompt = false
+        prompt = false
 
 [difftool "meld"]
-cmd = meld "$LOCAL" "$REMOTE"
+        cmd = meld "$LOCAL" "$REMOTE"
 
 # Using meld as a mergetool
 # Add the following to your .gitconfig file.
 [merge]
-tool = meld
+        tool = meld
 
 [mergetool "meld"]
-# Choose one of these 2 lines (not both!) explained below.
-cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
-# cmd = meld "$LOCAL" "$BASE" "$REMOTE" --output "$MERGED"
+        # Choose one of these 2 lines (not both!) explained below.
+        cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
+        # cmd = meld "$LOCAL" "$BASE" "$REMOTE" --output "$MERGED"
 
 [colour]
-ui = auto
+        ui = auto
 
 [credential]
-helper = cache --timeout=36000
+        helper = cache --timeout=36000
 [push]
 	default = matching
