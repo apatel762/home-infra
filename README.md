@@ -42,3 +42,7 @@ Other things to install to make Ubuntu 18 look nicer:
 3) Icons - `Papirus-Dark`
 4) Shell - `Flat-Remix`
 5) Wallpaper - black screen
+
+![alt text][logo]
+
+[logo]: image.png "What it looks like"
