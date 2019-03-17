@@ -97,11 +97,15 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
+# ~/.bashrc_arjun, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
 if [ -f ~/.bashrc_arjun ]; then
     . ~/.bashrc_arjun
+fi
+
+if [ -f ~/.bashrc_arjun_PS1 ]; then
+    . ~/.bashrc_arjun_PS1
 fi
 
 # enable programmable completion features (you don't need to enable
