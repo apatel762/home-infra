@@ -36,7 +36,8 @@
     Plugin 'vim-airline/vim-airline'  " Airline
     Plugin 'airblade/vim-gitgutter'   " Git gutter
     Plugin 'ervandew/supertab'        " SuperTab
-    Plugin 'honza/vim-snippets'       " Snippets (mainly used for markdown)
+    Plugin 'SirVer/ultisnips'         " Snippets Engine
+    Plugin 'honza/vim-snippets'       " The actual snippets
     Plugin 'Shougo/deoplete.nvim'     " Deoplete.nvim
 
     call vundle#end()                 " required
