@@ -13,6 +13,7 @@ dotfiles and where they are supposed to be installed.
 sudo apt install stow
 # You'll need to remove any dotfiles that would cause a conflict with
 # stow before you perform these commands, or else they wont work.
+cd ~/dotfiles
 stow bash
 stow vim
 stow git # etc...
