@@ -43,7 +43,8 @@
     filetype plugin indent on         " required
 
 " Activate deoplete by default
-    let g:deoplete#enable_at_startup = 1
+    let g:deoplete#enable_at_startup=1
+    call deoplete#custom#option('ignore_case', v:true) 
 
 " Line numbers
     set number
