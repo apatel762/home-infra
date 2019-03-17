@@ -47,6 +47,13 @@
     let g:deoplete#enable_at_startup=1
     call deoplete#custom#option('ignore_case', v:true) 
 
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+    let g:UltiSnipsJumpForwardTrigger="<c-b>"
+    let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" If you want :UltiSnipsEdit to split your window.
+    let g:UltiSnipsEditSplit="vertical"
+
 " Line numbers
     set number
     set relativenumber
