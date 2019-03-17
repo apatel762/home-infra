@@ -37,13 +37,13 @@
     Plugin 'airblade/vim-gitgutter'   " Git gutter
     Plugin 'ervandew/supertab'        " SuperTab
     Plugin 'honza/vim-snippets'       " Snippets (mainly used for markdown)
-"   Plugin 'Shougo/deoplete.nvim'     " Deoplete.nvim
+    Plugin 'Shougo/deoplete.nvim'     " Deoplete.nvim
 
     call vundle#end()                 " required
     filetype plugin indent on         " required
 
 " Activate deoplete by default
-"   let g:deoplete#enable_at_startup = 1
+    let g:deoplete#enable_at_startup = 1
 
 " Line numbers
     set number
