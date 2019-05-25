@@ -124,3 +124,5 @@ export PATH="/home/arjun/anaconda3/bin:$PATH"
 
 # An alias for interacting with the dotfiles repository
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
