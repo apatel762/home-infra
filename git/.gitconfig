@@ -15,6 +15,7 @@
         last = log --all --graph --decorate --oneline -10
 
         s = status --short --branch
+        gsh = git show HEAD
 
 # Using meld as a difftool
 [diff]

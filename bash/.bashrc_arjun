@@ -5,6 +5,7 @@ alias processing='(pushd ~/Desktop/Processing && \. processing) && popd'
 # Quick config editing
 alias vimrc='vim ~/.vimrc'
 alias bashrc='vim ~/.bashrc_arjun'
+alias gitconfig='vim ~/.gitconfig'
 
 alias dotfiles='pushd ~/dotfiles'
 
