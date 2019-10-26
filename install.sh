@@ -1,5 +1,5 @@
-echo "[ -f ~/dotfiles/.bashrc ] && source ~/dotfiles/.bashrc" >> ~/.bashrc
+# overwrite current bashrc with one line that sources the custom one
+echo "[ -f ~/dotfiles/.bashrc ] && source ~/dotfiles/.bashrc" > ~/.bashrc
 
-echo "\$include /etc/inputrc" > ~/.inputrc
-echo "" >> ~/.inputrc
-echo "set completion-ignore-case On" >> ~/.inputrc
+# create an inputrc
+[ -f ~/dotfiles/.inputrc ] && cat ~/dotfiles/.inputrc > ~/.inputrc
