@@ -3,7 +3,6 @@
         name = Arjun Patel
 
 [core]
-        # editor = subl -n -w
         editor = vim
 
 [color]
@@ -42,5 +41,6 @@
 
 [credential]
         helper = cache --timeout=36000
+
 [push]
 	default = matching
