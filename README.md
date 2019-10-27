@@ -31,19 +31,3 @@ sudo apt install vim
 cd ~/.vim/bundle/
 git clone https://github.com/VundleVim/Vundle.vim.git
 ```
-
-## Misc.
-Other things to install to make Ubuntu 18 look nicer:
-* Gnome tweaks
-* Gnome shell extensions
-
-### Gnome Themes
-1) Applications - `HighContrastInverse`
-2) Cursor - `DMZ-Black`
-3) Icons - `Papirus-Dark`
-4) Shell - `Flat-Remix`
-5) Wallpaper - black screen
-
-![alt text][logo]
-
-[logo]: image.png "What it looks like"
