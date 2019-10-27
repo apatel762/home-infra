@@ -109,10 +109,12 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
+alias vim='nvim'
+
 # Quick config editing
-alias vimrc='vi ~/.vimrc'
-alias bashrc='vi ~/.bashrc'
-alias gitconfig='vi ~/.gitconfig'
+alias vimrc='vim ~/.vimrc'
+alias bashrc='vim ~/.bashrc'
+alias gitconfig='vim ~/.gitconfig'
 
 alias dotfiles='pushd ~/dotfiles'
 
