@@ -26,3 +26,5 @@ alias bp='echo "source ~/.bashrc" && source ~/.bashrc'
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
+
+alias tor=(dotfiles && ./scripts/run_tor.sh; popd)
