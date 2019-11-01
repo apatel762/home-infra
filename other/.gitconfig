@@ -3,7 +3,7 @@
         name = Arjun Patel
 
 [core]
-        editor = vi
+        editor = nvim
 
 [color]
         ui = auto
