@@ -131,7 +131,7 @@ alias ff='(firejail firefox &>/dev/null &)'
 
 # TODO: all of this cryptomator stuff should be a script - also the cmtf alias
 #       should check if the folder exists before trying to open it.
-alias cm='(cd ~ && (./cryptomator.AppImage &>/dev/null &); cd -)'
+alias cm='(cd ~ && (./cryptomator.AppImage &>/dev/null &); cd - &>/dev/null)'
 alias cmtf='(xdg-open ~/.local/share/Cryptomator/mnt/kLbNXGlWQhUA_0)'
 
 alias kpx='(keepassxc &>/dev/null &)'
