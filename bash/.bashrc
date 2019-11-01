@@ -120,14 +120,20 @@ alias dotfiles='pushd ~/dotfiles'
 
 alias c='clear'
 
-alias dt='cd ~/Desktop/'
-alias doc='cd ~/Documents/'
-alias dl='cd ~/Downloads/'
-
 alias bp='echo "source ~/.bashrc" && source ~/.bashrc'
 
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 
-alias orb='(dotfiles && ./scripts/run_tor.sh; popd)'
+alias orb='((dotfiles &>/dev/null) && (./scripts/run_tor.sh &>/dev/null); popd)'
+alias ff='(firejail firefox &>/dev/null &)'
+
+# TODO: all of this cryptomator stuff should be a script - also the cmtf alias
+#       should check if the folder exists before trying to open it.
+alias cm='(cd ~ && (./cryptomator.AppImage &>/dev/null &); cd -)'
+alias cmtf='(xdg-open ~/.local/share/Cryptomator/mnt/kLbNXGlWQhUA_0)'
+
+alias kpx='(keepassxc &>/dev/null &)'
+
+alias hdd='sudo mount /dev/sdb1 /mnt/OldHDD/'

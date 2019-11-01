@@ -78,8 +78,8 @@
     set incsearch                  " Search as characters are entered
 
 " Highlight any characters in column 79 (for keeping lines short)
-    highlight ColorColumn ctermbg=magenta
-    call matchadd('ColorColumn', '\%79v', 100)
+"    highlight ColorColumn ctermbg=magenta
+"    call matchadd('ColorColumn', '\%79v', 100)
 
 " Splits open at the bottom and right, rather than Vim defaults
     set splitbelow
