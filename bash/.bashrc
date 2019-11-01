@@ -126,8 +126,9 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 
-alias orb='((dotfiles &>/dev/null) && (./scripts/run_tor.sh &>/dev/null); popd)'
+alias orb='(dotfiles &>/dev/null && (./scripts/run_tor.sh &>/dev/null); popd &>/dev/null)'
 alias ff='(firejail firefox &>/dev/null &)'
+alias spo='(firejail spotify &>/dev/null &)'
 
 # TODO: all of this cryptomator stuff should be a script - also the cmtf alias
 #       should check if the folder exists before trying to open it.
