@@ -44,7 +44,6 @@ same copy of Windows again (maybe you wiped Windows and installed Linux over
 it).
 ```Bash
 sudo apt-get install ntfs-3g
-sudo mount -t ntfs-3g -o remove_hiberfile /dev/sdb1 /mnt/OldHDD
 
 # replace /dev/sdb1/ with the name of your disk
 # you can use this command to see the names of your disks
@@ -53,6 +52,8 @@ sudo fdisk -l
 # replace /mnt/OldHDD with whatever folder you want your disk
 # to be mounted to. Make the folder if it doesn't exist.
 sudo mkdir /mnt/OldHDD
+
+sudo mount -t ntfs-3g -o remove_hiberfile /dev/sdb1 /mnt/OldHDD
 ```
 
 #### My 4K screen won't run in 60fps
