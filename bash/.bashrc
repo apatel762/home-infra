@@ -138,3 +138,5 @@ alias cmtf='(xdg-open ~/.local/share/Cryptomator/mnt/kLbNXGlWQhUA_0)'
 alias kpx='(keepassxc &>/dev/null &)'
 
 alias hdd='sudo mount /dev/sdb1 /mnt/OldHDD/'
+
+alias rtk='(xdg-open ~/Documents/books/James\ W.\ Heisig/Remembering\ the\ Kanji\ 1\ \(Kindle\ Fire\ HDX\ edition\)_\ A\ Complete\ Course\ on\ How\ Not\ to\ Forget\ the\ Me\ \(4\)/Remembering\ the\ Kanji\ 1\ \(Kindle\ Fire\ HDX\ e\ -\ James\ W.\ Heisig.pdf &>/dev/null &)'
