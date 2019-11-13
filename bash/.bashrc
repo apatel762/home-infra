@@ -135,8 +135,8 @@ alias spo='(firejail spotify &>/dev/null &)'
 alias cm='(cd ~ && (./cryptomator.AppImage &>/dev/null &); cd - &>/dev/null)'
 alias cmtf='(xdg-open ~/.local/share/Cryptomator/mnt/kLbNXGlWQhUA_0)'
 
-alias kpx='(keepassxc &>/dev/null &)'
+alias kpx='($HOME/Documents/keepassxc/KeePassXC-2.5.0-x86_64.AppImage &>/dev/null &)'
 
 alias hdd='sudo mount /dev/sdb1 /mnt/OldHDD/'
 
-alias rtk='(xdg-open ~/Documents/books/James\ W.\ Heisig/Remembering\ the\ Kanji\ 1\ \(Kindle\ Fire\ HDX\ edition\)_\ A\ Complete\ Course\ on\ How\ Not\ to\ Forget\ the\ Me\ \(4\)/Remembering\ the\ Kanji\ 1\ \(Kindle\ Fire\ HDX\ e\ -\ James\ W.\ Heisig.pdf &>/dev/null &) && echo "Last page was 30"'
+alias rtk='(xdg-open ~/Documents/books/James\ W.\ Heisig/Remembering\ the\ Kanji\ 1\ \(Kindle\ Fire\ HDX\ edition\)_\ A\ Complete\ Course\ on\ How\ Not\ to\ Forget\ the\ Me\ \(4\)/Remembering\ the\ Kanji\ 1\ \(Kindle\ Fire\ HDX\ e\ -\ James\ W.\ Heisig.pdf &>/dev/null &) && echo "Last page was 42"'
