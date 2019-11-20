@@ -139,6 +139,6 @@ alias kpx='($HOME/Documents/keepassxc/KeePassXC-2.5.0-x86_64.AppImage &>/dev/nul
 
 alias hdd='sudo mount /dev/sdb1 /mnt/OldHDD/'
 
-alias rtk='(xdg-open ~/Documents/books/James\ W.\ Heisig/Remembering\ the\ Kanji\ 1\ \(Kindle\ Fire\ HDX\ edition\)_\ A\ Complete\ Course\ on\ How\ Not\ to\ Forget\ the\ Me\ \(4\)/Remembering\ the\ Kanji\ 1\ \(Kindle\ Fire\ HDX\ e\ -\ James\ W.\ Heisig.pdf &>/dev/null &) && echo "Last page was 42"'
+alias rtk='(xdg-open ~/Documents/books/James\ W.\ Heisig/Remembering\ the\ Kanji\ 1\ \(Kindle\ Fire\ HDX\ edition\)_\ A\ Complete\ Course\ on\ How\ Not\ to\ Forget\ the\ Me\ \(4\)/Remembering\ the\ Kanji\ 1\ \(Kindle\ Fire\ HDX\ e\ -\ James\ W.\ Heisig.pdf &>/dev/null &) && echo "Last page was 49"'
 
 alias chrome='(~/Documents/ungoogled-chromium_71.0.3578.98-2_linux.AppImage --no-sandbox &>/dev/null &)'
