@@ -25,6 +25,31 @@ if it isn't on your machine.
 
 The install script should handle this part for you.
 
+### Beautifying the desktop
+Gnome looks pretty plain by default, so it's nice to customise it a bit.
+https://www.ubuntupit.com/customize-gnome-shell-tips-beautify-gnome-desktop/
+
+Get the gnome tweak tool
+```Bash
+sudo apt-get install gnome-tweak-tool
+```
+
+Other settings
+```
+Icons: Papirus
+https://github.com/PapirusDevelopmentTeam/papirus-icon-theme
+
+GTK theme: Adapta-Eta
+Shell Theme: Adapta
+sudo apt-get install adapta-gtk-theme
+
+Dash to Dock (gnome shell extension) to get the iOS style bottom dock
+```
+
+You can also play around with all of the other settings in the gnome tweak tool 
+by pressing the Windows key (to browse all of your apps) and typing 'Tweaks' to 
+find the tweaks window.
+
 ## Troubleshooting
 Normally when I install linux from scratch I get some issues. The fixes
 are documented here.
