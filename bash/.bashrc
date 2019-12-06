@@ -126,19 +126,13 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 
-alias orb='(dotfiles &>/dev/null && (./scripts/run_tor.sh &>/dev/null); popd &>/dev/null)'
 alias ff='(firejail firefox &>/dev/null &)'
 alias spo='(firejail spotify &>/dev/null &)'
 
-# TODO: all of this cryptomator stuff should be a script - also the cmtf alias
-#       should check if the folder exists before trying to open it.
 alias cm='(cd ~ && (./cryptomator.AppImage &>/dev/null &); cd - &>/dev/null)'
-alias cmtf='(xdg-open ~/.local/share/Cryptomator/mnt/kLbNXGlWQhUA_0)'
 
 alias kpx='($HOME/Documents/keepassxc/KeePassXC-2.5.0-x86_64.AppImage &>/dev/null &)'
 
 alias hdd='sudo mount /dev/sdb1 /mnt/OldHDD/'
 
 alias rtk='(xdg-open ~/Documents/books/James\ W.\ Heisig/Remembering\ the\ Kanji\ 1\ \(Kindle\ Fire\ HDX\ edition\)_\ A\ Complete\ Course\ on\ How\ Not\ to\ Forget\ the\ Me\ \(4\)/Remembering\ the\ Kanji\ 1\ \(Kindle\ Fire\ HDX\ e\ -\ James\ W.\ Heisig.pdf &>/dev/null &) && echo "Last page was 49"'
-
-alias chrome='(~/Documents/ungoogled-chromium_71.0.3578.98-2_linux.AppImage --no-sandbox &>/dev/null &)'
