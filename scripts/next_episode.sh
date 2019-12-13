@@ -449,7 +449,7 @@ function parse_params() {
 # ARGS: None
 # OUTS: The marker file name
 function find_current_episode() {
-    find . -regex '.*[0-9]+' | sed 's/\.\///g' | head -n1 | cat
+    ls | grep ^[0-9] | sort | head -n1 | cat
 }
 
 
