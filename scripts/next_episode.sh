@@ -412,6 +412,7 @@ function script_usage() {
     cat << EOF
 Usage:
      -h|--help                  Displays this help
+     -v|--verbose               Displays verbose output
     -nc|--no-colour             Disables colour output
     -cr|--cron                  Run silently unless we encounter an error
 EOF
@@ -430,6 +431,9 @@ function parse_params() {
             -h|--help)
                 script_usage
                 exit 0
+                ;;
+            -v|--verbose)
+                verbose=true
                 ;;
             -nc|--no-colour)
                 no_colour=true
