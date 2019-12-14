@@ -480,21 +480,21 @@ function main() {
     colour_init
     #lock_init system
 
-    pretty_print "Finding current episode counter..."
+    verbose_print "Finding current episode counter..."
     local curr_episode=$(find_current_episode)
     if [[ -z "$curr_episode" ]]; then
         pretty_print "Could not find current episode counter." $fg_red
         script_exit "Exiting..."
     fi
-    pretty_print "Current episode is -> $curr_episode"
+    verbose_print "Current episode is -> $curr_episode"
 
     local next_episode=$((curr_episode+1))
-    pretty_print "Next episode is    -> $next_episode"
-    pretty_print ""
-    pretty_print "Opening next episode..."
+    verbose_print "Next episode is    -> $next_episode"
+    verbose_print ""
+    verbose_print "Opening next episode..."
     open_next_episode $next_episode
 
-    pretty_print "Incrementing marker file from $curr_episode to $next_episode"
+    verbose_print "Incrementing marker file from $curr_episode to $next_episode"
     mv "$curr_episode" "$next_episode" \
         || script_exit "Could not update marker" 2
     script_exit "Exiting..."
