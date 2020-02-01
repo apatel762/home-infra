@@ -44,6 +44,15 @@ Shell Theme: Adapta
 sudo apt-get install adapta-gtk-theme
 
 Dash to Dock (gnome shell extension) to get the iOS style bottom dock
+
+Font: iosevka (https://typeof.net/Iosevka/)
+
+Terminal themes: https://github.com/Mayccoll/Gogh
+Installation:
+* sudo apt-get install dconf-cli uuid-runtime
+* bash -c "$(wget -qO- https://git.io/vQgMr)" # verify the script first!
+* options: 05 07 11 13 24 48 55 84 93 102 137 139
+* Currently using Azu theme
 ```
 
 You can also play around with all of the other settings in the gnome tweak tool 
@@ -111,3 +120,8 @@ using `xrandr --newmode`.
 I don't remember that working for me, but maybe the change would only take
 place after downloading the nvidia drivers? (So in other words, it did work
 but it wasn't a complete solution).
+
+#### Issues with spacemacs
+When emacs was hanging at contacting host, restarting it a couple of times seemed to have fixed it.
+
+When spacemacs was throwing warnings about org-projectile-per-project (saying that the function definition is void), I fixed it by deleting the elpa files: `find ~/.emacs.d/elpa -name "*elc" -delete`. When I restarted emacs, the issue was gone.

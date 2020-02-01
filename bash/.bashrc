@@ -109,6 +109,11 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/.local/bin" ] ; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
+
 alias vim='nvim'
 
 # Quick config editing
@@ -129,7 +134,7 @@ alias l='ls -CF'
 alias ff='(firejail firefox &>/dev/null &)'
 alias spo='(firejail spotify &>/dev/null &)'
 
-alias cm='(cd ~ && (./cryptomator.AppImage &>/dev/null &); cd - &>/dev/null)'
+alias cm='(cd ~/Documents && (./cryptomator.AppImage &>/dev/null &); cd - &>/dev/null)'
 
 alias kpx='($HOME/Documents/keepassxc/KeePassXC-2.5.0-x86_64.AppImage &>/dev/null &)'
 
@@ -138,3 +143,5 @@ alias hdd='sudo mount /dev/sdb1 /mnt/OldHDD/'
 alias rtk='(xdg-open ~/Documents/books/James\ W.\ Heisig/Remembering\ the\ Kanji\ 1\ \(Kindle\ Fire\ HDX\ edition\)_\ A\ Complete\ Course\ on\ How\ Not\ to\ Forget\ the\ Me\ \(4\)/Remembering\ the\ Kanji\ 1\ \(Kindle\ Fire\ HDX\ e\ -\ James\ W.\ Heisig.pdf &>/dev/null &) && echo "Last page was 49"'
 
 alias nep='~/dotfiles/scripts/next_episode.sh'
+
+alias vpn-work='sudo openfortivpn -c /etc/openfortivpn/config-work'
