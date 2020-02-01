@@ -31,8 +31,6 @@
 
 " PLUGINS
     Plugin 'w0rp/ale'                 " Asynchronous Linting Engine
-    Plugin 'mattn/emmet-vim'          " Emmet-vim
-    Plugin 'scrooloose/nerdtree'      " NERDTree
     Plugin 'vim-airline/vim-airline'  " Airline
     Plugin 'airblade/vim-gitgutter'   " Git gutter
     Plugin 'ervandew/supertab'        " SuperTab
@@ -94,20 +92,14 @@
 " Syntax highlighting
     syntax on
 
-" Close vim if NERDTree is the last thing open
-    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-    let NERDTreeShowHidden=1                 " Show hidden files - NERDTree
-    let g:airline#extensions#ale#enabled = 1 " Integrate the ALE with Airline
+" Integrate the ALE with Airline
+    let g:airline#extensions#ale#enabled = 1
 
 " AUTOCOMPLETE
 " Press <C-x> then <C-o> to activate
     autocmd FileType html set omnifunc=htmlcomplete#CompleteTags 
     autocmd FileType css set omnifunc=csscomplete#CompleteCSS
     autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-
-" HOTKEYS
-    map <C-n> :NERDTreeToggle<CR>
 
 " Execute the current line of text as a shell command
     noremap Q !!$SHELL<CR>
