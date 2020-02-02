@@ -145,3 +145,5 @@ alias rtk='(xdg-open ~/Documents/books/James\ W.\ Heisig/Remembering\ the\ Kanji
 alias nep='~/dotfiles/scripts/next_episode.sh'
 
 alias vpn-work='sudo openfortivpn -c /etc/openfortivpn/config-work'
+
+alias st='syncthing -no-browser'
