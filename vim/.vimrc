@@ -174,9 +174,6 @@
         autocmd GUIEnter * set vb t_vb=
     endif
 
-" Add a bit extra margin to the left
-    set foldcolumn=1
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " STOLEN FROM https://github.com/amix/vimrc/blob/master/vimrcs/basic.vim
 " => Colors and fonts
