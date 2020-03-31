@@ -46,6 +46,10 @@ sudo apt-get install adapta-gtk-theme
 Dash to Dock (gnome shell extension) to get the iOS style bottom dock
 
 Font: iosevka (https://typeof.net/Iosevka/)
+To install fonts:
+* Move all of the .ttf files to '/usr/local/share/fonts' (will require sudo)
+* Manually rebuild font cache using 'fc-cache -f -v'
+* Optional: confirm their installation using 'fc-list | grep "font-name"'
 
 Terminal themes: https://github.com/Mayccoll/Gogh
 Installation:
