@@ -271,4 +271,4 @@ PS1="$PS1""\`__return_value\`"
 PS1="$PS1""$DIM$WHITE in $RESET_COLOURS""$DIM$BLUE\`__shortpath\`$RESET_COLOURS"
 PS1="$PS1""\`__gitinfo\`"
 PS1="$PS1"'$RESET_COLOURS'
-PS1="$PS1"': '
+PS1="$PS1"" \\$"': '
