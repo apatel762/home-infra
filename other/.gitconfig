@@ -1,23 +1,20 @@
 [user]
-        email = apatel762@users.noreply.github.com
-        name = Arjun Patel
+    email = apatel762@users.noreply.github.com
+    name = Arjun Patel
 
 [core]
-        editor = nvim
+    editor = nvim
 
 [color]
-        ui = auto
+    ui = auto
 
 [alias]
-        # Fancy looking commit log
-        hist = log --all --graph --decorate --oneline
-        last = log --all --graph --decorate --oneline -10
+    # Fancy looking commit log
+    hist = log --all --graph --decorate --oneline
+    last = log --all --graph --decorate --oneline -10
 
-        s = status --short --branch
-        gsh = git show HEAD
-
-[colour]
-        ui = auto
+    s = status --short --branch
+    gsh = git show HEAD
 
 [credential]
 	helper = cache --timeout=43200
