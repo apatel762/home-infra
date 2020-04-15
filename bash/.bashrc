@@ -265,10 +265,13 @@ function __gitinfo() {
 }
 
 # building the prompt string
-PS1='\u'
+PS1="\n"
+PS1="$PS1""\u"
 PS1="$PS1""$DIM$WHITE at $RESET_COLOURS"'\H'
 PS1="$PS1""\`__return_value\`"
 PS1="$PS1""$DIM$WHITE in $RESET_COLOURS""$DIM$BLUE\`__shortpath\`$RESET_COLOURS"
 PS1="$PS1""\`__gitinfo\`"
 PS1="$PS1"'$RESET_COLOURS'
-PS1="$PS1"" \\$"': '
+PS1="$PS1""\n"
+PS1="$PS1""\\$"
+PS1="$PS1""> "
