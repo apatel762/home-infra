@@ -122,6 +122,8 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
+VISUAL=nvim; export VISUAL EDITOR=nvim; export EDITOR
+
 # ---------------------------------------------------------------------------
 
 #    _    _  _                        
