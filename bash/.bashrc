@@ -191,17 +191,6 @@ WHITE=$(tput setaf 7)
 DIM=$(tput dim)
 RESET_COLOURS=$(tput sgr0)
  
-# get the return value of the last command
-function __return_value() {
-  RETVAL=$?
- 
-  # error
-  [ $RETVAL -ne   0 ] && echo "[$RED$RETVAL$RESET_COLOURS]" && return
- 
-  # successful
-  [ $RETVAL -eq   0 ] && echo "[$DIM$GREEN$RETVAL$RESET_COLOURS]" && return
-}
- 
 # a function to get the short path of some directory, so it doesn't take up a lot of space on the screen
 function __shortpath() {
   full_dir=$(pwd | sed -e "s!^${HOME}!~!")
@@ -269,28 +258,25 @@ function __gitinfo() {
       BRANCH_COLOUR=$diverged
       extra_info="${extra_info}!"
     fi
-    echo -n "$RESET_COLOURS""$BRANCH_COLOUR${branch}$DIM$BRANCH_COLOUR${extra_info}$RESET_COLOURS"
+    echo -n " ""$RESET_COLOURS""$BRANCH_COLOUR${branch}$DIM$BRANCH_COLOUR${extra_info}$RESET_COLOURS"
   fi
   return 0
 }
  
 # building the prompt string, the [0] is the exit code of the previous command
 PS1="\n"
-PS1="$PS1""\`__return_value\`"
-PS1="$PS1"" "
-PS1="$PS1""\`__gitinfo\`"
-PS1="$PS1""\n"
 
+# show the username in red if we are root
 if [[ "`id -u`" -eq 0 ]]; then
-  PS1="$PS1""$RED""\u""$RESET_COLOURS"
+  PS1="$PS1""\[$RED\]""\u""\[$RESET_COLOURS\]"
 else
-  PS1="$PS1""$WHITE""\u""$RESET_COLOURS"
+  PS1="$PS1""\[$WHITE\]""\u""\[$RESET_COLOURS\]"
 fi
 
-PS1="$PS1""$WHITE"'@'"$RESET_COLOURS"
-PS1="$PS1""$WHITE""\H""$RESET_COLOURS"
+PS1="$PS1""\[$WHITE\]"'@'"\[$RESET_COLOURS\]"
+PS1="$PS1""\[$WHITE\]""\H""\[$RESET_COLOURS\]"
 PS1="$PS1"":"
-PS1="$PS1""$DIM$YELLOW\`__shortpath\`$RESET_COLOURS"
-PS1="$PS1""$RESET_COLOURS> "
-MSYS2_PS1="$PS1"
-export MSYS2_PS1
+PS1="$PS1""\[$DIM\]\[$YELLOW\]\`__shortpath\`\[$RESET_COLOURS\]"
+PS1="$PS1""\`__gitinfo\`"
+PS1="$PS1""\n"
+PS1="$PS1""\[$RESET_COLOURS\]> "
