@@ -22,6 +22,7 @@
 #   1_Defaults
 #   2_Aliases
 #   3_Prompt
+#   4_Notes
 #
 
 # ---------------------------------------------------------------------------
@@ -156,15 +157,8 @@ alias c='clear'
 alias bp='echo "source ~/.bashrc" && source ~/.bashrc'
 
 alias ll='ls -alFh'
-alias la='ls -A'
-alias l='ls -CF'
 
-alias ff='(firejail firefox &>/dev/null &)'
-alias spo='(firejail spotify &>/dev/null &)'
-alias hdd='sudo mount /dev/sdb1 /mnt/OldHDD/'
-alias nep='~/dotfiles/scripts/next_episode.sh'
 alias vpn-work='sudo openfortivpn -c /etc/openfortivpn/config-work'
-alias st='syncthing -no-browser'
 
 # loops through every folder in the current dir and zips them up
 alias zipall='for i in */; do zip -r "${i%/}.zip" "$i"; done'
@@ -280,3 +274,16 @@ PS1="$PS1""\[$DIM\]\[$YELLOW\]\`__shortpath\`\[$RESET_COLOURS\]"
 PS1="$PS1""\`__gitinfo\`"
 PS1="$PS1""\n"
 PS1="$PS1""\[$RESET_COLOURS\]> "
+
+# ---------------------------------------------------------------------------
+
+#      __         _              
+#   /\ \ \  ___  | |_   ___  ___ 
+#  /  \/ / / _ \ | __| / _ \/ __|
+# / /\  / | (_) || |_ |  __/\__ \
+# \_\ \/   \___/  \__| \___||___/
+#                                
+
+# 4_Notes
+
+alias note='echo "note"'

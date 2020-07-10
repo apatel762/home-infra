@@ -31,12 +31,12 @@
 
 " PLUGINS
     Plugin 'w0rp/ale'                 " Asynchronous Linting Engine
-    Plugin 'vim-airline/vim-airline'  " Airline
     Plugin 'airblade/vim-gitgutter'   " Git gutter
     Plugin 'ervandew/supertab'        " SuperTab
     Plugin 'SirVer/ultisnips'         " Snippets Engine
     Plugin 'honza/vim-snippets'       " The actual snippets
     Plugin 'Shougo/deoplete.nvim'     " Deoplete.nvim
+    Plugin 'junegunn/goyo.vim'        " Goyo; distraction free mode
 
     call vundle#end()                 " required
     filetype plugin indent on         " required
