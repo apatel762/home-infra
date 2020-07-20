@@ -308,5 +308,16 @@ function did() {
     if [[ $# -ne 0 ]]; then
         echo "tags: $*" >> "$DID_LOCATION"
     fi
-    vim "+normal Go" +startinsert "$DID_LOCATION"
+
+    # we open vim, go to the end of the document and open a new line
+    # we also start in insert mode straight away, so we can immediately
+    # start typing when the document opens
+    # we also change a few settings so that we automatically wrap lines
+    # to 72 characters as we are typing, to keep the notes neat
+    vim "+normal Go" +startinsert    \
+        -c "set tw=72"               \
+        -c "set fo?"                 \
+        -c "set fo+=t"               \
+        -c "set fo-=l"               \
+        "$DID_LOCATION"
 }
