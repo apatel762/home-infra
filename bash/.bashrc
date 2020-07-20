@@ -298,7 +298,7 @@ function did() {
     local DID_LOCATION
     local DATE_FORMATTED
 
-    DID_LOCATION=~/Documents/did.md
+    DID_LOCATION=~/Documents/did.txt
     DATE_FORMATTED=$(date +"%Y-%m-%d %T (%A)")
 
     test -f "$DID_LOCATION" || touch "$DID_LOCATION"
@@ -306,7 +306,11 @@ function did() {
     echo >> "$DID_LOCATION"
     echo "$DATE_FORMATTED" >> "$DID_LOCATION"
     if [[ $# -ne 0 ]]; then
-        echo "tags: $*" >> "$DID_LOCATION"
+        printf "tags: " >> "$DID_LOCATION"
+        for tag in "$@"
+        do
+            printf "@%s " "$tag" >> "$DID_LOCATION"
+        done
     fi
 
     # we open vim, go to the end of the document and open a new line
