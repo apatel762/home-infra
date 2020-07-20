@@ -285,5 +285,28 @@ PS1="$PS1""\[$RESET_COLOURS\]> "
 #                                
 
 # 4_Notes
+# I use a single 'did' function to put all of my notes into a single
+# file. Each entry has the date and time above it. All of the entries
+# go one after the other, with the newest entry at the bottom.
+# This makes it easier to search and back up (you can just attach this
+# notes file in an email to yourself and put the emails into a folder
+# somewhere)
 
-alias note='echo "note"'
+# desc: append to the 'did' file
+# args: the tags that you want to give to this 'did' entry
+function did() {
+    local DID_LOCATION
+    local DATE_FORMATTED
+
+    DID_LOCATION=~/Documents/did.md
+    DATE_FORMATTED=$(date +"%Y-%m-%d %T (%A)")
+
+    test -f "$DID_LOCATION" || touch "$DID_LOCATION"
+
+    echo >> "$DID_LOCATION"
+    echo "$DATE_FORMATTED" >> "$DID_LOCATION"
+    if [[ $# -ne 0 ]]; then
+        echo "tags: $*" >> "$DID_LOCATION"
+    fi
+    vim "+normal Go" +startinsert "$DID_LOCATION"
+}
