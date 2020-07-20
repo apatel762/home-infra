@@ -36,7 +36,6 @@
     Plugin 'SirVer/ultisnips'         " Snippets Engine
     Plugin 'honza/vim-snippets'       " The actual snippets
     Plugin 'Shougo/deoplete.nvim'     " Deoplete.nvim
-    Plugin 'junegunn/goyo.vim'        " Goyo; distraction free mode
 
     call vundle#end()                 " required
     filetype plugin indent on         " required
@@ -51,7 +50,6 @@
 
 " If you want :UltiSnipsEdit to split your window.
     let g:UltiSnipsEditSplit="vertical"
-
 
 " Highlight any characters in column 79 (for keeping lines short)
 "    highlight ColorColumn ctermbg=magenta
