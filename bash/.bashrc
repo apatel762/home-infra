@@ -292,19 +292,29 @@ PS1="$PS1""\[$RESET_COLOURS\]> "
 # notes file in an email to yourself and put the emails into a folder
 # somewhere)
 
+DID_LOCATION=~/Documents/did.txt
+
+alias didv='less $DID_LOCATION'
+alias didvt='grep "$(date -I)" -A 999 ~/Documents/did.txt | less'
+alias didvy='grep "$(date -d "'"yesterday"'" -I)" -A 999 ~/Documents/did.txt | less'
+
 # desc: append to the 'did' file
 # args: the tags that you want to give to this 'did' entry
 function did() {
-    local DID_LOCATION
     local DATE_FORMATTED
-
-    DID_LOCATION=~/Documents/did.txt
     DATE_FORMATTED=$(date +"%Y-%m-%d %T (%A)")
 
     test -f "$DID_LOCATION" || touch "$DID_LOCATION"
 
+    # three spaces after the previous thing
     echo >> "$DID_LOCATION"
+    echo >> "$DID_LOCATION"
+    echo >> "$DID_LOCATION"
+
+    # put the formatted date under the spacing
     echo "$DATE_FORMATTED" >> "$DID_LOCATION"
+
+    # put all of the tags that were passed in as parameters on one line
     if [[ $# -ne 0 ]]; then
         printf "tags: " >> "$DID_LOCATION"
         for tag in "$@"
@@ -318,10 +328,10 @@ function did() {
     # start typing when the document opens
     # we also change a few settings so that we automatically wrap lines
     # to 72 characters as we are typing, to keep the notes neat
-    vim "+normal Go" +startinsert    \
-        -c "set tw=72"               \
-        -c "set fo?"                 \
-        -c "set fo+=t"               \
-        -c "set fo-=l"               \
+    vim "+normal Go" "+normal Go   " +startinsert    \
+        -c "set tw=72"                               \
+        -c "set fo?"                                 \
+        -c "set fo+=t"                               \
+        -c "set fo-=l"                               \
         "$DID_LOCATION"
 }
