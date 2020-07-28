@@ -298,6 +298,12 @@ alias didv='less $DID_LOCATION'
 alias didvt='grep "$(date -I)" -A 999 ~/Documents/did.txt | less'
 alias didvy='grep "$(date -d "'"yesterday"'" -I)" -A 999 ~/Documents/did.txt | less'
 
+# desc: hashes a given string
+# args: $1 = the string that you want to hash
+function hash_string() {
+    echo "$1" | md5sum | cut -f1 -d" "
+}
+
 # desc: append to the 'did' file
 # args: the tags that you want to give to this 'did' entry
 function did() {
@@ -313,6 +319,11 @@ function did() {
 
     # put the formatted date under the spacing
     echo "$DATE_FORMATTED" >> "$DID_LOCATION"
+
+    # hash the datetime and put it under the date
+    # this provides a unique identifier of the note that you can 'link'
+    # to from other notes and jump to using search (ctrl+f or whatever).
+    echo "hash: $(hash_string "$DATE_FORMATTED")" >> $DID_LOCATION
 
     # put all of the tags that were passed in as parameters on one line
     if [[ $# -ne 0 ]]; then
