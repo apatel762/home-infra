@@ -295,8 +295,8 @@ PS1="$PS1""\[$RESET_COLOURS\]> "
 DID_LOCATION=~/Documents/did.txt
 
 alias didv='less $DID_LOCATION'
-alias didvt='grep "$(date -I)" -A 999 ~/Documents/did.txt | less'
-alias didvy='grep "$(date -d "'"yesterday"'" -I)" -A 999 ~/Documents/did.txt | less'
+alias didvt='grep "$(date -I)" -A 999 "$DID_LOCATION" | less'
+alias didvy='grep "$(date -d "'"yesterday"'" -I)" -A 999 "$DID_LOCATION" | less'
 
 # desc: hashes a given string
 # args: $1 = the string that you want to hash
@@ -312,10 +312,8 @@ function did() {
 
     test -f "$DID_LOCATION" || touch "$DID_LOCATION"
 
-    # three spaces after the previous thing
-    echo >> "$DID_LOCATION"
-    echo >> "$DID_LOCATION"
-    echo >> "$DID_LOCATION"
+    # three newlines after the previous entry
+    { echo ""; echo ""; echo ""; } >> "$DID_LOCATION"
 
     # put the formatted date under the spacing
     echo "$DATE_FORMATTED" >> "$DID_LOCATION"
