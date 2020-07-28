@@ -323,11 +323,16 @@ function did() {
         done
     fi
 
-    # we open vim, go to the end of the document and open a new line
-    # we also start in insert mode straight away, so we can immediately
-    # start typing when the document opens
-    # we also change a few settings so that we automatically wrap lines
-    # to 72 characters as we are typing, to keep the notes neat
+    # a few things happening here:
+    # - open vim
+    #   - go to end of file and open a blank newline
+    #   - (this would be just under the text we added above)
+    #   - open another blank newline and add two spaces (for indent)
+    # - set the textwidth to 72 characters
+    # - make sure that text wraps automatically
+    # 
+    # you can then immediately start typing since we start vim in
+    # insert mode
     vim "+normal Go" "+normal Go   " +startinsert    \
         -c "set tw=72"                               \
         -c "set fo?"                                 \
