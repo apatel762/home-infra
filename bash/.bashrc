@@ -257,7 +257,7 @@ function __gitinfo() {
   return 0
 }
  
-# building the prompt string, the [0] is the exit code of the previous command
+# building the prompt string
 PS1="\n"
 
 # show the username in red if we are root
@@ -355,10 +355,23 @@ function did() {
 
 # desc: view all of today's did file entries
 function didvt() {
-    sed -n "/\"$(date -I)\"/,/\n\n\n/p" "$DID_LOCATION" | less
+
+    # we use sed to print out all of the stuff that starts with
+    # today's date up until the last instance of three newlines
+
+    sed -n "/""$(date -I)""/,/\n\n\n/p" "$DID_LOCATION" \
+        | less
 }
 
 # desc: view all of yesterday's did file entries
 function didvy() {
-    sed -n "/\"$(date -d 'yesterday' -I)\"/,/\n\n\n/p" "$DID_LOCATION" | less
+
+    # we use sed to print out all of the stuff that starts with
+    # yesterday's date going up to the first instance of today's
+    # date and then cut off the last four lines and pipe it into
+    # less so we can view it in the terminal
+
+    sed -n "/""$(date -d 'yesterday' -I)""/,/""$(date -I)""/p" "$DID_LOCATION" \
+        | head -n -4 \
+        | less
 }
