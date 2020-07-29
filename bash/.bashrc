@@ -295,8 +295,6 @@ PS1="$PS1""\[$RESET_COLOURS\]> "
 DID_LOCATION=~/Documents/did.txt
 
 alias didv='less $DID_LOCATION'
-alias didvt='grep "$(date -I)" -A 999 "$DID_LOCATION" | less'
-alias didvy='grep "$(date -d "'"yesterday"'" -I)" -A 999 "$DID_LOCATION" | less'
 
 # desc: hashes a given string
 # args: $1 = the string that you want to hash
@@ -304,7 +302,7 @@ function hash_string() {
     echo "$1" | md5sum | cut -f1 -d" "
 }
 
-# desc: append to the 'did' file
+# desc: append to the 'did' file, using Vim
 # args: the tags that you want to give to this 'did' entry
 function did() {
     local DATE_FORMATTED
@@ -348,4 +346,19 @@ function did() {
         -c "set fo+=t"                               \
         -c "set fo-=l"                               \
         "$DID_LOCATION"
+}
+
+# https://stackoverflow.com/a/16906481
+# using sed to search until a pattern; we use it to display all entries
+# on a given date. We stop at a pattern of three newlines in a row
+# because that's what separates each of my 'did' entries.
+
+# desc: view all of today's did file entries
+function didvt() {
+    sed -n "/\"$(date -I)\"/,/\n\n\n/p" "$DID_LOCATION" | less
+}
+
+# desc: view all of yesterday's did file entries
+function didvy() {
+    sed -n "/\"$(date -d 'yesterday' -I)\"/,/\n\n\n/p" "$DID_LOCATION" | less
 }
