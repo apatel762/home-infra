@@ -285,14 +285,24 @@ PS1="$PS1""\[$RESET_COLOURS\]> "
 #                                
 
 # 4_Notes
-# I use a single 'did' function to put all of my notes into a single
-# file. Each entry has the date and time above it. All of the entries
-# go one after the other, with the newest entry at the bottom.
+# I use a single 'did' function to put all of my journal notes into a
+# single file. Each entry has the date and time above it. All of the
+# entries go one after the other, with the newest entry at the bottom.
+#
 # This makes it easier to search and back up (you can just attach this
 # notes file in an email to yourself and put the emails into a folder
 # somewhere)
+#
+# I keep all of my notes in one folder and use my chosen editor to open
+# the entire folder at once.
+# The files I keep:
+#   did.txt (a journal file, to keep track of what I've been doing)
+#   bugs.txt (see: https://henrikwarne.com/2016/04/28/learning-from-your-bugs/)
+#   todo.txt (see: https://todotxt.org)
+#   dump.md (all of my notes dumped into one file; markdown for better formatting)
 
-DID_LOCATION=~/Documents/did.txt
+NOTES_FOLDER=~/Documents/Notes
+DID_LOCATION=~/Documents/Notes/did.txt
 
 alias didv='less $DID_LOCATION'
 
@@ -374,4 +384,15 @@ function didvy() {
     sed -n "/""$(date -d 'yesterday' -I)""/,/""$(date -I)""/p" "$DID_LOCATION" \
         | head -n -4 \
         | less
+}
+
+# desc: open the notes folder
+# args: none
+function notes() {
+    if command -v codium &> /dev/null
+    then
+        codium "$NOTES_FOLDER"
+    else
+        $EDITOR "$NOTES_FOLDER"
+    fi
 }
