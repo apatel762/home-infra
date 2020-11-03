@@ -1,3 +1,5 @@
+# shellcheck source=/dev/null
+
 #       _                     _                   
 #      | |                   | |                  
 #      | |__     __ _   ___  | |__    _ __    ___ 
@@ -83,6 +85,7 @@ esac
 # should be on the output of commands, not on the prompt
 #force_color_prompt=yes
 
+# shellcheck disable=SC2154
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
         # We have color support; assume it's compliant with Ecma-48
@@ -90,6 +93,7 @@ if [ -n "$force_color_prompt" ]; then
         # a case would tend to support setf rather than setaf.)
         color_prompt=yes
     else
+        # shellcheck disable=SC2034
         color_prompt=
     fi
 fi
@@ -115,7 +119,12 @@ fi
 
 # Enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    if test -r ~/.dircolors;
+    then
+        eval "$(dircolors -b ~/.dircolors)"
+    else
+        eval "$(dircolors -b)"
+    fi
 
     alias ls='ls --color=auto'
     alias grep='grep --color=auto'
@@ -123,7 +132,14 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
-VISUAL=nvim; export VISUAL EDITOR=nvim; export EDITOR
+# set the default terminal editor to nvim or vi
+if command -v nvim &>/dev/null; then
+    export VISUAL=nvim
+    export EDITOR=nvim
+else
+    export VISUAL=vi
+    export EDITOR=vi
+fi
 
 # ---------------------------------------------------------------------------
 
@@ -136,16 +152,32 @@ VISUAL=nvim; export VISUAL EDITOR=nvim; export EDITOR
 
 # 2_Aliases
 
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+# ---------------------------------------------------------
+# source the fzf bash snippets if we've installed fzf
+if [ -f "$HOME/.fzf.bash" ] ; then
+    source "$HOME/.fzf.bash"
+fi
 
-# set PATH so it includes user's private bin if it exists
+# ---------------------------------------------------------
+# Adding things to PATH if they exist
+
+# local bin
 if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-# Add Rust to $PATH
-export PATH="$HOME/.cargo/bin:$PATH"
+# doom emacs
+if [ -d "$HOME/.emacs.d/bin" ] ; then
+    PATH="$HOME/.emacs.d/bin:$PATH"
+fi
 
+# rust
+if [ -d "$HOME/.cargo/bin" ] ; then
+    PATH="$HOME/.cargo/bin:$PATH"
+fi
+# ---------------------------------------------------------
+
+# me being lazy
 alias vim='nvim'
 
 # Quick config editing
@@ -156,7 +188,9 @@ alias dotfiles='pushd ~/dotfiles'
 alias c='clear'
 alias bp='echo "source ~/.bashrc" && source ~/.bashrc'
 
-alias ll='ls -alFh'
+# I want to add symbols for symlinks and use human readable sizes by default
+# and I want to use the long format
+alias ll='ls -l --all --classify --human-readable'
 
 alias vpn-work='sudo openfortivpn -c /etc/openfortivpn/config-work'
 
@@ -174,11 +208,13 @@ alias zipall='for i in */; do zip -r "${i%/}.zip" "$i"; done'
 
 # 3_Prompt
 
+# shellcheck disable=SC2034
 BLACK=$(tput setaf 0)
 RED=$(tput setaf 1)
 GREEN=$(tput setaf 2)
 YELLOW=$(tput setaf 3)
 BLUE=$(tput setaf 4)
+# shellcheck disable=SC2034
 MAGENTA=$(tput setaf 5)
 CYAN=$(tput setaf 6)
 WHITE=$(tput setaf 7)
@@ -261,7 +297,7 @@ function __gitinfo() {
 PS1="\n"
 
 # show the username in red if we are root
-if [[ "`id -u`" -eq 0 ]]; then
+if [[ "$(id -u)" -eq 0 ]]; then
   PS1="$PS1""\[$RED\]""\u""\[$RESET_COLOURS\]"
 else
   PS1="$PS1""\[$WHITE\]""\u""\[$RESET_COLOURS\]"
@@ -301,10 +337,10 @@ PS1="$PS1""\[$RESET_COLOURS\]> "
 #   todo.txt (see: https://todotxt.org)
 #   dump.md (all of my notes dumped into one file; markdown for better formatting)
 
-NOTES_FOLDER=~/Documents/Notes
-DID_LOCATION=~/Documents/Notes/did.txt
+NOTES_FOLDER="$HOME/Documents/Notes"
+DID_LOCATION="$HOME/Documents/Notes/did.txt"
 
-alias didv='less $DID_LOCATION'
+alias didv='less "$DID_LOCATION"'
 
 # desc: hashes a given string
 # args: $1 = the string that you want to hash
@@ -318,10 +354,17 @@ function did() {
     local DATE_FORMATTED
     DATE_FORMATTED=$(date +"%Y-%m-%d %T (%A)")
 
-    test -f "$DID_LOCATION" || touch "$DID_LOCATION"
+    # create the file if it doesn't already exist
+    touch "$DID_LOCATION"
 
     # three newlines after the previous entry
-    { echo ""; echo ""; echo ""; } >> "$DID_LOCATION"
+    # shellcheck disable=SC2129
+    {
+        echo ""
+        echo ""
+        echo ""
+    } \
+        >> "$DID_LOCATION"
 
     # put the formatted date under the spacing
     echo "$DATE_FORMATTED" >> "$DID_LOCATION"
@@ -329,7 +372,7 @@ function did() {
     # hash the datetime and put it under the date
     # this provides a unique identifier of the note that you can 'link'
     # to from other notes and jump to using search (ctrl+f or whatever).
-    echo "hash: $(hash_string "$DATE_FORMATTED")" >> $DID_LOCATION
+    echo "hash: $(hash_string "$DATE_FORMATTED")" >> "$DID_LOCATION"
 
     # put all of the tags that were passed in as parameters on one line
     if [[ $# -ne 0 ]]; then
@@ -386,13 +429,28 @@ function didvy() {
         | less
 }
 
-# desc: open the notes folder
+# desc: open the notes folder with vs code or the default terminal editor
+#       if we don't have vs code installed
 # args: none
 function notes() {
-    if command -v codium &> /dev/null
+    if command -v code &> /dev/null
     then
-        codium "$NOTES_FOLDER"
+        code "$NOTES_FOLDER"
     else
-        $EDITOR "$NOTES_FOLDER"
+        $EDITOR "$NOTES_FOLDER" \
+            || echo "something went wrong opening $NOTES_FOLDER with $EDITOR"
+    fi
+}
+
+# desc: mirror my phone to the screen but only if we're both connected to
+#       the same wifi
+# args: none
+function pixel3() {
+    local SCRIPT_LOCATION
+    SCRIPT_LOCATION="$HOME/dotfiles/scripts/pixel3.sh"
+    if [ -f "$SCRIPT_LOCATION" ]; then
+        "$SCRIPT_LOCATION"
+    else
+        echo "Could not find $SCRIPT_LOCATION"
     fi
 }
