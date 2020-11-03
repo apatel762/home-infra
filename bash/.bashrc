@@ -132,15 +132,6 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
-# set the default terminal editor to nvim or vi
-if command -v nvim &>/dev/null; then
-    export VISUAL=nvim
-    export EDITOR=nvim
-else
-    export VISUAL=vi
-    export EDITOR=vi
-fi
-
 # ---------------------------------------------------------------------------
 
 #    _    _  _                        
@@ -177,8 +168,20 @@ if [ -d "$HOME/.cargo/bin" ] ; then
 fi
 # ---------------------------------------------------------
 
-# me being lazy
-alias vim='nvim'
+# set the default terminal editor
+if command -v nvim &>/dev/null; then
+    export VISUAL=nvim
+    export EDITOR=nvim
+    alias vim='nvim'
+else
+    export VISUAL=vi
+    export EDITOR=vi
+fi
+
+# set emacs to always open in terminal by default if installed
+if command -v emacs &>/dev/null; then
+    alias emacs='emacs -nw'
+fi
 
 # Quick config editing
 alias vimrc='vim ~/.vimrc'
