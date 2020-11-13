@@ -340,8 +340,8 @@ PS1="$PS1""\[$RESET_COLOURS\]> "
 #   todo.txt (see: https://todotxt.org)
 #   dump.md (all of my notes dumped into one file; markdown for better formatting)
 
-NOTES_FOLDER="$HOME/Documents/Notes"
-DID_LOCATION="$HOME/Documents/Notes/did.txt"
+NOTES_FOLDER="$HOME/Documents/Nextcloud/Notes"
+DID_LOCATION="$NOTES_FOLDER/did.txt"
 
 alias didv='less "$DID_LOCATION"'
 
