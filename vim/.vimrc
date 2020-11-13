@@ -4,52 +4,32 @@
 "  \ V /| | | | | | | | | (__
 "   \_/ |_|_| |_| |_|_|  \___|
 
-" REQUIRED SETUP FOR Vundle
+" REQUIRED SETUP FOR USING PLUGINS
 "
-" For a new PC/Laptop do: (after running `stow vim/` from dotfiles/)
-" git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+" For a new PC/Laptop after running `stow vim/` from `dotfiles/` there is
+" still something that you need to do before you can use plugins.
 "
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+" Using the native package manager, you need to make a folder for the plugin
+" repos:
 "
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
+"   ~/.vim/pack/*/start/
 "
-" Plugin management
-    set nocompatible                  " be iMproved, required
-    filetype off                      " required
-
-" Set the runtime path to include Vundle and initialize
-    set rtp+=~/.vim/bundle/Vundle.vim
-    call vundle#begin()
-
-" Let Vundle manage Vundle, required
-    Plugin 'VundleVim/Vundle.vim'
-
-" PLUGINS
-    Plugin 'w0rp/ale'                 " Asynchronous Linting Engine
-    Plugin 'airblade/vim-gitgutter'   " Git gutter
-    Plugin 'ervandew/supertab'        " SuperTab
-    Plugin 'SirVer/ultisnips'         " Snippets Engine
-    Plugin 'honza/vim-snippets'       " The actual snippets
-    Plugin 'Shougo/deoplete.nvim'     " Deoplete.nvim
-
-    call vundle#end()                 " required
-    filetype plugin indent on         " required
-
-" Activate deoplete by default
-    let g:deoplete#enable_at_startup=1
-    call deoplete#custom#option('ignore_case', v:true) 
-
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-    let g:UltiSnipsJumpForwardTrigger="<c-b>"
-    let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
-" If you want :UltiSnipsEdit to split your window.
-    let g:UltiSnipsEditSplit="vertical"
+" The * can be anything, so let's call it 'plugins'...
+"
+"   mkdir -p "$HOME/.vim/pack/plugins/start/"
+"
+" ...and then when you want to install plugins, just put them into the
+" folder that you just created:
+"
+"   git clone https://repo1 "$HOME/.vim/pack/plugins/start/"
+"   git clone https://repo2 "$HOME/.vim/pack/plugins/start/"
+"   git clone https://repo3 "$HOME/.vim/pack/plugins/start/"
+"
+" That's it.
+"
+" To update the plugins, just fetch and pull in the git repos.
+" To remove the plugins, move them somewhere else or delete them.
+"
 
 " Highlight any characters in column 79 (for keeping lines short)
 "    highlight ColorColumn ctermbg=magenta
@@ -61,15 +41,6 @@
 
 " Syntax highlighting
     syntax on
-
-" Integrate the ALE with Airline
-    let g:airline#extensions#ale#enabled = 1
-
-" AUTOCOMPLETE
-" Press <C-x> then <C-o> to activate
-    autocmd FileType html set omnifunc=htmlcomplete#CompleteTags 
-    autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-    autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 
 " Execute the current line of text as a shell command
     noremap Q !!$SHELL<CR>
