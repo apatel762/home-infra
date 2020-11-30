@@ -31,6 +31,17 @@
 " To remove the plugins, move them somewhere else or delete them.
 "
 
+" Plugin management
+    set nocompatible                  " be iMproved, required
+
+" VimWiki configuration
+    let g:vimwiki_list =
+    \ [
+    \     {
+    \         'path': '$HOME/Documents/Nextcloud/Notes/wiki'
+    \     }
+    \ ]
+
 " Highlight any characters in column 79 (for keeping lines short)
 "    highlight ColorColumn ctermbg=magenta
 "    call matchadd('ColorColumn', '\%79v', 100)
@@ -179,15 +190,6 @@
 
 " Wrap lines
     set wrap
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" STOLEN FROM https://github.com/amix/vimrc/blob/master/vimrcs/basic.vim
-" => Visual mode related
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Visual mode pressing * or # searches for the current selection
-" Super useful! From an idea by Michael Naumann
-    vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
-    vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """ => Moving around, tabs, windows and buffers
