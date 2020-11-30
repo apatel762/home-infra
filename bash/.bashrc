@@ -200,6 +200,73 @@ alias vpn-work='sudo openfortivpn -c /etc/openfortivpn/config-work'
 # loops through every folder in the current dir and zips them up
 alias zipall='for i in */; do zip -r "${i%/}.zip" "$i"; done'
 
+# desc: hashes a given string
+# args: $1 = the string that you want to hash
+function hash_string() {
+    echo "$1" | md5sum | cut -f1 -d" "
+}
+
+alias ffp=firefox_profile
+function firefox_profile() {
+    local FIREFOX_PROFILE_FOLDER
+    FIREFOX_PROFILE_FOLDER="$HOME/.mozilla/firefox/ty2439dj.default-1558852188159"
+
+    if [ -d "$FIREFOX_PROFILE_FOLDER" ] ; then
+        cd "$FIREFOX_PROFILE_FOLDER" \
+            || return 1
+    else
+        echo "sorry, the firefox profile folder you defined doesn't exist"
+        echo "folder: '$FIREFOX_PROFILE_FOLDER'"
+    fi
+}
+
+function update_material_fox() {
+    local GITHUB_FOLDER
+    GITHUB_FOLDER="$HOME/Documents/Github"
+
+    echo "making $GITHUB_FOLDER"
+    mkdir -p "$GITHUB_FOLDER"
+
+    if [ ! -d "$GITHUB_FOLDER/materialfox" ] ; then
+        echo "cloning 'materialfox'"
+        git clone https://github.com/muckSponge/MaterialFox.git "$GITHUB_FOLDER/materialfox"
+    else
+        echo "you already have 'materialfox' - skipping git clone"
+    fi
+
+    cd "$GITHUB_FOLDER/materialfox" && git fetch --all --prune && git pull --autostash --rebase
+
+    # function to go to the firefox profile folder
+    firefox_profile
+
+    echo "copying the chrome folder to your firefox profile"
+    cp -rvu "$GITHUB_FOLDER/materialfox/chrome" -t .
+    echo "done copying files!"
+    echo ""
+    echo "check the materialfox README.md"
+    echo "there is some stuff that needs to be added to your user-overrides.js in $PWD"
+}
+
+function bookmarks_sync() {
+    command -v rsync || { echo "need rsync" && return 1 }
+
+    local BOOKMARKS_FOLDER
+    BOOKMARKS_FOLDER="$HOME/Downloads/bookmarks"
+
+    local REMOTE_FOLDER
+    REMOTE_FOLDER="amigo@broadwater.local:/var/broadwater/bookmarks/raw/"
+
+    # go to where the bookmarks are
+    cd "$BOOKMARKS_FOLDER" || return 1
+
+    # put the newly downloaded stuff into the folder and copy it to broadwater
+    mv -vi ../*.html . && python3 create_index.py
+    rsync -avz "$BOOKMARKS_FOLDER"/*.html "$REMOTE_FOLDER"
+
+    # go back where we were now that we are done
+    cd - || return 1
+}
+
 # ---------------------------------------------------------------------------
 
 #    ___                                 _   
@@ -324,136 +391,21 @@ PS1="$PS1""\[$RESET_COLOURS\]> "
 #                                
 
 # 4_Notes
-# I use a single 'did' function to put all of my journal notes into a
-# single file. Each entry has the date and time above it. All of the
-# entries go one after the other, with the newest entry at the bottom.
+# I keep all of my notes in a VimWiki
 #
-# This makes it easier to search and back up (you can just attach this
-# notes file in an email to yourself and put the emails into a folder
-# somewhere)
+# Vim is the most comfortable text editor for me so I find it easier to use
+# than something like Orgmode which might be more powerful but would require
+# me to learn Emacs.
 #
-# I keep all of my notes in one folder and use my chosen editor to open
-# the entire folder at once.
-# The files I keep:
-#   did.txt (a journal file, to keep track of what I've been doing)
-#   bugs.txt (see: https://henrikwarne.com/2016/04/28/learning-from-your-bugs/)
-#   todo.txt (see: https://todotxt.org)
-#   dump.md (all of my notes dumped into one file; markdown for better formatting)
+# There's no real structure to my VimWiki notes, I just dump them into the
+# index file and hope for the best.
+#
+# I'm trying to avoid nesting my notes too deeply because then it becomes a
+# mess moving stuff about.
+#
+# This does lock me into using Vim (kind of) but I'm okay with that because
+# Vim isn't going away any time soon. Even if it does, I'm sure there will be
+# a way to convert the files to markdown or something similar.
 
-NOTES_FOLDER="$HOME/Documents/Nextcloud/Notes"
-DID_LOCATION="$NOTES_FOLDER/did.txt"
-
-alias didv='less "$DID_LOCATION"'
-
-# desc: hashes a given string
-# args: $1 = the string that you want to hash
-function hash_string() {
-    echo "$1" | md5sum | cut -f1 -d" "
-}
-
-# desc: append to the 'did' file, using Vim
-# args: the tags that you want to give to this 'did' entry
-function did() {
-    local DATE_FORMATTED
-    DATE_FORMATTED=$(date +"%Y-%m-%d %T (%A)")
-
-    # create the file if it doesn't already exist
-    touch "$DID_LOCATION"
-
-    # three newlines after the previous entry
-    # shellcheck disable=SC2129
-    {
-        echo ""
-        echo ""
-        echo ""
-    } \
-        >> "$DID_LOCATION"
-
-    # put the formatted date under the spacing
-    echo "$DATE_FORMATTED" >> "$DID_LOCATION"
-
-    # hash the datetime and put it under the date
-    # this provides a unique identifier of the note that you can 'link'
-    # to from other notes and jump to using search (ctrl+f or whatever).
-    echo "hash: $(hash_string "$DATE_FORMATTED")" >> "$DID_LOCATION"
-
-    # put all of the tags that were passed in as parameters on one line
-    if [[ $# -ne 0 ]]; then
-        printf "tags: " >> "$DID_LOCATION"
-        for tag in "$@"
-        do
-            printf "@%s " "$tag" >> "$DID_LOCATION"
-        done
-    fi
-
-    # a few things happening here:
-    # - open vim
-    #   - go to end of file and open a blank newline
-    #   - (this would be just under the text we added above)
-    #   - open another blank newline and add two spaces (for indent)
-    # - set the textwidth to 72 characters
-    # - make sure that text wraps automatically
-    # 
-    # you can then immediately start typing since we start vim in
-    # insert mode
-    vim "+normal Go" "+normal Go   " +startinsert    \
-        -c "set tw=72"                               \
-        -c "set fo?"                                 \
-        -c "set fo+=t"                               \
-        -c "set fo-=l"                               \
-        "$DID_LOCATION"
-}
-
-# https://stackoverflow.com/a/16906481
-# using sed to search until a pattern; we use it to display all entries
-# on a given date. We stop at a pattern of three newlines in a row
-# because that's what separates each of my 'did' entries.
-
-# desc: view all of today's did file entries
-function didvt() {
-
-    # we use sed to print out all of the stuff that starts with
-    # today's date up until the last instance of three newlines
-
-    sed -n "/""$(date -I)""/,/\n\n\n/p" "$DID_LOCATION" \
-        | less
-}
-
-# desc: view all of yesterday's did file entries
-function didvy() {
-
-    # we use sed to print out all of the stuff that starts with
-    # yesterday's date going up to the first instance of today's
-    # date and then cut off the last four lines and pipe it into
-    # less so we can view it in the terminal
-
-    sed -n "/""$(date -d 'yesterday' -I)""/,/""$(date -I)""/p" "$DID_LOCATION" \
-        | head -n -4 \
-        | less
-}
-
-# desc: open the notes folder with vs code or the default terminal editor
-#       if we don't have vs code installed
-# args: none
-function notes() {
-    if command -v code &> /dev/null
-    then
-        code "$NOTES_FOLDER"
-    else
-        $EDITOR "$NOTES_FOLDER" \
-            || echo "something went wrong opening $NOTES_FOLDER with $EDITOR"
-    fi
-}
-
-# desc: mirror my phone to the screen but only if we're both connected to
-#       the same wifi
-# args: none
-function pixel3() {
-    local SCRIPT_LOCATION
-    SCRIPT_LOCATION="$HOME/dotfiles/scripts/pixel3.sh"
-    if [ -f "$SCRIPT_LOCATION" ]; then
-        "$SCRIPT_LOCATION"
-    else
-        echo "Could not find $SCRIPT_LOCATION"
-    fi
-}
+# The location of the VimWiki is defined in the .vimrc, not here
+alias notes='vim -c VimwikiIndex'
