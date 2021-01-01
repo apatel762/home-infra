@@ -166,6 +166,13 @@ fi
 if [ -d "$HOME/.cargo/bin" ] ; then
     PATH="$HOME/.cargo/bin:$PATH"
 fi
+
+# node
+# binaries from https://nodejs.org/en/download/
+if [ -d "$HOME/Documents/Github/node-v14.15.1-linux-x64/bin" ] ; then
+    PATH="$HOME/Documents/Github/node-v14.15.1-linux-x64/bin:$PATH"
+fi
+
 # ---------------------------------------------------------
 
 # set the default terminal editor
@@ -199,6 +206,10 @@ alias vpn-work='sudo openfortivpn -c /etc/openfortivpn/config-work'
 
 # loops through every folder in the current dir and zips them up
 alias zipall='for i in */; do zip -r "${i%/}.zip" "$i"; done'
+
+# git
+alias fp='git fetch --all --prune && git pull'
+alias dmb='git branch --merged | egrep -v "(^\*|master|main|dev)" | xargs git branch -d'
 
 # desc: hashes a given string
 # args: $1 = the string that you want to hash
@@ -248,7 +259,10 @@ function update_material_fox() {
 }
 
 function bookmarks_sync() {
-    command -v rsync || { echo "need rsync" && return 1 }
+    if ! command -v rsync ; then
+      echo "need rsync"
+      return 1
+    fi
 
     local BOOKMARKS_FOLDER
     BOOKMARKS_FOLDER="$HOME/Downloads/bookmarks"
@@ -257,13 +271,16 @@ function bookmarks_sync() {
     REMOTE_FOLDER="amigo@broadwater.local:/var/broadwater/bookmarks/raw/"
 
     # go to where the bookmarks are
+    echo "moving to the bookmarks folder"
     cd "$BOOKMARKS_FOLDER" || return 1
 
     # put the newly downloaded stuff into the folder and copy it to broadwater
-    mv -vi ../*.html . && python3 create_index.py
-    rsync -avz "$BOOKMARKS_FOLDER"/*.html "$REMOTE_FOLDER"
+    mv -vi ../*.html . \
+        && python3 create_index.py \
+        && rsync -avz "$BOOKMARKS_FOLDER"/*.html "$REMOTE_FOLDER"
 
     # go back where we were now that we are done
+    echo "moving back to the folder we were in"
     cd - || return 1
 }
 
@@ -408,4 +425,5 @@ PS1="$PS1""\[$RESET_COLOURS\]> "
 # a way to convert the files to markdown or something similar.
 
 # The location of the VimWiki is defined in the .vimrc, not here
-alias notes='vim -c VimwikiIndex'
+alias notes='vim -c NV'
+

@@ -19,11 +19,12 @@
 "   mkdir -p "$HOME/.vim/pack/plugins/start/"
 "
 " ...and then when you want to install plugins, just put them into the
-" folder that you just created:
+" folder that you just created, e.g.:
 "
-"   git clone https://repo1 "$HOME/.vim/pack/plugins/start/"
-"   git clone https://repo2 "$HOME/.vim/pack/plugins/start/"
-"   git clone https://repo3 "$HOME/.vim/pack/plugins/start/"
+"   cd "$HOME/.vim/pack/plugins/start/"
+"   git clone https://github.com/alok/notational-fzf-vim.git
+"   git clone https://github.com/junegunn/fzf.vim.git
+"   git clone https://github.com/junegunn/fzf.git
 "
 " That's it.
 "
@@ -42,6 +43,14 @@
     \     }
     \ ]
 
+" notational-fzf-vim configuration
+    let g:nv_search_paths =
+    \ [
+    \   '~/Documents/Nextcloud/Notes/'
+    \ ]
+
+    let g:nv_create_note_key = 'ctrl-x'
+
 " Highlight any characters in column 79 (for keeping lines short)
 "    highlight ColorColumn ctermbg=magenta
 "    call matchadd('ColorColumn', '\%79v', 100)
@@ -55,6 +64,14 @@
 
 " Execute the current line of text as a shell command
     noremap Q !!$SHELL<CR>
+
+" Set the line width to 72 characters with auto wrapping
+" Call the function with `:call ShortLineWrap()`
+    function! ShortLineWrap()
+        set tw=72
+        set fo+=t
+        set fo-=l
+    endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " STOLEN FROM https://github.com/amix/vimrc/blob/master/vimrcs/basic.vim
