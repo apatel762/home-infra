@@ -202,6 +202,46 @@ alias bp='echo "source ~/.bashrc" && source ~/.bashrc'
 # and I want to use the long format
 alias ll='ls -l --all --classify --human-readable'
 
+# open the archived version of a link in the web browser
+# args: $1 = the URL of a website you want to see the archived version of
+function wayback() {
+    local ARCHIVE_URL
+    ARCHIVE_URL="https://web.archive.org/web/$(date +%Y%m%d%H%M%S)/$1"
+
+    echo "opening: $ARCHIVE_URL"
+    open_in_browser "$ARCHIVE_URL"
+}
+
+# open something from your default web browser
+# if xdg-open isn't available then will try to use the following browsers:
+#
+#   firefox
+#   chromium
+#   brave-browser
+#
+# args: $1 = the thing that you want to open from your browser
+function open_in_browser() {
+    if command -v xdg-open &>/dev/null;
+    then
+        xdg-open "$1" &>/dev/null
+
+    elif command -v firefox &>/dev/null;
+    then
+        firefox "$1" &>/dev/null &
+
+    elif command -v chromium &>/dev/null;
+    then
+        chromium "$1" &>/dev/null &
+
+    elif command -v brave-browser &>/dev/null;
+    then
+        brave-browser "$1" &>/dev/null &
+    else
+        echo "cannot open $1"
+        echo "please install one of: firefox, chromium or brave-browser"
+    fi
+}
+
 alias vpn-work='sudo openfortivpn -c /etc/openfortivpn/config-work'
 
 # loops through every folder in the current dir and zips them up
