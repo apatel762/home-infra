@@ -24,7 +24,6 @@
 #   1_Defaults
 #   2_Aliases
 #   3_Prompt
-#   4_Notes
 #
 
 # ---------------------------------------------------------------------------
@@ -324,6 +323,63 @@ function bookmarks_sync() {
     cd - || return 1
 }
 
+# start the ssh-agent, especially useful if you have KeePassXC which can
+# supply keys to the agent so you don't have to keep them in a .ssh folder
+if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+    ssh-agent -t 1h > "$XDG_RUNTIME_DIR/ssh-agent.env"
+    if command -v keepassxc &>/dev/null;
+    then
+        echo "SSH agent started; you have keepassxc installed, so that will be used"
+    else
+        echo "SSH agent started; use 'ssh-add /path/to/private_key' to put keys in the cache"
+    fi
+fi
+if [[ ! "$SSH_AUTH_SOCK" ]]; then
+    source "$XDG_RUNTIME_DIR/ssh-agent.env" >/dev/null
+fi
+
+# this alias is literally just so i can remind myself of how to generate ssh
+# keys because i dont do it often...
+function ssh_cmds() {
+    more << EOF
+Create a key without having to go through the interactive menu[1][2]
+
+  ssh-keygen -f ~/.ssh/my.key -t rsa -b 4096 -C my_comment
+
+
+Copying the key to a server that you have access to. This is useful for if
+you are rotating your SSH key (i.e. putting the new one onto the server and
+then deleting the old one)
+
+  ssh-copy-id -i ~/.ssh/my.key user@remote
+
+
+Alternatively, you could do it the long way/manually.
+- copy ~/.ssh/my.key.pub to clipboard (or email it or write it down...)
+- then append it to remote:/home/user/.ssh/authorized_keys
+
+If you get an error like this:
+
+  sign_and_send_pubkey: signing failed: agent refused operation
+
+It's probably because you have enabled the 'Require user confirmation when
+this key is used'[3][4] option in KeePassXC or your keys need stricter
+permission. If it's the permissions thing then:
+
+  chmod 600 my.key
+  chmod 644 my.key.pub
+
+[1]: https://www.ssh.com/ssh/keygen/#specifying-the-file-name
+[2]: https://web.archive.org/web/20201222143417/https://www.ssh.com/ssh/keygen/
+[3]: https://rtfm.co.ua/en/keepass-an-mfa-totp-codes-a-browsers-passwords-ssh-keys-passwords-storage-configuration-and-secret-service-integration/
+[4]: https://web.archive.org/web/20210116130536/https://rtfm.co.ua/en/keepass-an-mfa-totp-codes-a-browsers-passwords-ssh-keys-passwords-storage-configuration-and-secret-service-integration/
+
+Extra:
+https://blog.valouille.fr/post/2018-03-27-how-to-use-keepass-xc-with-ssh-agent/
+EOF
+}
+
+
 # ---------------------------------------------------------------------------
 
 #    ___                                 _   
@@ -437,33 +493,3 @@ PS1="$PS1""\[$DIM\]\[$YELLOW\]\`__shortpath\`\[$RESET_COLOURS\]"
 PS1="$PS1""\`__gitinfo\`"
 PS1="$PS1""\n"
 PS1="$PS1""\[$RESET_COLOURS\]> "
-
-# ---------------------------------------------------------------------------
-
-#      __         _              
-#   /\ \ \  ___  | |_   ___  ___ 
-#  /  \/ / / _ \ | __| / _ \/ __|
-# / /\  / | (_) || |_ |  __/\__ \
-# \_\ \/   \___/  \__| \___||___/
-#                                
-
-# 4_Notes
-# I keep all of my notes in a VimWiki
-#
-# Vim is the most comfortable text editor for me so I find it easier to use
-# than something like Orgmode which might be more powerful but would require
-# me to learn Emacs.
-#
-# There's no real structure to my VimWiki notes, I just dump them into the
-# index file and hope for the best.
-#
-# I'm trying to avoid nesting my notes too deeply because then it becomes a
-# mess moving stuff about.
-#
-# This does lock me into using Vim (kind of) but I'm okay with that because
-# Vim isn't going away any time soon. Even if it does, I'm sure there will be
-# a way to convert the files to markdown or something similar.
-
-# The location of the VimWiki is defined in the .vimrc, not here
-alias notes='vim -c NV'
-
