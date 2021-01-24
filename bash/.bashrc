@@ -485,10 +485,35 @@ permission. If it's the permissions thing then:
   chmod 600 my.key
   chmod 644 my.key.pub
 
+
+Here is some info re: using the SSH Agent[5]
+
+  # start SSH-Agent
+  ubuntu@node01:~$ eval \$(ssh-agent)
+  Agent pid 1592
+
+  # add Identity
+  ubuntu@node01:~$ ssh-add
+  Enter passphrase for /home/ubuntu/.ssh/id_rsa:
+  Identity added: /home/ubuntu/.ssh/id_rsa (ubuntu@dlp.srv.world)
+
+  # confirm
+  ubuntu@node01:~$ ssh-add -l
+  3072 SHA256:8c0JKIhM5yPk6Kd2YloCsiKOKKjqPu5Qcot94/buwEg ubuntu@dlp.srv.world (RSA)
+
+  # try to conenct with SSH without passphrase
+  ubuntu@node01:~$ ssh dlp.srv.world hostname
+  dlp.srv.world
+
+  # exit from SSH-Agent
+  ubuntu@node01:~$ eval \$(ssh-agent -k)
+  Agent pid 1592 killed
+
 [1]: https://www.ssh.com/ssh/keygen/#specifying-the-file-name
 [2]: https://web.archive.org/web/20201222143417/https://www.ssh.com/ssh/keygen/
 [3]: https://rtfm.co.ua/en/keepass-an-mfa-totp-codes-a-browsers-passwords-ssh-keys-passwords-storage-configuration-and-secret-service-integration/
 [4]: https://web.archive.org/web/20210116130536/https://rtfm.co.ua/en/keepass-an-mfa-totp-codes-a-browsers-passwords-ssh-keys-passwords-storage-configuration-and-secret-service-integration/
+[5]: https://www.server-world.info/en/note?os=Ubuntu_20.04&p=ssh&f=7 20210124100000
 
 Extra:
 https://blog.valouille.fr/post/2018-03-27-how-to-use-keepass-xc-with-ssh-agent/
@@ -510,3 +535,4 @@ sri() {
     echo "sha384-$(shasum -b -a 384 "$1" | awk '{ print $1 }' | xxd -r -p | base64)"
 }
 
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
