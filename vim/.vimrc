@@ -9,47 +9,56 @@
 " For a new PC/Laptop after running `stow vim/` from `dotfiles/` there is
 " still something that you need to do before you can use plugins.
 "
-" Using the native package manager, you need to make a folder for the plugin
-" repos:
-"
-"   ~/.vim/pack/*/start/
-"
-" The * can be anything, so let's call it 'plugins'...
-"
-"   mkdir -p "$HOME/.vim/pack/plugins/start/"
-"
-" ...and then when you want to install plugins, just put them into the
-" folder that you just created, e.g.:
-"
-"   cd "$HOME/.vim/pack/plugins/start/"
-"   git clone https://github.com/alok/notational-fzf-vim.git
-"   git clone https://github.com/junegunn/fzf.vim.git
-"   git clone https://github.com/junegunn/fzf.git
-"
-" That's it.
-"
-" To update the plugins, just fetch and pull in the git repos.
-" To remove the plugins, move them somewhere else or delete them.
-"
 
-" Plugin management
-    set nocompatible                  " be iMproved, required
+" For plugins to work
+set nocompatible                  " be iMproved, required
 
-" VimWiki configuration
-    let g:vimwiki_list =
-    \ [
-    \     {
-    \         'path': '$HOME/Documents/Nextcloud/Notes/wiki'
-    \     }
-    \ ]
+" ------------------------------------------------------------------------
+" Install junegunn/vim-plug for plugin management
+" and all of the plugins that I want to use
 
-" notational-fzf-vim configuration
-    let g:nv_search_paths =
-    \ [
-    \   '~/Documents/Nextcloud/Notes/'
-    \ ]
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 
-    let g:nv_create_note_key = 'ctrl-x'
+" All of the plugins must be between the plug#begin and plug#end
+" Also, the plug#begin directory can't clash with the native vim plugin
+" directory (plugins), so it's called 'plugged'
+
+call plug#begin('~/.vim/plugged')
+
+Plug 'junegunn/goyo.vim'
+
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+let g:deoplete#enable_at_startup = 1
+
+call plug#end()
+
+" ------------------------------------------------------------------------
+" Markdown configs
+
+" Goyo shortcut and always use it for Markdown
+nnoremap <C-g> :Goyo<CR>
+
+" Stuff that should run automatically when you open a markdown file
+if has("autocmd")
+    " Treat all .md files as markdown
+    autocmd BufNewFile,BufRead *.md set filetype=markdown
+
+    " Hide and format markdown elements like **bold**
+    autocmd FileType markdown set conceallevel=2
+
+endif
+
+" ------------------------------------------------------------------------
 
 " Highlight any characters in column 79 (for keeping lines short)
 "    highlight ColorColumn ctermbg=magenta
