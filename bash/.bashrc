@@ -22,8 +22,8 @@
 # refer to:
 #
 #   1_Defaults
-#   2_Aliases
-#   3_Prompt
+#   2_Prompt
+#   3_Aliases
 #
 
 # ---------------------------------------------------------------------------
@@ -133,6 +133,120 @@ fi
 
 # ---------------------------------------------------------------------------
 
+#    ___                                 _   
+#   / _ \ _ __   ___   _ __ ___   _ __  | |_ 
+#  / /_)/| '__| / _ \ | '_ ` _ \ | '_ \ | __|
+# / ___/ | |   | (_) || | | | | || |_) || |_ 
+# \/     |_|    \___/ |_| |_| |_|| .__/  \__|
+#                                |_|         
+
+# 2_Prompt
+
+# shellcheck disable=SC2034
+BLACK=$(tput setaf 0)
+RED=$(tput setaf 1)
+GREEN=$(tput setaf 2)
+YELLOW=$(tput setaf 3)
+BLUE=$(tput setaf 4)
+# shellcheck disable=SC2034
+MAGENTA=$(tput setaf 5)
+CYAN=$(tput setaf 6)
+WHITE=$(tput setaf 7)
+DIM=$(tput dim)
+RESET_COLOURS=$(tput sgr0)
+ 
+# a function to get the short path of some directory, so it doesn't take up a lot of space on the screen
+function __shortpath() {
+  full_dir=$(pwd | sed -e "s!^${HOME}!~!")
+  if [[ "$full_dir" == "~" ]]; then
+    echo -n "$full_dir"
+  else
+    # Replace (/.) with (/..) for 2 chars, etc
+    front=$(echo "${full_dir%/*}" | sed -re 's!(/.)[^/]*!\1!g')
+    back=${full_dir##*/}
+    echo -n "${front}/${back}"
+  fi
+}
+ 
+function __gitinfo() {
+  # Get the current git branch and colorize to indicate branch state
+  # branch_name+ indicates there are stash(es)
+  # branch_name? indicates there are untracked files
+  # branch_name! indicates your branch has diverged
+  # branch_name> indicates your branch is ahead
+  # branch_name< indicates your branch is behind
+  local unknown untracked stash clean ahead behind staged dirty diverged
+  unknown=$BLUE        # blue
+  untracked=$GREEN     # green
+  stash=$GREEN         # green
+  clean=$GREEN         # green
+  ahead=$YELLOW        # yellow
+  behind=$YELLOW       # yellow
+  staged=$CYAN         # cyan
+  dirty=$RED           # red
+  diverged=$RED        # red
+  branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+  extra_info=" "
+  if [[ -n "$branch" ]]; then
+    git_status=$(git status 2> /dev/null)
+    # If nothing changes the BRANCH_COLOUR, we can spot unhandled cases.
+    BRANCH_COLOUR=$unknown
+    if [[ $git_status =~ 'Untracked files' ]]; then
+      BRANCH_COLOUR=$untracked
+      extra_info="${extra_info}?"
+    fi
+    if git stash show &>/dev/null; then
+      BRANCH_COLOUR=$stash
+      extra_info="${extra_info}+"
+    fi
+    if [[ $git_status =~ 'working directory clean' ]]; then
+      BRANCH_COLOUR=$clean
+    fi
+    if [[ $git_status =~ 'Your branch is ahead' ]]; then
+      BRANCH_COLOUR=$ahead
+      extra_info="${extra_info}>"
+    fi
+    if [[ $git_status =~ 'Your branch is behind' ]]; then
+      BRANCH_COLOUR=$behind
+      extra_info="${extra_info}<"
+    fi
+    if [[ $git_status =~ 'Changes to be committed' ]]; then
+      BRANCH_COLOUR=$staged
+    fi
+    if [[ $git_status =~ 'Changed but not updated' ||
+          $git_status =~ 'Changes not staged'      ||
+          $git_status =~ 'Unmerged paths' ]]; then
+      BRANCH_COLOUR=$dirty
+    fi
+    if [[ $git_status =~ 'Your branch'.+diverged ]]; then
+      BRANCH_COLOUR=$diverged
+      extra_info="${extra_info}!"
+    fi
+    echo -n " ""$RESET_COLOURS""$BRANCH_COLOUR${branch}$DIM$BRANCH_COLOUR${extra_info}$RESET_COLOURS"
+  fi
+  return 0
+}
+ 
+# building the prompt string
+PS1="\n"
+
+# show the username in red if we are root
+if [[ "$(id -u)" -eq 0 ]]; then
+  PS1="$PS1""\[$RED\]""\u""\[$RESET_COLOURS\]"
+else
+  PS1="$PS1""\[$WHITE\]""\u""\[$RESET_COLOURS\]"
+fi
+
+PS1="$PS1""\[$WHITE\]"'@'"\[$RESET_COLOURS\]"
+PS1="$PS1""\[$WHITE\]""\H""\[$RESET_COLOURS\]"
+PS1="$PS1"":"
+PS1="$PS1""\[$DIM\]\[$YELLOW\]\`__shortpath\`\[$RESET_COLOURS\]"
+PS1="$PS1""\`__gitinfo\`"
+PS1="$PS1""\n"
+PS1="$PS1""\[$RESET_COLOURS\]> "
+
+# ---------------------------------------------------------------------------
+
 #    _    _  _                        
 #   /_\  | |(_)  __ _  ___   ___  ___ 
 #  //_\\ | || | / _` |/ __| / _ \/ __|
@@ -140,7 +254,7 @@ fi
 # \_/ \_/|_||_| \__,_||___/ \___||___/
 #                                     
 
-# 2_Aliases
+# 3_Aliases
 
 # ---------------------------------------------------------
 # source the fzf bash snippets if we've installed fzf
@@ -325,18 +439,20 @@ function bookmarks_sync() {
 
 # start the ssh-agent, especially useful if you have KeePassXC which can
 # supply keys to the agent so you don't have to keep them in a .ssh folder
-if ! pgrep -u "$USER" ssh-agent > /dev/null; then
-    ssh-agent -t 1h > "$XDG_RUNTIME_DIR/ssh-agent.env"
-    if command -v keepassxc &>/dev/null;
-    then
-        echo "SSH agent started; you have keepassxc installed, so that will be used"
-    else
-        echo "SSH agent started; use 'ssh-add /path/to/private_key' to put keys in the cache"
-    fi
-fi
-if [[ ! "$SSH_AUTH_SOCK" ]]; then
-    source "$XDG_RUNTIME_DIR/ssh-agent.env" >/dev/null
-fi
+# NOTE: I shouldn't be doing this in .bashrc apparently
+#       disabling for now
+#if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+#    ssh-agent -t 1h > "$XDG_RUNTIME_DIR/ssh-agent.env"
+#    if command -v keepassxc &>/dev/null;
+#    then
+#        echo "SSH agent started; you have keepassxc installed, so that will be used"
+#    else
+#        echo "SSH agent started; use 'ssh-add /path/to/private_key' to put keys in the cache"
+#    fi
+#fi
+#if [[ ! "$SSH_AUTH_SOCK" ]]; then
+#    source "$XDG_RUNTIME_DIR/ssh-agent.env" >/dev/null
+#fi
 
 # this alias is literally just so i can remind myself of how to generate ssh
 # keys because i dont do it often...
@@ -379,117 +495,18 @@ https://blog.valouille.fr/post/2018-03-27-how-to-use-keepass-xc-with-ssh-agent/
 EOF
 }
 
+# desc: generate a subresource integrity hash for a file
+# args: $1 = the path to the file you want to make the hash for
+sri() {
+    echo "generating SRI hash for $1"
 
-# ---------------------------------------------------------------------------
+    # make sure stuff is installed so you can generate the hash
+    command -v shasum > /dev/null 2>&1 || echo "please install 'shasum' to continue"
+    command -v awk > /dev/null 2>&1 || echo "please install 'awk' to continue"
+    command -v xxd > /dev/null 2>&1 || echo "please install 'xxd' to continue"
+    command -v base64 > /dev/null 2>&1 || echo "please install 'base64' to continue"
 
-#    ___                                 _   
-#   / _ \ _ __   ___   _ __ ___   _ __  | |_ 
-#  / /_)/| '__| / _ \ | '_ ` _ \ | '_ \ | __|
-# / ___/ | |   | (_) || | | | | || |_) || |_ 
-# \/     |_|    \___/ |_| |_| |_|| .__/  \__|
-#                                |_|         
-
-# 3_Prompt
-
-# shellcheck disable=SC2034
-BLACK=$(tput setaf 0)
-RED=$(tput setaf 1)
-GREEN=$(tput setaf 2)
-YELLOW=$(tput setaf 3)
-BLUE=$(tput setaf 4)
-# shellcheck disable=SC2034
-MAGENTA=$(tput setaf 5)
-CYAN=$(tput setaf 6)
-WHITE=$(tput setaf 7)
-DIM=$(tput dim)
-RESET_COLOURS=$(tput sgr0)
- 
-# a function to get the short path of some directory, so it doesn't take up a lot of space on the screen
-function __shortpath() {
-  full_dir=$(pwd | sed -e "s!^${HOME}!~!")
-  if [[ "$full_dir" == "~" ]]; then
-    echo -n "$full_dir"
-  else
-    # Replace (/.) with (/..) for 2 chars, etc
-    front=$(echo "${full_dir%/*}" | sed -re 's!(/.)[^/]*!\1!g')
-    back=${full_dir##*/}
-    echo -n "${front}/${back}"
-  fi
+    # https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity
+    echo "sha384-$(shasum -b -a 384 "$1" | awk '{ print $1 }' | xxd -r -p | base64)"
 }
- 
-function __gitinfo() {
-  # Get the current git branch and colorize to indicate branch state
-  # branch_name+ indicates there are stash(es)
-  # branch_name? indicates there are untracked files
-  # branch_name! indicates your branch has diverged
-  # branch_name> indicates your branch is ahead
-  # branch_name< indicates your branch is behind
-  local unknown untracked stash clean ahead behind staged dirty diverged
-  unknown=$BLUE        # blue
-  untracked=$GREEN     # green
-  stash=$GREEN         # green
-  clean=$GREEN         # green
-  ahead=$YELLOW        # yellow
-  behind=$YELLOW       # yellow
-  staged=$CYAN         # cyan
-  dirty=$RED           # red
-  diverged=$RED        # red
-  branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
-  extra_info=" "
-  if [[ -n "$branch" ]]; then
-    git_status=$(git status 2> /dev/null)
-    # If nothing changes the BRANCH_COLOUR, we can spot unhandled cases.
-    BRANCH_COLOUR=$unknown
-    if [[ $git_status =~ 'Untracked files' ]]; then
-      BRANCH_COLOUR=$untracked
-      extra_info="${extra_info}?"
-    fi
-    if git stash show &>/dev/null; then
-      BRANCH_COLOUR=$stash
-      extra_info="${extra_info}+"
-    fi
-    if [[ $git_status =~ 'working directory clean' ]]; then
-      BRANCH_COLOUR=$clean
-    fi
-    if [[ $git_status =~ 'Your branch is ahead' ]]; then
-      BRANCH_COLOUR=$ahead
-      extra_info="${extra_info}>"
-    fi
-    if [[ $git_status =~ 'Your branch is behind' ]]; then
-      BRANCH_COLOUR=$behind
-      extra_info="${extra_info}<"
-    fi
-    if [[ $git_status =~ 'Changes to be committed' ]]; then
-      BRANCH_COLOUR=$staged
-    fi
-    if [[ $git_status =~ 'Changed but not updated' ||
-          $git_status =~ 'Changes not staged'      ||
-          $git_status =~ 'Unmerged paths' ]]; then
-      BRANCH_COLOUR=$dirty
-    fi
-    if [[ $git_status =~ 'Your branch'.+diverged ]]; then
-      BRANCH_COLOUR=$diverged
-      extra_info="${extra_info}!"
-    fi
-    echo -n " ""$RESET_COLOURS""$BRANCH_COLOUR${branch}$DIM$BRANCH_COLOUR${extra_info}$RESET_COLOURS"
-  fi
-  return 0
-}
- 
-# building the prompt string
-PS1="\n"
 
-# show the username in red if we are root
-if [[ "$(id -u)" -eq 0 ]]; then
-  PS1="$PS1""\[$RED\]""\u""\[$RESET_COLOURS\]"
-else
-  PS1="$PS1""\[$WHITE\]""\u""\[$RESET_COLOURS\]"
-fi
-
-PS1="$PS1""\[$WHITE\]"'@'"\[$RESET_COLOURS\]"
-PS1="$PS1""\[$WHITE\]""\H""\[$RESET_COLOURS\]"
-PS1="$PS1"":"
-PS1="$PS1""\[$DIM\]\[$YELLOW\]\`__shortpath\`\[$RESET_COLOURS\]"
-PS1="$PS1""\`__gitinfo\`"
-PS1="$PS1""\n"
-PS1="$PS1""\[$RESET_COLOURS\]> "
