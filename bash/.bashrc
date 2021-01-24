@@ -303,6 +303,15 @@ if command -v emacs &>/dev/null; then
     alias emacs='emacs -nw'
 fi
 
+# this alias is not just to save time, it also makes it possible to pass
+# through the SSH_AUTH_SOCK environment variable to keepass, which, in turn,
+# allows keepass to hold your SSH keys and feed them to the SSH agent as and
+# when it's needed
+if command -v keepassxc &>/dev/null; then
+    alias kp='keepassxc &>/dev/null &'
+fi
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+
 # Quick config editing
 alias vimrc='vim ~/.vimrc'
 alias bashrc='vim ~/.bashrc'
@@ -437,23 +446,6 @@ function bookmarks_sync() {
     cd - || return 1
 }
 
-# start the ssh-agent, especially useful if you have KeePassXC which can
-# supply keys to the agent so you don't have to keep them in a .ssh folder
-# NOTE: I shouldn't be doing this in .bashrc apparently
-#       disabling for now
-#if ! pgrep -u "$USER" ssh-agent > /dev/null; then
-#    ssh-agent -t 1h > "$XDG_RUNTIME_DIR/ssh-agent.env"
-#    if command -v keepassxc &>/dev/null;
-#    then
-#        echo "SSH agent started; you have keepassxc installed, so that will be used"
-#    else
-#        echo "SSH agent started; use 'ssh-add /path/to/private_key' to put keys in the cache"
-#    fi
-#fi
-#if [[ ! "$SSH_AUTH_SOCK" ]]; then
-#    source "$XDG_RUNTIME_DIR/ssh-agent.env" >/dev/null
-#fi
-
 # this alias is literally just so i can remind myself of how to generate ssh
 # keys because i dont do it often...
 function ssh_cmds() {
@@ -534,5 +526,3 @@ sri() {
     # https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity
     echo "sha384-$(shasum -b -a 384 "$1" | awk '{ print $1 }' | xxd -r -p | base64)"
 }
-
-export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
