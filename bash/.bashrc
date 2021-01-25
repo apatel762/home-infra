@@ -336,7 +336,7 @@ function pn() {
 function ns() {
     if command -v nb &>/dev/null; then
         if [ -d "$HOME/.nb/notes" ] ; then
-            find ~/.nb/notes -type f -name "*\.md" -printf %f -exec head -n1 "{}" \; \
+            find "$HOME/.nb/notes" -type f -name "*\.md" -printf %f -exec head -n1 "{}" \; \
                 | sort -r \
                 | sed 's/# /\t/g' \
                 | fzf \
