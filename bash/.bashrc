@@ -320,6 +320,35 @@ alias dotfiles='pushd ~/dotfiles'
 alias c='clear'
 alias bp='echo "source ~/.bashrc" && source ~/.bashrc'
 
+# note taking
+function pn() {
+    if command -v nb &>/dev/null; then
+        if [ -d "$HOME/.nb/notes" ] ; then
+            nb notes:add --filename "$(date +"%Y-%m-%dT%H%M%SZ" --universal).md"
+        else
+            echo "cannot make permanote, you haven't got the 'notes' notebook"
+        fi
+    else
+        echo "cannot make permanote, you don't have nb installed"
+    fi
+}
+
+function ns() {
+    if command -v nb &>/dev/null; then
+        if [ -d "$HOME/.nb/notes" ] ; then
+            find ~/.nb/notes -type f -name "*\.md" -printf %f -exec head -n1 "{}" \; \
+                | sort -r \
+                | sed 's/# /\t/g' \
+                | fzf \
+                | awk 'BEGIN { FS = "\t" } { printf "[%s](%s)", $2, $1 }'
+        else
+            echo "cannot search permanotes, you haven't got the 'notes' notebook"
+        fi
+    else
+        echo "cannot search permanotes, install nb first"
+    fi
+}
+
 # I want to add symbols for symlinks and use human readable sizes by default
 # and I want to use the long format
 alias ll='ls -l --all --classify --human-readable'
