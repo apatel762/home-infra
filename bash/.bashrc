@@ -324,28 +324,32 @@ alias bp='echo "source ~/.bashrc" && source ~/.bashrc'
 function pn() {
     if ! command -v nb &>/dev/null; then
         echo "cannot make permanote, you don't have nb installed"
+        return 1
     fi
     if [ ! -d "$HOME/.nb/notes" ] ; then
         echo "cannot make permanote, you haven't got the 'notes' notebook"
+        return 1
     fi
+
     nb notes:add --filename "$(date +"%Y-%m-%dT%H%M%SZ" --universal).md"
 }
 
 function ns() {
     if ! command -v nb &>/dev/null; then
         echo "please install 'nb' - can't search notes without it!"
+        return 1
     fi
     if ! command -v fzf &>/dev/null; then
         echo "please install 'fzf' - needed for filtering search results"
+        return 1
     fi
     if ! command -v xsel &>/dev/null; then
         echo "please install 'xsel' - needed for copying result to clipboard"
-    fi
-    if ! -f /dev/tty; then
-        echo "need '/dev/tty' to print link before copying"
+        return 1
     fi
     if [ ! -d "$HOME/.nb/notes" ] ; then
         echo "cannot search permanotes, you haven't got the 'notes' notebook"
+        return 1
     fi
 
     find "$HOME/.nb/notes" -type f -name "*\.md" -printf %f -exec head -n1 "{}" \; \
@@ -354,8 +358,9 @@ function ns() {
         | fzf \
         | awk 'BEGIN { FS = "\t" } { printf "[%s](%s)", $2, $1 }' \
         | tee /dev/tty \
-        | xsel
+        | xsel --clipboard
 
+    echo ""
     echo "the above link has been copied to your clipboard"
 
     # `tee /dev/tty` outputs the thing in the pipe to stdout before passing it through
