@@ -322,31 +322,45 @@ alias bp='echo "source ~/.bashrc" && source ~/.bashrc'
 
 # note taking
 function pn() {
-    if command -v nb &>/dev/null; then
-        if [ -d "$HOME/.nb/notes" ] ; then
-            nb notes:add --filename "$(date +"%Y-%m-%dT%H%M%SZ" --universal).md"
-        else
-            echo "cannot make permanote, you haven't got the 'notes' notebook"
-        fi
-    else
+    if ! command -v nb &>/dev/null; then
         echo "cannot make permanote, you don't have nb installed"
     fi
+    if [ ! -d "$HOME/.nb/notes" ] ; then
+        echo "cannot make permanote, you haven't got the 'notes' notebook"
+    fi
+    nb notes:add --filename "$(date +"%Y-%m-%dT%H%M%SZ" --universal).md"
 }
 
 function ns() {
-    if command -v nb &>/dev/null; then
-        if [ -d "$HOME/.nb/notes" ] ; then
-            find "$HOME/.nb/notes" -type f -name "*\.md" -printf %f -exec head -n1 "{}" \; \
-                | sort -r \
-                | sed 's/# /\t/g' \
-                | fzf \
-                | awk 'BEGIN { FS = "\t" } { printf "[%s](%s)", $2, $1 }'
-        else
-            echo "cannot search permanotes, you haven't got the 'notes' notebook"
-        fi
-    else
-        echo "cannot search permanotes, install nb first"
+    if ! command -v nb &>/dev/null; then
+        echo "please install 'nb' - can't search notes without it!"
     fi
+    if ! command -v fzf &>/dev/null; then
+        echo "please install 'fzf' - needed for filtering search results"
+    fi
+    if ! command -v xsel &>/dev/null; then
+        echo "please install 'xsel' - needed for copying result to clipboard"
+    fi
+    if ! -f /dev/tty; then
+        echo "need '/dev/tty' to print link before copying"
+    fi
+    if [ ! -d "$HOME/.nb/notes" ] ; then
+        echo "cannot search permanotes, you haven't got the 'notes' notebook"
+    fi
+
+    find "$HOME/.nb/notes" -type f -name "*\.md" -printf %f -exec head -n1 "{}" \; \
+        | sort -r \
+        | sed 's/# /\t/g' \
+        | fzf \
+        | awk 'BEGIN { FS = "\t" } { printf "[%s](%s)", $2, $1 }' \
+        | tee /dev/tty \
+        | xsel
+
+    echo "the above link has been copied to your clipboard"
+
+    # `tee /dev/tty` outputs the thing in the pipe to stdout before passing it through
+    # https://stackoverflow.com/a/5677265
+    # https://web.archive.org/web/20201227082859/https://stackoverflow.com/questions/5677201/how-to-pipe-stdout-while-keeping-it-on-screen-and-not-to-a-output-file
 }
 
 # I want to add symbols for symlinks and use human readable sizes by default
