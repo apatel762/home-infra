@@ -21,7 +21,7 @@ function to_markdown_link() {
       exit 1
     fi
 
-    PATH_TO_FILE="$NOTES_FOLDER/$1" 
+    PATH_TO_FILE="$NOTES_FOLDER/$1"
     if [[ ! -f "$PATH_TO_FILE" ]]; then
         echo "$PATH_TO_FILE is not a file"
     fi
