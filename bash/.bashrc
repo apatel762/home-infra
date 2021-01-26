@@ -321,12 +321,14 @@ alias c='clear'
 alias bp='echo "source ~/.bashrc" && source ~/.bashrc'
 
 # note taking
+NOTES_FOLDER="$HOME/.nb/notes" 
+
 function pn() {
     if ! command -v nb &>/dev/null; then
         echo "cannot make permanote, you don't have nb installed"
         return 1
     fi
-    if [ ! -d "$HOME/.nb/notes" ] ; then
+    if [ ! -d "$NOTES_FOLDER" ] ; then
         echo "cannot make permanote, you haven't got the 'notes' notebook"
         return 1
     fi
@@ -347,12 +349,12 @@ function ns() {
         echo "please install 'xsel' - needed for copying result to clipboard"
         return 1
     fi
-    if [ ! -d "$HOME/.nb/notes" ] ; then
+    if [ ! -d "$NOTES_FOLDER" ] ; then
         echo "cannot search permanotes, you haven't got the 'notes' notebook"
         return 1
     fi
 
-    find "$HOME/.nb/notes" -type f -name "*\.md" -printf %f -exec head -n1 "{}" \; \
+    find "$NOTES_FOLDER" -type f -name "*\.md" -printf %f -exec head -n1 "{}" \; \
         | sort -r \
         | sed 's/# /\t/g' \
         | fzf \
