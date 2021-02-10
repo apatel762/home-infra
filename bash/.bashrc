@@ -320,56 +320,6 @@ alias dotfiles='pushd ~/dotfiles'
 alias c='clear'
 alias bp='echo "source ~/.bashrc" && source ~/.bashrc'
 
-# note taking
-NOTES_FOLDER="$HOME/.nb/notes" 
-
-function pn() {
-    if ! command -v nb &>/dev/null; then
-        echo "cannot make permanote, you don't have nb installed"
-        return 1
-    fi
-    if [ ! -d "$NOTES_FOLDER" ] ; then
-        echo "cannot make permanote, you haven't got the 'notes' notebook"
-        return 1
-    fi
-
-    nb notes:add --filename "$(date +"%Y-%m-%dT%H%M%SZ" --universal).md"
-}
-
-function ns() {
-    if ! command -v nb &>/dev/null; then
-        echo "please install 'nb' - can't search notes without it!"
-        return 1
-    fi
-    if ! command -v fzf &>/dev/null; then
-        echo "please install 'fzf' - needed for filtering search results"
-        return 1
-    fi
-    if ! command -v xsel &>/dev/null; then
-        echo "please install 'xsel' - needed for copying result to clipboard"
-        return 1
-    fi
-    if [ ! -d "$NOTES_FOLDER" ] ; then
-        echo "cannot search permanotes, you haven't got the 'notes' notebook"
-        return 1
-    fi
-
-    find "$NOTES_FOLDER" -type f -name "*\.md" -printf %f -exec head -n1 "{}" \; \
-        | sort -r \
-        | sed 's/# /\t/g' \
-        | fzf \
-        | awk 'BEGIN { FS = "\t" } { printf "[%s](%s)", $2, $1 }' \
-        | tee /dev/tty \
-        | xsel --clipboard
-
-    echo ""
-    echo "the above link has been copied to your clipboard"
-
-    # `tee /dev/tty` outputs the thing in the pipe to stdout before passing it through
-    # https://stackoverflow.com/a/5677265
-    # https://web.archive.org/web/20201227082859/https://stackoverflow.com/questions/5677201/how-to-pipe-stdout-while-keeping-it-on-screen-and-not-to-a-output-file
-}
-
 # I want to add symbols for symlinks and use human readable sizes by default
 # and I want to use the long format
 alias ll='ls -l --all --classify --human-readable'
