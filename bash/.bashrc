@@ -298,6 +298,8 @@ else
     export EDITOR=vi
 fi
 
+alias nv='$HOME/dotfiles/scripts/notes.sh'
+
 # set emacs to always open in terminal by default if installed
 if command -v emacs &>/dev/null; then
     alias emacs='emacs -nw'

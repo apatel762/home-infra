@@ -136,7 +136,18 @@ create_permanote() {
 }
 
 create_fleeting_note() {
-    echo "create a fleeting note or open if already exists"
+    local FILENAME
+    local PATH_TO_FILE
+    FILENAME="$(date --iso --universal).md"
+    PATH_TO_FILE="$NOTES_FOLDER/$FILENAME"
+
+    if [[ ! -e "$PATH_TO_FILE" ]]; then
+        nb notes:add \
+            --filename "$FILENAME" \
+            --title "$(date +"%B %e, %Y")"
+    else
+        $EDITOR "$PATH_TO_FILE"
+    fi
 }
 
 choose_action_and_do_it() {
@@ -168,7 +179,7 @@ choose_action_and_do_it() {
             ;;
 
         *)
-            oops "Please choose one of the options to use your notes!"
+            exit 0
             ;;
     esac
 }
