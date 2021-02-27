@@ -14,9 +14,9 @@
 # - Standard (for the above)
 # - ogre (for the other titles)
 
-# ---------------------------------------------------------------------------
+# ----------------------------------------------------------------------
 # TABLE OF CONTENTS
-# ---------------------------------------------------------------------------
+# ----------------------------------------------------------------------
 
 # In Vim, press * on the below words to go to the section that they
 # refer to:
@@ -26,7 +26,7 @@
 #   3_Aliases
 #
 
-# ---------------------------------------------------------------------------
+# ----------------------------------------------------------------------
 
 #     ___         __                _  _        
 #    /   \  ___  / _|  __ _  _   _ | || |_  ___ 
@@ -44,76 +44,39 @@
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
-      *) return;;
+    *) return;;
 esac
 
-# don't put duplicate lines or lines starting with space in the history.
-# See bash(1) for more options
-HISTCONTROL=ignoreboth
+# ----------------------------------------------------------------------
+# bash history
+# see the `bash` manpage for more info
 
-# append to the history file, don't overwrite it
-shopt -s histappend
-
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTCONTROL=ignoreboth:erasedups
 HISTSIZE=1000
 HISTFILESIZE=2000
 
-# check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
-shopt -s checkwinsize
+# ----------------------------------------------------------------------
+# shell options
 
-# If set, the pattern "**" used in a pathname expansion context will
-# match all files and zero or more directories and subdirectories.
-#shopt -s globstar
+shopt -s histappend         # append to history instead of deleting
+shopt -s checkwinsize       # checks term size when bash regains control
+shopt -s expand_aliases     # expand aliases
+shopt -s cmdhist            # save multiline cmds as single line in hist
 
-# make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+# ignore case when using TAB completion
+bind "set completion-ignore-case on"
 
-# set variable identifying the chroot you work in (used in the prompt below)
-if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
-    debian_chroot=$(cat /etc/debian_chroot)
-fi
-
-# set a fancy prompt (non-color, unless we know we "want" color)
-case "$TERM" in
-    xterm-color|*-256color) color_prompt=yes;;
-esac
-
-# uncomment for a colored prompt, if the terminal has the capability; turned
-# off by default to not distract the user: the focus in a terminal window
-# should be on the output of commands, not on the prompt
-#force_color_prompt=yes
-
-# shellcheck disable=SC2154
-if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-        # We have color support; assume it's compliant with Ecma-48
-        # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-        # a case would tend to support setf rather than setaf.)
-        color_prompt=yes
-    else
-        # shellcheck disable=SC2034
-        color_prompt=
-    fi
-fi
-
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-    ;;
-*)
-    ;;
-esac
+# ----------------------------------------------------------------------
+# shell completions and colours
 
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
 if ! shopt -oq posix; then
-  if [ -f /usr/share/bash-completion/bash_completion ]; then
-    . /usr/share/bash-completion/bash_completion
-  elif [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-  fi
+    if [ -f /usr/share/bash-completion/bash_completion ]; then
+        source /usr/share/bash-completion/bash_completion
+    elif [ -f /etc/bash_completion ]; then
+        source /etc/bash_completion
+    fi
 fi
 
 # Enable color support of ls and also add handy aliases
@@ -131,7 +94,7 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
-# ---------------------------------------------------------------------------
+# ----------------------------------------------------------------------
 
 #    ___                                 _   
 #   / _ \ _ __   ___   _ __ ___   _ __  | |_ 
@@ -154,87 +117,88 @@ CYAN=$(tput setaf 6)
 WHITE=$(tput setaf 7)
 DIM=$(tput dim)
 RESET_COLOURS=$(tput sgr0)
- 
-# a function to get the short path of some directory, so it doesn't take up a lot of space on the screen
+
+# a function to get the short path of some directory, so it doesn't take
+# up a lot of space on the screen
 function __shortpath() {
-  full_dir=$(pwd | sed -e "s!^${HOME}!~!")
-  if [[ "$full_dir" == "~" ]]; then
-    echo -n "$full_dir"
-  else
-    # Replace (/.) with (/..) for 2 chars, etc
-    front=$(echo "${full_dir%/*}" | sed -re 's!(/.)[^/]*!\1!g')
-    back=${full_dir##*/}
-    echo -n "${front}/${back}"
-  fi
+    full_dir=$(pwd | sed -e "s!^${HOME}!~!")
+    if [[ "$full_dir" == "~" ]]; then
+        echo -n "$full_dir"
+    else
+        # Replace (/.) with (/..) for 2 chars, etc
+        front=$(echo "${full_dir%/*}" | sed -re 's!(/.)[^/]*!\1!g')
+        back=${full_dir##*/}
+        echo -n "${front}/${back}"
+    fi
 }
- 
+
 function __gitinfo() {
-  # Get the current git branch and colorize to indicate branch state
-  # branch_name+ indicates there are stash(es)
-  # branch_name? indicates there are untracked files
-  # branch_name! indicates your branch has diverged
-  # branch_name> indicates your branch is ahead
-  # branch_name< indicates your branch is behind
-  local unknown untracked stash clean ahead behind staged dirty diverged
-  unknown=$BLUE        # blue
-  untracked=$GREEN     # green
-  stash=$GREEN         # green
-  clean=$GREEN         # green
-  ahead=$YELLOW        # yellow
-  behind=$YELLOW       # yellow
-  staged=$CYAN         # cyan
-  dirty=$RED           # red
-  diverged=$RED        # red
-  branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
-  extra_info=" "
-  if [[ -n "$branch" ]]; then
-    git_status=$(git status 2> /dev/null)
-    # If nothing changes the BRANCH_COLOUR, we can spot unhandled cases.
-    BRANCH_COLOUR=$unknown
-    if [[ $git_status =~ 'Untracked files' ]]; then
-      BRANCH_COLOUR=$untracked
-      extra_info="${extra_info}?"
+    # Get the current git branch and colorize to indicate branch state
+    # branch_name+ indicates there are stash(es)
+    # branch_name? indicates there are untracked files
+    # branch_name! indicates your branch has diverged
+    # branch_name> indicates your branch is ahead
+    # branch_name< indicates your branch is behind
+    local unknown untracked stash clean ahead behind staged dirty diverged
+    unknown=$BLUE        # blue
+    untracked=$GREEN     # green
+    stash=$GREEN         # green
+    clean=$GREEN         # green
+    ahead=$YELLOW        # yellow
+    behind=$YELLOW       # yellow
+    staged=$CYAN         # cyan
+    dirty=$RED           # red
+    diverged=$RED        # red
+    branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+    extra_info=" "
+    if [[ -n "$branch" ]]; then
+        git_status=$(git status 2> /dev/null)
+        # If nothing changes the BRANCH_COLOUR, we can spot unhandled cases.
+        BRANCH_COLOUR=$unknown
+        if [[ $git_status =~ 'Untracked files' ]]; then
+            BRANCH_COLOUR=$untracked
+            extra_info="${extra_info}?"
+        fi
+        if git stash show &>/dev/null; then
+            BRANCH_COLOUR=$stash
+            extra_info="${extra_info}+"
+        fi
+        if [[ $git_status =~ 'working directory clean' ]]; then
+            BRANCH_COLOUR=$clean
+        fi
+        if [[ $git_status =~ 'Your branch is ahead' ]]; then
+            BRANCH_COLOUR=$ahead
+            extra_info="${extra_info}>"
+        fi
+        if [[ $git_status =~ 'Your branch is behind' ]]; then
+            BRANCH_COLOUR=$behind
+            extra_info="${extra_info}<"
+        fi
+        if [[ $git_status =~ 'Changes to be committed' ]]; then
+            BRANCH_COLOUR=$staged
+        fi
+        if [[ $git_status =~ 'Changed but not updated' ||
+            $git_status =~ 'Changes not staged'      ||
+            $git_status =~ 'Unmerged paths' ]]; then
+                    BRANCH_COLOUR=$dirty
+        fi
+        if [[ $git_status =~ 'Your branch'.+diverged ]]; then
+            BRANCH_COLOUR=$diverged
+            extra_info="${extra_info}!"
+        fi
+        echo -n " ""$RESET_COLOURS""$BRANCH_COLOUR${branch}$DIM$BRANCH_COLOUR${extra_info}$RESET_COLOURS"
     fi
-    if git stash show &>/dev/null; then
-      BRANCH_COLOUR=$stash
-      extra_info="${extra_info}+"
-    fi
-    if [[ $git_status =~ 'working directory clean' ]]; then
-      BRANCH_COLOUR=$clean
-    fi
-    if [[ $git_status =~ 'Your branch is ahead' ]]; then
-      BRANCH_COLOUR=$ahead
-      extra_info="${extra_info}>"
-    fi
-    if [[ $git_status =~ 'Your branch is behind' ]]; then
-      BRANCH_COLOUR=$behind
-      extra_info="${extra_info}<"
-    fi
-    if [[ $git_status =~ 'Changes to be committed' ]]; then
-      BRANCH_COLOUR=$staged
-    fi
-    if [[ $git_status =~ 'Changed but not updated' ||
-          $git_status =~ 'Changes not staged'      ||
-          $git_status =~ 'Unmerged paths' ]]; then
-      BRANCH_COLOUR=$dirty
-    fi
-    if [[ $git_status =~ 'Your branch'.+diverged ]]; then
-      BRANCH_COLOUR=$diverged
-      extra_info="${extra_info}!"
-    fi
-    echo -n " ""$RESET_COLOURS""$BRANCH_COLOUR${branch}$DIM$BRANCH_COLOUR${extra_info}$RESET_COLOURS"
-  fi
-  return 0
+    return 0
 }
- 
+
 # building the prompt string
 PS1="\n"
 
 # show the username in red if we are root
 if [[ "$(id -u)" -eq 0 ]]; then
-  PS1="$PS1""\[$RED\]""\u""\[$RESET_COLOURS\]"
+    PS1="$PS1""\[$RED\]""\u""\[$RESET_COLOURS\]"
 else
-  PS1="$PS1""\[$WHITE\]""\u""\[$RESET_COLOURS\]"
+    PS1="$PS1""\[$WHITE\]""\u""\[$RESET_COLOURS\]"
 fi
 
 PS1="$PS1""\[$WHITE\]"'@'"\[$RESET_COLOURS\]"
@@ -245,7 +209,7 @@ PS1="$PS1""\`__gitinfo\`"
 PS1="$PS1""\n"
 PS1="$PS1""\[$RESET_COLOURS\]> "
 
-# ---------------------------------------------------------------------------
+# ----------------------------------------------------------------------
 
 #    _    _  _                        
 #   /_\  | |(_)  __ _  ___   ___  ___ 
@@ -256,37 +220,26 @@ PS1="$PS1""\[$RESET_COLOURS\]> "
 
 # 3_Aliases
 
-# ---------------------------------------------------------
+# ----------------------------------------------------------------------
 # source the fzf bash snippets if we've installed fzf
+
 if [ -f "$HOME/.fzf.bash" ] ; then
     source "$HOME/.fzf.bash"
 fi
 
-# ---------------------------------------------------------
+# ----------------------------------------------------------------------
 # Adding things to PATH if they exist
 
-# local bin
 if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-# doom emacs
-if [ -d "$HOME/.emacs.d/bin" ] ; then
-    PATH="$HOME/.emacs.d/bin:$PATH"
+if [ -d "$HOME/.bin" ] ; then
+    PATH="$HOME/.bin:$PATH"
 fi
 
-# rust
-if [ -d "$HOME/.cargo/bin" ] ; then
-    PATH="$HOME/.cargo/bin:$PATH"
-fi
-
-# node
-# binaries from https://nodejs.org/en/download/
-if [ -d "$HOME/Documents/Github/node-v14.15.1-linux-x64/bin" ] ; then
-    PATH="$HOME/Documents/Github/node-v14.15.1-linux-x64/bin:$PATH"
-fi
-
-# ---------------------------------------------------------
+# ----------------------------------------------------------------------
+# terminal editor
 
 # set the default terminal editor
 if command -v nvim &>/dev/null; then
@@ -298,12 +251,19 @@ else
     export EDITOR=vi
 fi
 
-alias nv='$HOME/dotfiles/scripts/notes.sh'
+# ----------------------------------------------------------------------
+# man pager
 
-# set emacs to always open in terminal by default if installed
-if command -v emacs &>/dev/null; then
-    alias emacs='emacs -nw'
-fi
+# I want to use `bat` as the manpager if it's installed so that I get
+# syntax highlighting on manpages. Also, since it uses the same keys as
+# less, there's no reason not to use it if you have it.
+
+if command -v bat &>/dev/null; then
+    export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+fi                    
+                      
+# ----------------------------------------------------------------------
+# keepass & ssh agent
 
 # this alias is not just to save time, it also makes it possible to pass
 # through the SSH_AUTH_SOCK environment variable to keepass, which, in turn,
@@ -314,17 +274,25 @@ if command -v keepassxc &>/dev/null; then
 fi
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
-# Quick config editing
-alias vimrc='vim ~/.vimrc'
-alias bashrc='vim ~/.bashrc'
-alias gitconfig='vim ~/.gitconfig'
-alias dotfiles='pushd ~/dotfiles'
-alias c='clear'
-alias bp='echo "source ~/.bashrc" && source ~/.bashrc'
+# ----------------------------------------------------------------------
+# quick config editing
+
+alias vimrc='$EDITOR ~/.vimrc'                          # edit vimrc
+alias bashrc='$EDITOR ~/.bashrc'                        # edit bashrc
+alias gitconfig='$EDITOR ~/.gitconfig'                  # edit gitconfig
+alias dotfiles='pushd ~/dotfiles'                       # go to dotfiles
+alias bp='echo "source ~/.bashrc" && source ~/.bashrc'  # refresh bash
+alias nv='$HOME/dotfiles/scripts/notes.sh'              # note taking
+
+# ----------------------------------------------------------------------
+# ls
 
 # I want to add symbols for symlinks and use human readable sizes by default
 # and I want to use the long format
 alias ll='ls -l --all --classify --human-readable'
+
+# ----------------------------------------------------------------------
+# archive.org
 
 # open the archived version of a link in the web browser
 # args: $1 = the URL of a website you want to see the archived version of
@@ -335,6 +303,9 @@ function wayback() {
     echo "opening: $ARCHIVE_URL"
     open_in_browser "$ARCHIVE_URL"
 }
+
+# ----------------------------------------------------------------------
+# web browsers
 
 # open something from your default web browser
 # if xdg-open isn't available then will try to use the following browsers:
@@ -366,20 +337,52 @@ function open_in_browser() {
     fi
 }
 
+# ----------------------------------------------------------------------
+# work vpn
+
 alias vpn-work='sudo openfortivpn -c /etc/openfortivpn/config-work'
+
+# ----------------------------------------------------------------------
+# git
+
+alias fp='git fetch --all --prune && git pull'
+alias dmb='git branch --merged | egrep -v "(^\*|master|main|dev)" | xargs git branch -d'
+
+# ----------------------------------------------------------------------
+# zip utils
 
 # loops through every folder in the current dir and zips them up
 alias zipall='for i in */; do zip -r "${i%/}.zip" "$i"; done'
 
-# git
-alias fp='git fetch --all --prune && git pull'
-alias dmb='git branch --merged | egrep -v "(^\*|master|main|dev)" | xargs git branch -d'
-
-# desc: hashes a given string
-# args: $1 = the string that you want to hash
-function hash_string() {
-    echo "$1" | md5sum | cut -f1 -d" "
+# desc: extract an archive using one of many different archive commands
+# args: $1 = the path to the archive to extract
+ex ()
+{
+    if [ -f "$1" ] ; then
+        case "$1" in
+            *.tar.bz2)   ( set -x; tar xjf "$1"    ) ;;
+            *.tar.gz)    ( set -x; tar xzf "$1"    ) ;;
+            *.bz2)       ( set -x; bunzip2 "$1"    ) ;;
+            *.rar)       ( set -x; unrar x "$1"    ) ;;
+            *.gz)        ( set -x; gunzip "$1"     ) ;;
+            *.tar)       ( set -x; tar xf "$1"     ) ;;
+            *.tbz2)      ( set -x; tar xjf "$1"    ) ;;
+            *.tgz)       ( set -x; tar xzf "$1"    ) ;;
+            *.zip)       ( set -x; unzip "$1"      ) ;;
+            *.Z)         ( set -x; uncompress "$1" ) ;;
+            *.7z)        ( set -x; 7z x "$1"       ) ;;
+            *.deb)       ( set -x; ar x "$1"       ) ;;
+            *.tar.xz)    ( set -x; tar xf "$1"     ) ;;
+            *.tar.zst)   ( set -x; unzstd "$1"     ) ;;
+            *)           echo "'$1' cannot be extracted via ex()" ;;
+        esac
+    else
+        echo "'$1' is not a valid file"
+    fi
 }
+
+# ----------------------------------------------------------------------
+# managing firefox profile
 
 alias ffp=firefox_profile
 function firefox_profile() {
@@ -389,9 +392,9 @@ function firefox_profile() {
     if [ -d "$FIREFOX_PROFILE_FOLDER" ] ; then
         cd "$FIREFOX_PROFILE_FOLDER" \
             || return 1
-    else
-        echo "sorry, the firefox profile folder you defined doesn't exist"
-        echo "folder: '$FIREFOX_PROFILE_FOLDER'"
+                else
+                    echo "sorry, the firefox profile folder you defined doesn't exist"
+                    echo "folder: '$FIREFOX_PROFILE_FOLDER'"
     fi
 }
 
@@ -422,31 +425,8 @@ function update_material_fox() {
     echo "there is some stuff that needs to be added to your user-overrides.js in $PWD"
 }
 
-function bookmarks_sync() {
-    if ! command -v rsync ; then
-      echo "need rsync"
-      return 1
-    fi
-
-    local BOOKMARKS_FOLDER
-    BOOKMARKS_FOLDER="$HOME/Downloads/bookmarks"
-
-    local REMOTE_FOLDER
-    REMOTE_FOLDER="amigo@broadwater.local:/var/broadwater/bookmarks/raw/"
-
-    # go to where the bookmarks are
-    echo "moving to the bookmarks folder"
-    cd "$BOOKMARKS_FOLDER" || return 1
-
-    # put the newly downloaded stuff into the folder and copy it to broadwater
-    mv -vi ../*.html . \
-        && python3 create_index.py \
-        && rsync -avz "$BOOKMARKS_FOLDER"/*.html "$REMOTE_FOLDER"
-
-    # go back where we were now that we are done
-    echo "moving back to the folder we were in"
-    cd - || return 1
-}
+# ----------------------------------------------------------------------
+# ssh help
 
 # this alias is literally just so i can remind myself of how to generate ssh
 # keys because i dont do it often...
@@ -514,6 +494,9 @@ https://blog.valouille.fr/post/2018-03-27-how-to-use-keepass-xc-with-ssh-agent/
 EOF
 }
 
+# ----------------------------------------------------------------------
+# hashing stuff
+
 # desc: generate a subresource integrity hash for a file
 # args: $1 = the path to the file you want to make the hash for
 sri() {
@@ -527,4 +510,10 @@ sri() {
 
     # https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity
     echo "sha384-$(shasum -b -a 384 "$1" | awk '{ print $1 }' | xxd -r -p | base64)"
+}
+
+# desc: hashes a given string
+# args: $1 = the string that you want to hash
+function hash_string() {
+    echo "$1" | md5sum | cut -f1 -d" "
 }
