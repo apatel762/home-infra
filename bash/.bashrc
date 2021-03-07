@@ -277,12 +277,14 @@ export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 # ----------------------------------------------------------------------
 # quick config editing
 
-alias vimrc='$EDITOR ~/.vimrc'                          # edit vimrc
-alias bashrc='$EDITOR ~/.bashrc'                        # edit bashrc
-alias gitconfig='$EDITOR ~/.gitconfig'                  # edit gitconfig
-alias dotfiles='pushd ~/dotfiles'                       # go to dotfiles
+export DOTFILES="$HOME/dotfiles"
+
+alias vimrc='$EDITOR $HOME/.vimrc'                      # edit vimrc
+alias bashrc='$EDITOR $HOME/.bashrc'                    # edit bashrc
+alias gitconfig='$EDITOR $HOME/.gitconfig'              # edit gitconfig
+alias dotfiles='pushd $DOTFILES'                        # go to dotfiles
 alias bp='echo "source ~/.bashrc" && source ~/.bashrc'  # refresh bash
-alias nv='$HOME/dotfiles/scripts/notes.sh'              # note taking
+alias nv='$DOTFILES/scripts/notes.sh'                   # note taking
 
 # ----------------------------------------------------------------------
 # ls
@@ -517,3 +519,19 @@ sri() {
 function hash_string() {
     echo "$1" | md5sum | cut -f1 -d" "
 }
+
+# ----------------------------------------------------------------------
+# display cheatsheets upon terminal startup
+
+function show_ssh_agent_instructions() {
+    if [ -f "$DOTFILES/cheatsheets/sshagent.txt" ] ; then
+        printf "\n"
+        cat "$DOTFILES/cheatsheets/sshagent.txt"
+        printf "Currently:\n"
+        ssh-add -l
+    else
+        :
+    fi
+}
+
+show_ssh_agent_instructions

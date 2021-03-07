@@ -1,0 +1,10 @@
+SSH Agent
+=========
+
+Make sure that you have your SSH agent loaded. If it isn't, then use
+the commands below to get it set up:
+
+  eval $(ssh-agent)              # to start up the agent
+  ssh-add ~/.ssh/github.key      # or whatever your key is called
+  ssh -T git@github.com          # to test your connection
+
