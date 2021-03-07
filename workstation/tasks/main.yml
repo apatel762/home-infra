@@ -8,10 +8,6 @@
         # should be pre-installed but it's here just to make sure
         - coreutils
 
-        # terminal text editor
-        - vim
-        - neovim
-
         # password manager
         # can also integrate with SSH agent
         - keepassxc
@@ -22,6 +18,10 @@
         - apt-transport-https
         - lsb-release
         - ca-certificates
+
+        # other stuff
+        - curl
+        - fzf
 
 - name: Ensure that the .config/dotfiles directory exists
   file:

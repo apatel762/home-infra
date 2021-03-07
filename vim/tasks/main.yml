@@ -1,0 +1,43 @@
+---
+- name: Ensure that vim and neovim are installed
+  become: yes
+  apt:
+      state: present
+      name:
+        - vim
+        - neovim
+
+# ---------------------------------------------------------------------
+# vim config
+
+- name: Ensure that custom .vimrc is in the home folder
+  copy:
+      src: .vimrc
+      dest: "{{ lookup('env', 'HOME') }}/.vimrc"
+
+# ---------------------------------------------------------------------
+# vim-plug (for managing vim plugins)
+
+- name: Ensure that the .vim/autoload folder exists
+  file:
+      path: "{{ lookup('env', 'HOME') }}/.vim/autoload"
+      state: directory
+
+- name: Ensure that plug.vim is installed
+  get_url:
+    url: https://raw.githubusercontent.com/junegunn/vim-plug/cffcfe150bda75177920530c5f1911b52f70a065/plug.vim
+    checksum: sha256:6df347cb9212f83eb15b84778814306a1111b7a6f7b327f6c7990fb77ec34743
+    dest: "{{ lookup('env', 'HOME') }}/.vim/autoload/plug.vim"
+
+# ---------------------------------------------------------------------
+# neovim config
+
+- name: Ensure that the nvim config folder exists
+  file:
+      path: "{{ lookup('env', 'HOME') }}/.config/nvim"
+      state: directory
+
+- name: Ensure that custom neovim init file is in nvim config folder
+  copy:
+      src: init.vim
+      dest: "{{ lookup('env', 'HOME') }}/.config/nvim/init.vim"
