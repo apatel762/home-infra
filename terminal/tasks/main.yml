@@ -1,0 +1,59 @@
+---
+
+# ---------------------------------------------------------------------
+# bashrc
+
+- name: Ensure that custom .bashrc is in the home folder
+  copy:
+      src: .bashrc
+      dest: "{{ lookup('env', 'HOME') }}/.bashrc"
+
+- name: Ensure that DOTFILES is exported in .bashrc
+  lineinfile:
+      path: "{{ lookup('env', 'HOME') }}/.bashrc"
+      regexp: "^export DOTFILES"
+      line: export DOTFILES="$HOME/.config/dotfiles"
+
+# ---------------------------------------------------------------------
+# gitconfig
+
+- name: Ensure that custom .gitconfig is in the home folder
+  copy:
+      src: .gitconfig
+      dest: "{{ lookup('env', 'HOME') }}/.gitconfig"
+
+# ---------------------------------------------------------------------
+# inputrc
+
+- name: Ensure that custom .inputrc is in our dotfiles folder
+  copy:
+      src: .inputrc
+      dest: "{{ lookup('env', 'HOME') }}/.config/dotfiles/.inputrc"
+
+- name: Ensure that INPUTRC is exported in .bashrc
+  lineinfile:
+      path: "{{ lookup('env', 'HOME') }}/.bashrc"
+      regexp: "^export INPUTRC"
+      line: export INPUTRC="$DOTFILES/.inputrc"
+
+# ---------------------------------------------------------------------
+# note-taking stuff
+
+- name: Ensure notes.sh is in .config/dotfiles
+  copy:
+      src: notes.sh
+      dest: "{{ lookup('env', 'HOME') }}/.config/dotfiles/scripts/notes.sh"
+
+- name: Ensure that note-taking alias is present in .bashrc
+  lineinfile:
+      path: "{{ lookup('env', 'HOME') }}/.bashrc"
+      regexp: "^alias nv"
+      line: alias nv='$DOTFILES/scripts/notes.sh'
+
+# ---------------------------------------------------------------------
+# putting cheatsheets in common folder
+
+- name: Ensure cheatsheets are in .config/dotfiles
+  copy:
+      src: cheatsheets/
+      dest: "{{ lookup('env', 'HOME') }}/.config/dotfiles/cheatsheets/"

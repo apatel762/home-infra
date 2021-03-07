@@ -1,29 +1,25 @@
 # Dotfiles
 
+All of my dotfiles and workstation config. These dotfiles are built for
+Debian but they might also work on Ubuntu (or other downstream distros).
+
 ## Installation
 To install this repo, go to your home directory and do a `git clone`:
 ```Bash
 cd ~
 git clone https://github.com/apatel762/dotfiles.git
 ```
-It's important that this dotfiles directory is in your home directory
-so that the install script functions correctly.
+All of the configuration is managed by Ansible. Use the `run.sh` in the
+top-level of the repo to install Ansible and run the playbooks for configuring
+`localhost`.
 
-When the repository has finished downloading, do:
-```Bash
-cd ~/dotfiles
-chmod +x install.sh && ./install.sh
-```
-The `chmod +x` is giving permission for `install.sh` to be executed.
-Alternatively - read through the installer script and do what it's doing
-manually.
+Don't forget to `chmod 744 run.sh` if you can't run it.
 
-### A note about VIM
-You will need to install Vundle if you want Vim to not throw errors at you
-whenever you try to run it. You may also need to install vim (instead of vi)
-if it isn't on your machine.
+Resources to help understand Ansible:
 
-The install script should handle this part for you.
+- [Ansible for DevOps (Jeff Geerling)](https://www.ansiblefordevops.com/)
+- [Ansible role directory structure](https://www.golinuxcloud.com/ansible-roles-directory-structure-tutorial)
+- [Managing Dotfiles with Ansible](https://thebroken.link/managing-dotfiles-with-ansible/)
 
 ### Beautifying the desktop
 Gnome looks pretty plain by default, so it's nice to customise it a bit.
@@ -67,7 +63,7 @@ find the tweaks window.
 Normally when I install linux from scratch I get some issues. The fixes
 are documented here.
 
-#### My NTFS hard drive is stuck in read-only mode
+### My NTFS hard drive is stuck in read-only mode
 If the hard drive was being used by Windows, a hibernate file would have
 locked the hard drive into read-only mode so that Windows can boot up quickly
 again and resume your files from where they were.
@@ -81,20 +77,23 @@ Linux. This should only be done if you're not going to use the drive on that
 same copy of Windows again (maybe you wiped Windows and installed Linux over 
 it).
 ```Bash
-sudo apt-get install ntfs-3g
+# become root somehow
+sudo su
+
+apt-get install ntfs-3g
 
 # replace /dev/sdb1/ with the name of your disk
 # you can use this command to see the names of your disks
-sudo fdisk -l
+fdisk -l
 
 # replace /mnt/OldHDD with whatever folder you want your disk
 # to be mounted to. Make the folder if it doesn't exist.
-sudo mkdir /mnt/OldHDD
+mkdir /mnt/OldHDD
 
-sudo mount -t ntfs-3g -o remove_hiberfile /dev/sdb1 /mnt/OldHDD
+mount -t ntfs-3g -o remove_hiberfile /dev/sdb1 /mnt/OldHDD
 ```
 
-#### My 4K screen won't run in 60fps
+### My 4K screen won't run in 60fps
 This was a tough one to fix. The issue in the end was that I needed the 
 nvidia drivers (and they weren't included in the debian version that I 
 had installed).
@@ -124,8 +123,3 @@ using `xrandr --newmode`.
 I don't remember that working for me, but maybe the change would only take
 place after downloading the nvidia drivers? (So in other words, it did work
 but it wasn't a complete solution).
-
-#### Issues with spacemacs
-When emacs was hanging at contacting host, restarting it a couple of times seemed to have fixed it.
-
-When spacemacs was throwing warnings about org-projectile-per-project (saying that the function definition is void), I fixed it by deleting the elpa files: `find ~/.emacs.d/elpa -name "*elc" -delete`. When I restarted emacs, the issue was gone.

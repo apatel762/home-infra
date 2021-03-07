@@ -1,0 +1,11 @@
+[user]
+    email = arjun@aspatel.com
+    name = Arjun Patel
+
+[color]
+    ui = auto
+
+[alias]
+    # Fancy looking commit log
+    hist = log --all --graph --decorate --oneline
+    last = log --all --graph --decorate --oneline -10

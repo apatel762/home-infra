@@ -1,0 +1,8 @@
+---
+- name: Set up local workstation
+  hosts: local
+  roles:
+    - role: workstation
+    - role: terminal
+    - role: vim
+    - role: ssh
