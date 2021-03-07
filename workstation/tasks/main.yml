@@ -23,7 +23,15 @@
         - curl
         - fzf
 
+# ---------------------------------------------------------------------
+# create a folder to put my dotfiles and scripts
+
 - name: Ensure that the .config/dotfiles directory exists
   file:
       path: "{{ lookup('env', 'HOME') }}/.config/dotfiles"
+      state: directory
+
+- name: Ensure that the .config/dotfiles/scripts directory exists
+  file:
+      path: "{{ lookup('env', 'HOME') }}/.config/dotfiles/scripts"
       state: directory

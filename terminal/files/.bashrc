@@ -277,15 +277,15 @@ export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 # ----------------------------------------------------------------------
 # quick config editing
 
-export DOTFILES="$HOME/dotfiles"
-export INPUTRC="$HOME/.config/dotfiles/.inputrc"
+export DOTFILES="$HOME/.config/dotfiles"
+export INPUTRC="$DOTFILES/.inputrc"
 
 alias vimrc='$EDITOR $HOME/.vimrc'                      # edit vimrc
 alias bashrc='$EDITOR $HOME/.bashrc'                    # edit bashrc
 alias gitconfig='$EDITOR $HOME/.gitconfig'              # edit gitconfig
 alias dotfiles='pushd $DOTFILES'                        # go to dotfiles
 alias bp='echo "source ~/.bashrc" && source ~/.bashrc'  # refresh bash
-alias nv='$DOTFILES/scripts/notes.sh'                   # note taking
+alias nv='$DOTFILES/scripts/notes.sh'
 
 # ----------------------------------------------------------------------
 # ls

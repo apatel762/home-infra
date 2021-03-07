@@ -1,8 +1,21 @@
 ---
+
+# ---------------------------------------------------------------------
+# bashrc
+
 - name: Ensure that custom .bashrc is in the home folder
   copy:
       src: .bashrc
       dest: "{{ lookup('env', 'HOME') }}/.bashrc"
+
+- name: Ensure that DOTFILES is exported in .bashrc
+  lineinfile:
+      path: "{{ lookup('env', 'HOME') }}/.bashrc"
+      regexp: "^export DOTFILES"
+      line: export DOTFILES="$HOME/.config/dotfiles"
+
+# ---------------------------------------------------------------------
+# gitconfig
 
 - name: Ensure that custom .gitconfig is in the home folder
   copy:
@@ -21,4 +34,18 @@
   lineinfile:
       path: "{{ lookup('env', 'HOME') }}/.bashrc"
       regexp: "^export INPUTRC"
-      line: export INPUTRC="$HOME/.config/dotfiles/.inputrc"
+      line: export INPUTRC="$DOTFILES/.inputrc"
+
+# ---------------------------------------------------------------------
+# note-taking stuff
+
+- name: Ensure notes.sh is in .config/dotfiles
+  copy:
+      src: notes.sh
+      dest: "{{ lookup('env', 'HOME') }}/.config/dotfiles/scripts/notes.sh"
+
+- name: Ensure that note-taking alias is present in .bashrc
+  lineinfile:
+      path: "{{ lookup('env', 'HOME') }}/.bashrc"
+      regexp: "^alias nv"
+      line: alias nv='$DOTFILES/scripts/notes.sh'
