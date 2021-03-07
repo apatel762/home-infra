@@ -429,73 +429,29 @@ function update_material_fox() {
 }
 
 # ----------------------------------------------------------------------
-# ssh help
+# cheatsheets
+
+# TODO: 
+#  make these cheatsheets use a script and alias the script
+#  and move the alias nearer to the top of this file
+#  and update the Ansible config
+#  https://github.com/apatel762/dotfiles/issues/2
+
+function show_ssh_agent_instructions() {
+    if [ -f "$DOTFILES/cheatsheets/sshagent.txt" ] ; then
+        printf "\n"
+        cat "$DOTFILES/cheatsheets/sshagent.txt"
+        printf "Currently:\n"
+        ssh-add -l
+    else
+        :
+    fi
+}
 
 # this alias is literally just so i can remind myself of how to generate ssh
 # keys because i dont do it often...
-function ssh_cmds() {
-    more << EOF
-Create a key without having to go through the interactive menu[1][2]
-
-  ssh-keygen -f ~/.ssh/my.key -t rsa -b 4096 -C my_comment
-
-
-Copying the key to a server that you have access to. This is useful for if
-you are rotating your SSH key (i.e. putting the new one onto the server and
-then deleting the old one)
-
-  ssh-copy-id -i ~/.ssh/my.key user@remote
-
-
-Alternatively, you could do it the long way/manually.
-- copy ~/.ssh/my.key.pub to clipboard (or email it or write it down...)
-- then append it to remote:/home/user/.ssh/authorized_keys
-
-If you get an error like this:
-
-  sign_and_send_pubkey: signing failed: agent refused operation
-
-It's probably because you have enabled the 'Require user confirmation when
-this key is used'[3][4] option in KeePassXC or your keys need stricter
-permission. If it's the permissions thing then:
-
-  chmod 600 my.key
-  chmod 644 my.key.pub
-
-
-Here is some info re: using the SSH Agent[5]
-
-  # start SSH-Agent
-  ubuntu@node01:~$ eval \$(ssh-agent)
-  Agent pid 1592
-
-  # add Identity
-  ubuntu@node01:~$ ssh-add
-  Enter passphrase for /home/ubuntu/.ssh/id_rsa:
-  Identity added: /home/ubuntu/.ssh/id_rsa (ubuntu@dlp.srv.world)
-
-  # confirm
-  ubuntu@node01:~$ ssh-add -l
-  3072 SHA256:8c0JKIhM5yPk6Kd2YloCsiKOKKjqPu5Qcot94/buwEg ubuntu@dlp.srv.world (RSA)
-
-  # try to conenct with SSH without passphrase
-  ubuntu@node01:~$ ssh dlp.srv.world hostname
-  dlp.srv.world
-
-  # exit from SSH-Agent
-  ubuntu@node01:~$ eval \$(ssh-agent -k)
-  Agent pid 1592 killed
-
-[1]: https://www.ssh.com/ssh/keygen/#specifying-the-file-name
-[2]: https://web.archive.org/web/20201222143417/https://www.ssh.com/ssh/keygen/
-[3]: https://rtfm.co.ua/en/keepass-an-mfa-totp-codes-a-browsers-passwords-ssh-keys-passwords-storage-configuration-and-secret-service-integration/
-[4]: https://web.archive.org/web/20210116130536/https://rtfm.co.ua/en/keepass-an-mfa-totp-codes-a-browsers-passwords-ssh-keys-passwords-storage-configuration-and-secret-service-integration/
-[5]: https://www.server-world.info/en/note?os=Ubuntu_20.04&p=ssh&f=7 20210124100000
-
-Extra:
-https://blog.valouille.fr/post/2018-03-27-how-to-use-keepass-xc-with-ssh-agent/
-EOF
-}
+alias ssh_cmds='more $DOTFILES/ssh.txt'
+alias ssh_agent=show_ssh_agent_instructions
 
 # ----------------------------------------------------------------------
 # hashing stuff
@@ -520,19 +476,3 @@ sri() {
 function hash_string() {
     echo "$1" | md5sum | cut -f1 -d" "
 }
-
-# ----------------------------------------------------------------------
-# display cheatsheets upon terminal startup
-
-function show_ssh_agent_instructions() {
-    if [ -f "$DOTFILES/cheatsheets/sshagent.txt" ] ; then
-        printf "\n"
-        cat "$DOTFILES/cheatsheets/sshagent.txt"
-        printf "Currently:\n"
-        ssh-add -l
-    else
-        :
-    fi
-}
-
-show_ssh_agent_instructions
