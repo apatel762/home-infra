@@ -2,11 +2,7 @@
 - name: Set up local workstation
   hosts: local
   roles:
+    - role: workstation
     - role: terminal
+    - role: vim
     - role: ssh
-
-# todo:
-#   add inputrc to bashrc
-# todo:
-#   standardise on .config/dotfiles folder
-#   create the folder if it doesnt exist

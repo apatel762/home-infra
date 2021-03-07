@@ -278,6 +278,7 @@ export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 # quick config editing
 
 export DOTFILES="$HOME/dotfiles"
+export INPUTRC="$HOME/.config/dotfiles/.inputrc"
 
 alias vimrc='$EDITOR $HOME/.vimrc'                      # edit vimrc
 alias bashrc='$EDITOR $HOME/.bashrc'                    # edit bashrc
