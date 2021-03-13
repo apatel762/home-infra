@@ -23,12 +23,6 @@
       path: "{{ lookup('env', 'HOME') }}/.vim/autoload"
       state: directory
 
-- name: Ensure that plug.vim is installed
-  get_url:
-    url: https://raw.githubusercontent.com/junegunn/vim-plug/cffcfe150bda75177920530c5f1911b52f70a065/plug.vim
-    checksum: sha256:6df347cb9212f83eb15b84778814306a1111b7a6f7b327f6c7990fb77ec34743
-    dest: "{{ lookup('env', 'HOME') }}/.vim/autoload/plug.vim"
-
 # ---------------------------------------------------------------------
 # neovim config
 

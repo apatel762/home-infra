@@ -23,6 +23,10 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+" if python --version show 3.0+ you should use let g:python_host_prog = '/usr/bin/python2'
+let g:python_host_prog = '/usr/bin/python'
+let g:python3_host_prog = '/usr/bin/python3'
+
 " All of the plugins must be between the plug#begin and plug#end
 " Also, the plug#begin directory can't clash with the native vim plugin
 " directory (plugins), so it's called 'plugged'
