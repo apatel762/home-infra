@@ -207,7 +207,14 @@ PS1="$PS1"":"
 PS1="$PS1""\[$DIM\]\[$YELLOW\]\`__shortpath\`\[$RESET_COLOURS\]"
 PS1="$PS1""\`__gitinfo\`"
 PS1="$PS1""\n"
-PS1="$PS1""\[$RESET_COLOURS\]> "
+
+# make the last bit of prompt a '#' for root and '%' for
+# everything else
+if [[ "$(id -u)" -eq 0 ]]; then
+    PS1="$PS1""\[$RESET_COLOURS\]# "
+else
+    PS1="$PS1""\[$RESET_COLOURS\]% "
+fi
 
 # ----------------------------------------------------------------------
 
