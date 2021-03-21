@@ -44,6 +44,11 @@
       src: notes.sh
       dest: "{{ lookup('env', 'HOME') }}/.config/dotfiles/scripts/notes.sh"
 
+- name: Ensure notes.sh can be executed by current user
+  file:
+      path: "{{ lookup('env', 'HOME') }}/.config/dotfiles/scripts/notes.sh"
+      mode: u=rwx,g=r,o=r
+
 - name: Ensure that note-taking alias is present in .bashrc
   lineinfile:
       path: "{{ lookup('env', 'HOME') }}/.bashrc"
