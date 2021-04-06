@@ -350,7 +350,23 @@ function open_in_browser() {
 # ----------------------------------------------------------------------
 # work vpn
 
-alias vpn-work='sudo openfortivpn -c /etc/openfortivpn/config-work'
+function vpn-work() {
+    # ensure that the vpn config file is there
+    if [ ! -f "/etc/openfortivpn/config-work" ];
+    then
+        echo "aborting! you don't have the 'config-work' file in '/etc/openfortivpn'"
+    else
+        # ensure that openfortivpn is installed or is in the path
+        if command -v openfortivpn &>/dev/null;
+        then
+            echo "starting vpn connection at $(date --iso-8601=seconds)"
+            sudo openfortivpn -c /etc/openfortivpn/config-work
+            echo "closing vpn connection at $(date --iso-8601=seconds)"
+        else
+            echo "could not start the VPN connection... you don't have 'openfortivpn' installed or on your path"
+        fi
+    fi
+}
 
 # ----------------------------------------------------------------------
 # git
