@@ -132,7 +132,10 @@ search_notes_by_title() {
 }
 
 create_permanote() {
-    nb notes:add --filename "$(date +"%Y-%m-%dT%H%M%SZ" --universal).md"
+    (
+        set -x;
+        nb notes:add --filename "$(date +"%Y-%m-%dT%H%M%SZ" --universal).md"
+    )
 }
 
 create_fleeting_note() {
@@ -150,12 +153,27 @@ create_fleeting_note() {
     fi
 }
 
+save_url() {
+    read -e -p "URL> " URL
+    (
+        set -x;
+        nb use notes
+        nb bookmark "$URL" \
+            --filename "$(date +"%Y-%m-%dT%H%M%SZ" --universal).md" \
+            --comment "::Bookmark::" \
+            --skip-content \
+            --edit
+    )
+}
+
 choose_action_and_do_it() {
     local OPTIONS=(
         'Search all'
         'Search titles'
         'Create permanote'
         'Create fleeting note'
+        'Save URL'
+        'Re-index notes'
     )
 
     local ACTION
@@ -176,6 +194,14 @@ choose_action_and_do_it() {
 
         'Create fleeting note')
             create_fleeting_note
+            ;;
+
+        'Save URL')
+            save_url
+            ;;
+
+        'Re-index notes')
+            (set -x; nb index rebuild)
             ;;
 
         *)
