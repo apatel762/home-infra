@@ -9,3 +9,8 @@ I'm using the `WhiteSur-gtk-theme` to skin Firefox, specifically the MacOS Monte
 ```bash
 git submodule add https://github.com/vinceliuice/WhiteSur-gtk-theme whitesur
 ```
+
+My custom Firefox config also uses the Arkenfox userjs, which has been added as a dependency like this:
+```bash
+git submodule add https://github.com/arkenfox/user.js userjs
+```

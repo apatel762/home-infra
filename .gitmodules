@@ -1,3 +1,6 @@
 [submodule "firefox/whitesur"]
 	path = firefox/whitesur
 	url = https://github.com/vinceliuice/WhiteSur-gtk-theme
+[submodule "firefox/userjs"]
+	path = firefox/userjs
+	url = https://github.com/arkenfox/user.js
