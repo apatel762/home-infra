@@ -31,43 +31,17 @@ Resources to help understand Ansible:
 - [Ansible role directory structure](https://www.golinuxcloud.com/ansible-roles-directory-structure-tutorial)
 - [Managing Dotfiles with Ansible](https://thebroken.link/managing-dotfiles-with-ansible/)
 
-### Beautifying the desktop
-Gnome looks pretty plain by default, so it's nice to customise it a bit.
-https://www.ubuntupit.com/customize-gnome-shell-tips-beautify-gnome-desktop/
+### Terminal theme
 
-Get the gnome tweak tool
-```Bash
-sudo apt-get install gnome-tweak-tool
+Mayccoll. "[Gogh](https://github.com/Mayccoll/Gogh)". *[Archived](https://web.archive.org/web/20210724130748/https://github.com/Mayccoll/Gogh)*. Retrieved July 24, 2021.
+
+```bash
+sudo apt-get install dconf-cli uuid-runtime
+bash -c "$(wget -qO- https://git.io/vQgMr)" # verify the script first!
+
+# the script will give you some options
+# I am currently using the Afterglow theme, with WhiteSur-gtk
 ```
-
-Other settings
-```
-Icons: Papirus
-https://github.com/PapirusDevelopmentTeam/papirus-icon-theme
-
-GTK theme: Adapta-Eta
-Shell Theme: Adapta
-sudo apt-get install adapta-gtk-theme
-
-Dash to Dock (gnome shell extension) to get the iOS style bottom dock
-
-Font: iosevka (https://typeof.net/Iosevka/)
-To install fonts:
-* Move all of the .ttf files to '/usr/local/share/fonts' (will require sudo)
-* Manually rebuild font cache using 'fc-cache -f -v'
-* Optional: confirm their installation using 'fc-list | grep "font-name"'
-
-Terminal themes: https://github.com/Mayccoll/Gogh
-Installation:
-* sudo apt-get install dconf-cli uuid-runtime
-* bash -c "$(wget -qO- https://git.io/vQgMr)" # verify the script first!
-* options: 05 07 11 13 24 48 55 84 93 102 137 139
-* Currently using Azu theme
-```
-
-You can also play around with all of the other settings in the gnome tweak tool 
-by pressing the Windows key (to browse all of your apps) and typing 'Tweaks' to 
-find the tweaks window.
 
 ## Troubleshooting
 Normally when I install linux from scratch I get some issues. The fixes
