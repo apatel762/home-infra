@@ -293,6 +293,7 @@ alias gitconfig='$EDITOR $HOME/.gitconfig'              # edit gitconfig
 alias dotfiles='pushd $DOTFILES'                        # go to dotfiles
 alias bp='echo "source ~/.bashrc" && source ~/.bashrc'  # refresh bash
 alias nv='$DOTFILES/scripts/notes.sh'
+alias cite='python3 $DOTFILES/scripts/cite.py'
 
 # ----------------------------------------------------------------------
 # ls

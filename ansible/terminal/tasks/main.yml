@@ -56,6 +56,25 @@
       line: alias nv='$DOTFILES/scripts/notes.sh'
 
 # ---------------------------------------------------------------------
+# note-taking stuff
+
+- name: Ensure cite.py is in .config/dotfiles
+  copy:
+      src: cite.py
+      dest: "{{ lookup('env', 'HOME') }}/.config/dotfiles/scripts/cite.py"
+
+- name: Ensure cite.py can be executed by current user
+  file:
+      path: "{{ lookup('env', 'HOME') }}/.config/dotfiles/scripts/cite.py"
+      mode: u=rwx,g=r,o=r
+
+- name: Ensure that citation alias is present in .bashrc
+  lineinfile:
+      path: "{{ lookup('env', 'HOME') }}/.bashrc"
+      regexp: "^alias cite"
+      line: alias cite='python3 $DOTFILES/scripts/cite.py'
+
+# ---------------------------------------------------------------------
 # putting cheatsheets in common folder
 
 - name: Ensure cheatsheets are in .config/dotfiles
