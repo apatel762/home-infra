@@ -5,12 +5,22 @@ Debian but they might also work on Ubuntu (or other downstream distros).
 
 ## Installation
 To install this repo, go to your home directory and do a `git clone`:
+
 ```Bash
 cd ~
-git clone https://github.com/apatel762/dotfiles.git
+git clone --recursive https://github.com/apatel762/dotfiles.git
+
+# some submodules are used to track dependencies, so you need to
+# clone the repo using `--recursive` or else the submodule folders
+# will be empty.
+
+# you can use the below command to init the submodules if you forgot
+# to use the `--recursive` flag when you cloned the repo
+git submodule update --init --recursive
 ```
-All of the configuration is managed by Ansible. Use the `run.sh` in the
-top-level of the repo to install Ansible and run the playbooks for configuring
+
+Most of the configuration is managed by Ansible. Use the `run.sh` in the
+`ansible` folder to install Ansible and run the playbooks for configuring
 `localhost`.
 
 Don't forget to `chmod 744 run.sh` if you can't run it.
