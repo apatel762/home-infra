@@ -27,9 +27,9 @@ Don't forget to `chmod 744 run.sh` if you can't run it.
 
 Resources to help understand Ansible:
 
-- [Ansible for DevOps (Jeff Geerling)](https://www.ansiblefordevops.com/)
-- [Ansible role directory structure](https://www.golinuxcloud.com/ansible-roles-directory-structure-tutorial)
-- [Managing Dotfiles with Ansible](https://thebroken.link/managing-dotfiles-with-ansible/)
+- Geerling, Jeff. "[Ansible for DevOps](https://www.ansiblefordevops.com/)". *[Archived](https://web.archive.org/web/20210724131446/https://www.ansiblefordevops.com/)*. Retrieved July 24, 2021.
+- unascribed (February 12, 2020). "[Ansible roles directory structure overview](https://www.golinuxcloud.com/ansible-roles-directory-structure-tutorial)". *[Archived](https://web.archive.org/web/20210724131606/https://www.golinuxcloud.com/ansible-roles-directory-structure-tutorial)*. Retrieved July 24, 2021.
+- de Sousa, Alex (March 19, 2020). "[Managing Dotfiles with Ansible](https://thebroken.link/managing-dotfiles-with-ansible/)". *[Archived](https://web.archive.org/web/20210724131740/https://thebroken.link/managing-dotfiles-with-ansible/)*. Retrieved July 24, 2021.
 
 ### Terminal theme
 
