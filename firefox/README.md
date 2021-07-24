@@ -4,13 +4,13 @@ I use some customisations for Firefox that can't easily be worked into the Ansib
 
 ## Dependencies
 
-I'm using the `WhiteSur-gtk-theme` to skin Firefox, specifically the MacOS Monterey style. This repo has been added as a submodule with the following steps:
+Wehner, Joshua (February 1, 2016). "[Working with submodules](https://github.blog/2016-02-01-working-with-submodules/)". *[Archived](https://web.archive.org/web/20210724123412/https://github.blog/2016-02-01-working-with-submodules/)*. Retrieved July 24, 2021.
+
+The submodules were added using the following commands:
 
 ```bash
 git submodule add https://github.com/vinceliuice/WhiteSur-gtk-theme whitesur
-```
-
-My custom Firefox config also uses the Arkenfox userjs, which has been added as a dependency like this:
-```bash
 git submodule add https://github.com/arkenfox/user.js userjs
 ```
+
+We depend on these repos for custom Firefox theming and configuration/hardening.
