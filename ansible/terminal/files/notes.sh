@@ -12,6 +12,9 @@ FZF_OPTS=(
     "--cycle"
 )
 
+# the directory of this script
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 # ---------------------------------------------------------------------- 
 # Util function/s
 
@@ -173,7 +176,7 @@ notational_velocity() {
                             fi
                         fi;
                     )+abort" \
-            --preview "./preview.sh {}"
+            --preview "$DIR/preview.sh {}"
     )
 }
 
