@@ -53,9 +53,16 @@ do_validation() {
     require sed "manipulating text from search results"
     require head "getting the first line from a file"
     require date "getting the date"
+    require sk "for fuzzy finding stuff"
+    require rg "for searching for stuff"
 
     if [ ! -d "$NOTES_FOLDER" ] ; then
         echo "cannot search permanotes, you haven't got the 'notes' notebook"
+        return 1
+    fi
+
+    if [ -z "$EDITOR" ] ; then
+        echo "please set the EDITOR env variable before continuing"
         return 1
     fi
 }
@@ -81,36 +88,6 @@ function to_markdown_link() {
     echo "[$TITLE]($1)"
 }
 
-search_notes_full_text() {
-    export -f to_markdown_link
-    export NOTES_FOLDER
-
-    rg . "$NOTES_FOLDER" "${RIPGREP_OPTS[@]}" \
-        | awk '
-            BEGIN {
-                FS=":"
-                OFS="\t"
-            }
-            function basename(file) {
-                sub(".*/", "", file)
-                return file
-            }
-            {
-                print basename($1),$3
-            }' \
-        | fzf --cycle \
-        | awk '
-            BEGIN {
-                FS="\t"
-            }
-            {
-                print $1
-            }' \
-        | xargs -n 1 -P 10 -I {} bash -c 'to_markdown_link "$@"' _ {} \
-        | tee /dev/tty \
-        | xsel --clipboard
-}
-
 search_notes_by_title() {
     find "$NOTES_FOLDER" -type f -name "*\.md" -printf %f -exec head -n1 "{}" \; \
         | sort -r \
@@ -129,13 +106,6 @@ search_notes_by_title() {
     # `tee /dev/tty` outputs the thing in the pipe to stdout before passing it through
     # https://stackoverflow.com/a/5677265
     # https://web.archive.org/web/20201227082859/https://stackoverflow.com/questions/5677201/how-to-pipe-stdout-while-keeping-it-on-screen-and-not-to-a-output-file
-}
-
-create_permanote() {
-    (
-        set -x;
-        nb notes:add --filename "$(date +"%Y-%m-%dT%H%M%SZ" --universal).md"
-    )
 }
 
 create_fleeting_note() {
@@ -166,11 +136,61 @@ save_url() {
     )
 }
 
+notational_velocity() {
+    # this function will search the notes folder by file name AND the
+    # text inside of the file (might be a little bit slow if you have
+    # thousands of files).
+    #
+    # using the search you can narrow down the list of files and hit
+    # the 'Enter' key to open the file that you want to edit.
+    #
+    # if your search term doesn't match anything, a new note will be
+    # added with your search term as the title (and the current date
+    # and time as the file name).
+    #
+    # why? because it combines the act of searching and creating notes
+    # together, which helps you resurface old knowledge while you're
+    # adding the new stuff
+    #
+    # credits in no particular order:
+    #  - https://github.com/alok/notational-fzf-vim/issues/22#issuecomment-616144200
+    #  - https://github.com/junegunn/fzf.vim/blob/master/bin/preview.sh
+    #  - https://en.wikipedia.org/wiki/Notational_Velocity
+    (
+        cd "$NOTES_FOLDER"
+        sk \
+            --ansi \
+            --interactive \
+            --cmd "(rg --files | rg -S \"{}\" & rg -S -l \"{}\" & echo {}) \
+                        | sort \
+                        | uniq" \
+            --bind "enter:execute(
+                        if [[ -z {} ]]; then
+                            if [[ -n $EDITOR ]]; then
+                                $EDITOR {}
+                            else
+                                vim {}
+                            fi
+                        else
+                            if test -f {}; then
+                                nb notes:edit {}
+                            else
+                                # if our search term didn't match anything, we should
+                                # create a new file to record this new topic
+                                nb notes:add \
+                                    --title {} \
+                                    --filename \"$(date +"%Y-%m-%dT%H%M%SZ" --universal).md\"
+                            fi
+                        fi;
+                    )+abort" \
+            --preview "$HOME/Documents/Github/fzf.vim/bin/preview.sh {}"
+    )
+}
+
 choose_action_and_do_it() {
     local OPTIONS=(
-        'Search all'
+        'Take notes'
         'Search titles'
-        'Create permanote'
         'Create fleeting note'
         'Save URL'
         'Re-index notes'
@@ -180,16 +200,12 @@ choose_action_and_do_it() {
     ACTION="$(printf '%s\n' "${OPTIONS[@]}" | fzf "${FZF_OPTS[@]}")"
 
     case "$ACTION" in
-        'Search all')
-            search_notes_full_text
+        'Take notes')
+            notational_velocity
             ;;
 
         'Search titles')
             search_notes_by_title
-            ;;
-
-        'Create permanote')
-            create_permanote
             ;;
 
         'Create fleeting note')
