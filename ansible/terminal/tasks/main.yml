@@ -75,6 +75,25 @@
       line: alias cite='python3 $DOTFILES/scripts/cite.py'
 
 # ---------------------------------------------------------------------
+# games script
+
+- name: Ensure games.sh is in .config/dotfiles
+  copy:
+      src: games.sh
+      dest: "{{ lookup('env', 'HOME') }}/.config/dotfiles/scripts/games.sh"
+
+- name: Ensure games.sh can be executed by current user
+  file:
+      path: "{{ lookup('env', 'HOME') }}/.config/dotfiles/scripts/games.sh"
+      mode: u=rwx,g=r,o=r
+
+- name: Ensure that alias for launching games is present in .bashrc
+  lineinfile:
+      path: "{{ lookup('env', 'HOME') }}/.bashrc"
+      regexp: "^alias games"
+      line: alias games='$DOTFILES/scripts/games.sh'
+
+# ---------------------------------------------------------------------
 # putting cheatsheets in common folder
 
 - name: Ensure cheatsheets are in .config/dotfiles
