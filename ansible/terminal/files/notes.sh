@@ -5,16 +5,6 @@
 
 NOTES_FOLDER="$HOME/.nb/notes"
 
-RIPGREP_OPTS=(
-    "--follow"
-    "--smart-case"
-    "--line-number"
-    "--color" "never"
-    "--no-messages"
-    "--no-heading"
-    "--with-filename"
-)
-
 FZF_OPTS=(
     "--height" "10%"
     "--border"
