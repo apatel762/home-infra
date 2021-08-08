@@ -282,6 +282,12 @@ fi
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
 # ----------------------------------------------------------------------
+# games
+
+# a script that quickly launches games defined in the file.
+alias games='$DOTFILES/scripts/games.sh'
+
+# ----------------------------------------------------------------------
 # quick config editing
 
 export DOTFILES="$HOME/.config/dotfiles"
