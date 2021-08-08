@@ -6,7 +6,7 @@ def is_empty(s: str) -> bool:
     return s is None or len(s) == 0
 
 def today() -> str:
-    return datetime.datetime.now().strftime('%B %d, %Y')
+    return datetime.datetime.now().strftime('%B %d, %Y').replace(' 0', ' ')
 
 def convert_to_archive_org_link(link: str) -> str:
     if is_empty(link):
