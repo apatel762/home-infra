@@ -173,7 +173,7 @@ notational_velocity() {
                             fi
                         fi;
                     )+abort" \
-            --preview "$HOME/Documents/Github/fzf.vim/bin/preview.sh {}"
+            --preview "./preview.sh {}"
     )
 }
 
