@@ -402,6 +402,7 @@ ex ()
             *.tbz2)      ( set -x; tar xjf "$1"    ) ;;
             *.tgz)       ( set -x; tar xzf "$1"    ) ;;
             *.zip)       ( set -x; unzip "$1"      ) ;;
+            *.cbz)       ( set -x; unzip "$1"      ) ;;
             *.Z)         ( set -x; uncompress "$1" ) ;;
             *.7z)        ( set -x; 7z x "$1"       ) ;;
             *.deb)       ( set -x; ar x "$1"       ) ;;
