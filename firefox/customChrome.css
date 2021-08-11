@@ -1,37 +1,6 @@
-/*
-How many buttons on left headerbar (can be 3, 4 or 5)
-@import "Monterey/left_header_button_5.css";
-
-ignore this ^^ i've overridden the code because it ain't working properly
-*/
-
-#TabsToolbar {
-    margin-left: 580px !important;
-}
-
-:root[sizemode="maximized"] #TabsToolbar {
-    margin-left: 620px !important;
-}
-
-
-/* Left window titlebuttons mode */
-
-@media (-moz-gtk-csd-reversed-placement) {
-    #TabsToolbar {
-        margin-left: 654px !important;
-    }
-     :root[sizemode="maximized"] #TabsToolbar {
-        margin-left: 654px !important;
-    }
-}
-
-
-/* How many buttons on right headerbar (can be 3, 4 or 5) */
-
-@import "Monterey/right_header_button_5.css";
-
 /* make the font size smaller (because resist fingerprinting makes it too big) */
 
+/*
 .tabbrowser-tab {
     font-size: 12px !important;
 }
@@ -40,3 +9,4 @@ ignore this ^^ i've overridden the code because it ain't working properly
 #searchbar {
     font-size: 14px !important;
 }
+*/

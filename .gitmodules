@@ -1,3 +1,6 @@
 [submodule "firefox/userjs"]
 	path = firefox/userjs
 	url = https://github.com/arkenfox/user.js
+[submodule "firefox/edge-firefox"]
+	path = firefox/edge-firefox
+	url = https://github.com/bmFtZQ/Edge-FrFox
