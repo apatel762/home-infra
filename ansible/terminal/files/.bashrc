@@ -196,6 +196,12 @@ function __gitinfo() {
             BRANCH_COLOUR=$diverged
             extra_info="${extra_info}!"
         fi
+
+        # pad the extra info with a space if it exists
+        if [ "${#extra_info}" -gt 1 ]; then
+            extra_info="${extra_info} "
+        fi
+
         echo -n " ""$RESET_COLOURS""$BRANCH_COLOUR${branch}$DIM$BRANCH_COLOUR${extra_info}$RESET_COLOURS"
     fi
     return 0
