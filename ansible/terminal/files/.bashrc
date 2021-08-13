@@ -122,9 +122,9 @@ RESET_COLOURS=$(tput sgr0)
 # we can see if we're on a vpn or not (and which adapter we're using)
 function __vpn_info() {
     if [ -n "$(ifconfig -s | egrep "ppp[0-9]")" ]; then
-        echo -n "/""$(ifconfig -s | egrep "ppp[0-9]" | sed 's/ .*//g')"
+        echo -n "/""$(ifconfig -s | egrep "ppp[0-9]" | awk '{print $1}')"
     #else
-    #    echo -n "/""$(ifconfig -s | egrep "wlp" | sed 's/ .*//g')"
+    #    echo -n "/""$(ifconfig -s | egrep "wlp" | awk '{print $1}')"
     fi
 }
 
