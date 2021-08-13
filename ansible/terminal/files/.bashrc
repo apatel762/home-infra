@@ -118,6 +118,16 @@ WHITE=$(tput setaf 7)
 DIM=$(tput dim)
 RESET_COLOURS=$(tput sgr0)
 
+# a function that gets the point-to-point network interface id so that
+# we can see if we're on a vpn or not (and which adapter we're using)
+function __vpn_info() {
+    if [ -n "$(ifconfig -s | egrep "ppp[0-9]")" ]; then
+        echo -n "/""$(ifconfig -s | egrep "ppp[0-9]" | sed 's/ .*//g')"
+    #else
+    #    echo -n "/""$(ifconfig -s | egrep "wlp" | sed 's/ .*//g')"
+    fi
+}
+
 # a function to get the short path of some directory, so it doesn't take
 # up a lot of space on the screen
 function __shortpath() {
@@ -192,29 +202,30 @@ function __gitinfo() {
 }
 
 # building the prompt string
-PS1="\n"
 
-# show the username in red if we are root
+PS1=""
+
+# user (show in red if we are root)
 if [[ "$(id -u)" -eq 0 ]]; then
     PS1="$PS1""\[$RED\]""\u""\[$RESET_COLOURS\]"
 else
     PS1="$PS1""\[$WHITE\]""\u""\[$RESET_COLOURS\]"
 fi
 
+# @hostname
 PS1="$PS1""\[$WHITE\]"'@'"\[$RESET_COLOURS\]"
 PS1="$PS1""\[$WHITE\]""\H""\[$RESET_COLOURS\]"
-PS1="$PS1"":"
-PS1="$PS1""\[$DIM\]\[$YELLOW\]\`__shortpath\`\[$RESET_COLOURS\]"
-PS1="$PS1""\`__gitinfo\`"
-PS1="$PS1""\n"
 
-# make the last bit of prompt a '#' for root and '%' for
-# everything else
-if [[ "$(id -u)" -eq 0 ]]; then
-    PS1="$PS1""\[$RESET_COLOURS\]# "
-else
-    PS1="$PS1""\[$RESET_COLOURS\]% "
-fi
+# [vpn]
+PS1="$PS1""\[$DIM\]\[$WHITE\]\$(__vpn_info)\[$RESET_COLOURS\]"
+
+# short path
+PS1="$PS1"":"
+PS1="$PS1""\[$DIM\]\[$YELLOW\]\$(__shortpath)\[$RESET_COLOURS\]"
+
+# git branch info if any
+PS1="$PS1""\$(__gitinfo)"
+PS1="$PS1""\[$RESET_COLOURS\]\\$ "
 
 # ----------------------------------------------------------------------
 
