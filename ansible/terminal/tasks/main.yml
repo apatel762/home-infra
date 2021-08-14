@@ -6,11 +6,11 @@
 - name: Ensure that custom .bashrc is in the home folder
   copy:
       src: .bashrc
-      dest: "{{ lookup('env', 'HOME') }}/.bashrc"
+      dest: "{{ bashrc }}"
 
 - name: Ensure that DOTFILES is exported in .bashrc
   lineinfile:
-      path: "{{ lookup('env', 'HOME') }}/.bashrc"
+      path: "{{ bashrc }}"
       regexp: "^export DOTFILES"
       line: export DOTFILES="$HOME/.config/dotfiles"
 
@@ -20,7 +20,7 @@
 - name: Ensure that custom .gitconfig is in the home folder
   copy:
       src: .gitconfig
-      dest: "{{ lookup('env', 'HOME') }}/.gitconfig"
+      dest: "{{ gitconfig }}"
 
 # ---------------------------------------------------------------------
 # inputrc
@@ -28,11 +28,11 @@
 - name: Ensure that custom .inputrc is in our dotfiles folder
   copy:
       src: .inputrc
-      dest: "{{ lookup('env', 'HOME') }}/.config/dotfiles/.inputrc"
+      dest: "{{ dotfiles }}/.inputrc"
 
 - name: Ensure that INPUTRC is exported in .bashrc
   lineinfile:
-      path: "{{ lookup('env', 'HOME') }}/.bashrc"
+      path: "{{ bashrc }}"
       regexp: "^export INPUTRC"
       line: export INPUTRC="$DOTFILES/.inputrc"
 
@@ -42,26 +42,26 @@
 - name: Ensure notes.sh is in .config/dotfiles
   copy:
       src: notes.sh
-      dest: "{{ lookup('env', 'HOME') }}/.config/dotfiles/scripts/notes.sh"
+      dest: "{{ dotfiles }}/scripts/notes.sh"
 
 - name: Ensure notes.sh can be executed by current user
   file:
-      path: "{{ lookup('env', 'HOME') }}/.config/dotfiles/scripts/notes.sh"
+      path: "{{ dotfiles }}/scripts/notes.sh"
       mode: u=rwx,g=r,o=r
 
 - name: Ensure preview.sh is in .config/dotfiles
   copy:
       src: preview.sh
-      dest: "{{ lookup('env', 'HOME') }}/.config/dotfiles/scripts/preview.sh"
+      dest: "{{ dotfiles }}/scripts/preview.sh"
 
 - name: Ensure preview.sh can be executed by current user
   file:
-      path: "{{ lookup('env', 'HOME') }}/.config/dotfiles/scripts/preview.sh"
+      path: "{{ dotfiles }}/scripts/preview.sh"
       mode: u=rwx,g=r,o=r
 
 - name: Ensure that note-taking alias is present in .bashrc
   lineinfile:
-      path: "{{ lookup('env', 'HOME') }}/.bashrc"
+      path: "{{ bashrc }}"
       regexp: "^alias nv"
       line: alias nv='$DOTFILES/scripts/notes.sh'
 
@@ -71,16 +71,16 @@
 - name: Ensure cite.py is in .config/dotfiles
   copy:
       src: cite.py
-      dest: "{{ lookup('env', 'HOME') }}/.config/dotfiles/scripts/cite.py"
+      dest: "{{ dotfiles }}/scripts/cite.py"
 
 - name: Ensure cite.py can be executed by current user
   file:
-      path: "{{ lookup('env', 'HOME') }}/.config/dotfiles/scripts/cite.py"
+      path: "{{ dotfiles }}/scripts/cite.py"
       mode: u=rwx,g=r,o=r
 
 - name: Ensure that citation alias is present in .bashrc
   lineinfile:
-      path: "{{ lookup('env', 'HOME') }}/.bashrc"
+      path: "{{ bashrc }}"
       regexp: "^alias cite"
       line: alias cite='python3 $DOTFILES/scripts/cite.py'
 
@@ -90,16 +90,16 @@
 - name: Ensure games.sh is in .config/dotfiles
   copy:
       src: games.sh
-      dest: "{{ lookup('env', 'HOME') }}/.config/dotfiles/scripts/games.sh"
+      dest: "{{ dotfiles }}/scripts/games.sh"
 
 - name: Ensure games.sh can be executed by current user
   file:
-      path: "{{ lookup('env', 'HOME') }}/.config/dotfiles/scripts/games.sh"
+      path: "{{ dotfiles }}/scripts/games.sh"
       mode: u=rwx,g=r,o=r
 
 - name: Ensure that alias for launching games is present in .bashrc
   lineinfile:
-      path: "{{ lookup('env', 'HOME') }}/.bashrc"
+      path: "{{ bashrc }}"
       regexp: "^alias games"
       line: alias games='$DOTFILES/scripts/games.sh'
 
@@ -109,4 +109,4 @@
 - name: Ensure cheatsheets are in .config/dotfiles
   copy:
       src: cheatsheets/
-      dest: "{{ lookup('env', 'HOME') }}/.config/dotfiles/cheatsheets/"
+      dest: "{{ dotfiles }}/cheatsheets/"
