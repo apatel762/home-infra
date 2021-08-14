@@ -12,7 +12,7 @@ user_pref("browser.urlbar.autoFill", true);
 // generally useful stuff
 // make sure the startup page is the home page
 user_pref("browser.startup.page", 1);
-user_pref("browser.startup.homepage", "https://duckduckgo.com/");
+user_pref("browser.startup.homepage", "about:home");
 user_pref("browser.newtabpage.enabled", true);
 user_pref("browser.newtab.preload", true);
 
