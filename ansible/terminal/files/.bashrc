@@ -123,6 +123,8 @@ RESET_COLOURS=$(tput sgr0)
 function __vpn_info() {
     if [ -n "$(ifconfig -s | egrep "ppp[0-9]")" ]; then
         echo -n "/""$(ifconfig -s | egrep "ppp[0-9]" | awk '{print $1}')"
+    elif [ -n "$(ifconfig -s | egrep "tun[0-9]")" ]; then
+        echo -n "/""$(ifconfig -s | egrep "tun[0-9]" | awk '{print $1}')"
     #else
     #    echo -n "/""$(ifconfig -s | egrep "wlp" | awk '{print $1}')"
     fi
