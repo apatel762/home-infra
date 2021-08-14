@@ -28,15 +28,15 @@
 
 - name: Ensure that the .config/dotfiles directory exists
   file:
-      path: "{{ lookup('env', 'HOME') }}/.config/dotfiles"
+      path: "{{ dotfiles }}"
       state: directory
 
 - name: Ensure that the .config/dotfiles/scripts directory exists
   file:
-      path: "{{ lookup('env', 'HOME') }}/.config/dotfiles/scripts"
+      path: "{{ dotfiles }}/scripts"
       state: directory
 
 - name: Ensure that the .config/dotfiles/scripts directory exists
   file:
-      path: "{{ lookup('env', 'HOME') }}/.config/dotfiles/cheatsheets"
+      path: "{{ dotfiles }}/cheatsheets"
       state: directory

@@ -1,17 +1,17 @@
 ---
 - name: Ensure that the .config/systemd/user directory exists
   file:
-      path: "{{ lookup('env', 'HOME') }}/.config/systemd/user"
+      path: "{{ systemd_local }}"
       state: directory
 
 - name: Ensure that ssh-agent.service exists in local systemd config
   copy:
       src: ssh-agent.service
-      dest: "{{ lookup('env', 'HOME') }}/.config/systemd/user/ssh-agent.service"
+      dest: "{{ systemd_local }}/ssh-agent.service"
 
 - name: Ensure that SSH_AUTH_SOCK is exported in .bashrc
   lineinfile:
-      path: "{{ lookup('env', 'HOME') }}/.bashrc"
+      path: "{{ bashrc }}"
       regexp: "^export SSH_AUTH_SOCK"
       line: export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
