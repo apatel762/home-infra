@@ -162,7 +162,7 @@ function __gitinfo() {
     dirty=$RED           # red
     diverged=$RED        # red
     branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
-    extra_info=" "
+    extra_info=""
     if [[ -n "$branch" ]]; then
         git_status=$(git status 2> /dev/null)
         # If nothing changes the BRANCH_COLOUR, we can spot unhandled cases.
@@ -201,7 +201,7 @@ function __gitinfo() {
 
         # pad the extra info with a space if it exists
         if [ "${#extra_info}" -gt 1 ]; then
-            extra_info="${extra_info} "
+            extra_info=" ${extra_info}"
         fi
 
         echo -n " ""$RESET_COLOURS""$BRANCH_COLOUR${branch}$DIM$BRANCH_COLOUR${extra_info}$RESET_COLOURS"
@@ -212,6 +212,7 @@ function __gitinfo() {
 # building the prompt string
 
 PS1=""
+PS1="$PS1""\[$WHITE\]"'['"\[$RESET_COLOURS\]"
 
 # user (show in red if we are root)
 if [[ "$(id -u)" -eq 0 ]]; then
@@ -228,11 +229,13 @@ PS1="$PS1""\[$WHITE\]""\H""\[$RESET_COLOURS\]"
 PS1="$PS1""\[$DIM\]\[$WHITE\]\$(__vpn_info)\[$RESET_COLOURS\]"
 
 # short path
-PS1="$PS1"":"
+PS1="$PS1"" "
 PS1="$PS1""\[$DIM\]\[$YELLOW\]\$(__shortpath)\[$RESET_COLOURS\]"
 
 # git branch info if any
 PS1="$PS1""\$(__gitinfo)"
+PS1="$PS1""\[$WHITE\]"']'"\[$RESET_COLOURS\]"
+
 PS1="$PS1""\[$RESET_COLOURS\]\\$ "
 
 # ----------------------------------------------------------------------
