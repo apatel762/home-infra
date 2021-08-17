@@ -265,6 +265,9 @@ pathadd() {
     if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
         PATH="${PATH:+"$PATH:"}$1"
     fi
+
+    # see also: https://superuser.com/a/39995
+    # or: https://web.archive.org/web/20200930183945/https://superuser.com/questions/39751/add-directory-to-path-if-its-not-already-there
 }
 
 pathadd "$HOME/.local/bin"
