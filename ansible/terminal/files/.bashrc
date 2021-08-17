@@ -259,13 +259,16 @@ fi
 # ----------------------------------------------------------------------
 # Adding things to PATH if they exist
 
-if [ -d "$HOME/.local/bin" ] ; then
-    PATH="$HOME/.local/bin:$PATH"
-fi
+pathadd() {
+    # don't add the folder if it doesn't exist
+    # or if it's already in the PATH
+    if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
+        PATH="${PATH:+"$PATH:"}$1"
+    fi
+}
 
-if [ -d "$HOME/.bin" ] ; then
-    PATH="$HOME/.bin:$PATH"
-fi
+pathadd "$HOME/.local/bin"
+pathadd "$HOME/.bin"
 
 # ----------------------------------------------------------------------
 # terminal editor
