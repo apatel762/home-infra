@@ -2,9 +2,19 @@
 
 set -e
 
-sudo apt-get update
-sudo apt-get upgrade --autoremove
-sudo apt-get dist-upgrade
+if command -v apt-get &> /dev/null
+then
+    sudo apt-get update
+    sudo apt-get upgrade --autoremove
+    sudo apt-get dist-upgrade
+fi
 
-command -v flatpak && flatpak update
-command -v snap && sudo snap refresh
+if command -v flatpak &> /dev/null
+then
+    flatpak update
+fi
+
+if command -v snap &> /dev/null
+then
+    sudo snap refresh
+fi
