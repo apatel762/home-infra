@@ -40,3 +40,21 @@
   file:
       path: "{{ dotfiles }}/cheatsheets"
       state: directory
+
+# ---------------------------------------------------------------------
+# put the script for installing updates in the right place
+
+- name: Ensure that .local/bin directory exists
+  file:
+      path: "{{ local_bin }}"
+      state: directory
+
+- name: Ensure that the check-for-updates is in the .local/bin
+  copy:
+      src: check-for-updates
+      dest: "{{ local_bin }}/check-for-updates"
+
+- name: Ensure that the check-for-updates script is executable
+  file:
+      path: "{{ local_bin }}/check-for-updates"
+      mode: u=rwx,g=r,o=r
