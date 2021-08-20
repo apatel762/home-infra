@@ -4,4 +4,4 @@ $include /etc/inputrc
 set completion-ignore-case On
 
 # paste text into the terminal safely
-set enable-bracketed-paste on
+set enable-bracketed-paste On

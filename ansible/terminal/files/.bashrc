@@ -63,9 +63,6 @@ shopt -s checkwinsize       # checks term size when bash regains control
 shopt -s expand_aliases     # expand aliases
 shopt -s cmdhist            # save multiline cmds as single line in hist
 
-# ignore case when using TAB completion
-bind "set completion-ignore-case on"
-
 # ----------------------------------------------------------------------
 # shell completions and colours
 
@@ -320,6 +317,9 @@ alias games='$DOTFILES/scripts/games.sh'
 
 export DOTFILES="$HOME/.config/dotfiles"
 export INPUTRC="$DOTFILES/.inputrc"
+
+# ensure that the current INPUTRC is used in the terminal sesh
+bind -f "$INPUTRC"
 
 alias vimrc='$EDITOR $HOME/.vimrc'                      # edit vimrc
 alias bashrc='$EDITOR $HOME/.bashrc'                    # edit bashrc
