@@ -26,6 +26,11 @@ user_pref("privacy.window.maxInnerHeight", 900);
 user_pref("browser.download.forbid_open_with", true);
 user_pref("signon.rememberSignons", false); // we use our own password manager
 
+// the reader view text-to-speech caused crackling noises
+// https://old.reddit.com/r/linuxmint/comments/i19h4k/firefox_causing_crackling_noise_on_reader_mode_is/
+// https://old.reddit.com/r/linuxquestions/comments/gu2kew/sound_crackle_and_pulseaudio_crashes_when_firefox/fsfunz3
+user_pref("media.webspeech.synth.enabled", false);
+
 // really smooth scrolling
 user_pref("general.smoothScroll", true);
 user_pref("general.smoothScroll.currentVelocityWeighting", 0);
