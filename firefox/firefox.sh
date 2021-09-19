@@ -1,12 +1,43 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # ---------------------------------------------------------------------
 # SCRIPT VARIABLES
 
+# echo an error message and exit the script
+oops() {
+  echo "$0:" "$@" >&2
+  exit 1
+}
+
+case "$(uname -s)" in
+  Linux)
+    # only allow the script to run on Linux
+    # because it hasn't been tested on any other OS
+    ;;
+  *)
+    oops "This script only works on Linux"
+    ;;
+esac
+
+# args: $1 = a binary you want to require e.g. tar, gpg, mail
+#       $2 = a message briefly describing what you need the binary for
+require() {
+  command -v "$1" > /dev/null 2>&1 \
+    || oops "you do not have '$1' installed or its not in your PATH; needed for: $2"
+}
+
+require dirname "getting the directory that files are in"
+require logname "getting the login name of the current user"
+require getent "getting entries from the Name Service Switch libraries"
+require cut "manipulating text"
+require ln "making links between files"
+require pidof "checking pid of running processes"
+
 # gets the directory of this script
 ROOTDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-MY_USERNAME="${SUDO_USER:-$(logname 2> /dev/null || echo "${USER}")}"
+# gets the current user's username and home folder
+MY_USERNAME="$(logname 2> /dev/null || echo "${USER}")"
 MY_HOME=$(getent passwd "${MY_USERNAME}" | cut -d: -f6)
 
 # where the custom CSS files are
@@ -22,19 +53,6 @@ FIREFOX_THEME_DIR="${FIREFOX_DIR_HOME}/firefox-themes"
 
 # ---------------------------------------------------------------------
 # HELPER FUNCTIONS
-
-# echo an error message and exit the script
-oops() {
-  echo "$0:" "$@" >&2
-  exit 1
-}
-
-# args: $1 = a binary you want to require e.g. tar, gpg, mail
-#       $2 = a message briefly describing what you need the binary for
-require() {
-  command -v "$1" > /dev/null 2>&1 \
-    || oops "you do not have '$1' installed or its not in your PATH; needed for: $2"
-}
 
 # desc: remove ALL existing firefox themes if any are installed
 remove_firefox_theme() {
@@ -87,8 +105,6 @@ install_all_firefox_stuff() {
 
 
 # ensure that Firefox has been initialised and is not currently running
-
-require pidof "check running processes"
 
 if [[ ! -d "${FIREFOX_DIR_HOME}" ]]; then
   oops "ERROR: Firefox is installed but not yet initialised. Don't forget to close it after you run/initialise it"
