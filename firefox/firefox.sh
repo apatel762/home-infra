@@ -67,8 +67,8 @@ config_firefox() {
     echo "Applying firefox config to: ${d}"
 
     if [[ -f "${d}/prefs.js" ]]; then
-      rm -rf                          "${d}/chrome"
-      ln -sf "${FIREFOX_THEME_DIR}"   "${d}/chrome"
+      rm -rf "${d}/chrome"
+      ln -sf "${FIREFOX_THEME_DIR}" "${d}/chrome"
 
       # run the Arkenfox/userjs updater script
       # to install the hardened userjs (with custom overrides)
@@ -86,14 +86,14 @@ install_all_firefox_stuff() {
   remove_firefox_theme
 
   # ensure that the theme folder exists
-  mkdir -p                                                       "${FIREFOX_THEME_DIR}"
+  mkdir -p "${FIREFOX_THEME_DIR}"
 
   # copy all of the custom theme files to the theme folder
-  cp -rf "${FIREFOX_SRC_DIR}"/*                               -t "${FIREFOX_THEME_DIR}"
+  cp -rf "${FIREFOX_SRC_DIR}"/* -t "${FIREFOX_THEME_DIR}"
 
   # if you've got a custom CSS file then throw that in as well
   if [[ -f "$ROOTDIR"/customChrome.css ]]; then
-    cp -rf "$ROOTDIR"/customChrome.css                        -t "${FIREFOX_THEME_DIR}"
+    cp -rf "$ROOTDIR"/customChrome.css -t "${FIREFOX_THEME_DIR}"
   fi
 
   # apply custom config & firefox hardening
