@@ -255,20 +255,32 @@ fi
 
 # ----------------------------------------------------------------------
 # Adding things to PATH if they exist
+# https://superuser.com/a/39995
+# https://web.archive.org/web/20200930183945/https://superuser.com/questions/39751/add-directory-to-path-if-its-not-already-there
 
-pathadd() {
-    # don't add the folder if it doesn't exist
-    # or if it's already in the PATH
+# don't add the folder if it doesn't exist
+# or if it's already in the PATH
+
+append_to_path() {
     if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
         PATH="${PATH:+"$PATH:"}$1"
     fi
-
-    # see also: https://superuser.com/a/39995
-    # or: https://web.archive.org/web/20200930183945/https://superuser.com/questions/39751/add-directory-to-path-if-its-not-already-there
 }
 
-pathadd "$HOME/.local/bin"
-pathadd "$HOME/.bin"
+prepend_to_path() {
+    if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
+        PATH="$1${PATH:+":$PATH"}"
+    fi
+}
+
+append_to_path "$HOME/.local/bin"
+append_to_path "$HOME/.bin"
+
+# pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+append_to_path "$PYENV_ROOT/bin"
+prepend_to_path "$PYENV_ROOT/shims" # alternative to `eval "$(pyenv init --path)"`
+eval "$(pyenv init -)"
 
 # ----------------------------------------------------------------------
 # terminal editor

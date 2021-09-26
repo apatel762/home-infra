@@ -23,7 +23,23 @@ Most of the configuration is managed by Ansible. Use the `run.sh` in the
 `ansible` folder to install Ansible and run the playbooks for configuring
 `localhost`.
 
-Don't forget to `chmod 744 run.sh` if you can't run it.
+Don't forget to `chmod 744 run.sh` if you can't run it, **and ensure that `python` points to Python 3** (not Python 2, as it will on older operating systems).
+
+You can use `pyenv` to manage your Python versions:
+
+```Bash
+# run the installer
+curl https://pyenv.run | bash
+#curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
+
+# add stuff to your bashrc depending on OS
+# see also, the .bashrc in this repo (in the 'adding things to path' section)
+# https://github.com/pyenv/pyenv#basic-github-checkout
+
+# pick a python version to install
+pyenv list --installed | less
+pyenv install 3.9.7
+```
 
 Resources to help understand Ansible:
 
