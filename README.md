@@ -23,7 +23,7 @@ Most of the configuration is managed by Ansible. Use the `run.sh` in the
 `ansible` folder to install Ansible and run the playbooks for configuring
 `localhost`.
 
-Don't forget to `chmod 744 run.sh` if you can't run it, **and ensure that `python` points to Python 3** (not Python 2, as it will on older operating systems).
+Don't forget to `chmod u=rx,go-rwx run.sh` if you can't run it, **and ensure that `python` points to Python 3** (not Python 2, as it will on older operating systems).
 
 You can use `pyenv` to manage your Python versions:
 
@@ -78,7 +78,8 @@ same copy of Windows again (maybe you wiped Windows and installed Linux over
 it).
 ```Bash
 # become root somehow
-sudo su
+sudo -i
+#su root
 
 apt-get install ntfs-3g
 
