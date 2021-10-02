@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+
+# echo an error message and exit the script
+oops() {
+    echo "$0:" "$@" >&2
+    exit 1
+}
+
+# args: $1 = a binary you want to require e.g. tar, gpg, mail
+#       $2 = a message briefly describing what you need the binary for
+require() {
+    command -v "$1" > /dev/null 2>&1 \
+        || oops "you do not have '$1' installed; needed for: $2"
+}
+
+do_validation() {
+    # wget -O ~/.local/bin/bashids https://raw.githubusercontent.com/benwilber/bashids/master/bashids
+    # chmod 500 ~/.local/bin/bashids
+    require bashids "generating ids based on an input"
+
+    # should be part of coreutils I think?
+    require date "generating almost-unique numbers based on the current date"
+}
+
+generate_email() {
+    local SALT
+    local RANDOM_ID
+    SALT="email at my domain, only used by me"
+    RANDOM_ID="$(bashids -e -l 11 -s "$SALT" "$(date +"%Y%m%d%H%M%S%N")")"
+
+    echo "relay-<service>-$RANDOM_ID"
+}
+
+do_validation
+generate_email

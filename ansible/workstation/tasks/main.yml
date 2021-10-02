@@ -57,4 +57,17 @@
 - name: Ensure that the check-for-updates script is executable
   file:
       path: "{{ local_bin }}/check-for-updates"
-      mode: u=rwx,g=r,o=r
+      mode: u=rx
+
+# ---------------------------------------------------------------------
+# put the email generator in the right place
+
+- name: Ensure that the generate-email script is in the .local/bin
+  copy:
+      src: generate-email
+      dest: "{{ local_bin }}/generate-email"
+
+- name: Ensure that the generate-email script is executable
+  file:
+      path: "{{ local_bin }}/generate-email"
+      mode: u=rx
