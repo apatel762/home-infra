@@ -84,3 +84,16 @@
   file:
       path: "{{ local_bin }}/bashids"
       mode: u=rx
+
+# ---------------------------------------------------------------------
+# put my work vpn config into the dotfiles folder
+
+- name: Ensure that my work VPN config is with my dotfiles
+  copy:
+      src: config-work
+      dest: "{{ dotfiles }}/config-work"
+
+- name: Ensure that my work VPN config has hardened permissions
+  file:
+      path: "{{ dotfiles }}/config-work"
+      mode: u=r
