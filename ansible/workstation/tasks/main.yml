@@ -71,3 +71,16 @@
   file:
       path: "{{ local_bin }}/generate-email"
       mode: u=rx
+
+# ---------------------------------------------------------------------
+# put the bash id generator in its place
+
+- name: Ensure that the bash-id-generator script is in the .local/bin
+  copy:
+      src: bash-id-generator
+      dest: "{{ local_bin }}/bashids"
+
+- name: Ensure that the bash-id-generator script is executable
+  file:
+      path: "{{ local_bin }}/bashids"
+      mode: u=rx
