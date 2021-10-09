@@ -6,3 +6,5 @@
     - role: terminal
     - role: vim
     - role: ssh
+    # clean this up later
+    - role: yt-dlp
