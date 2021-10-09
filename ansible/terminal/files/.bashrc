@@ -477,73 +477,19 @@ ex ()
 }
 
 # ----------------------------------------------------------------------
-# managing firefox profile
+# moving to the firefox profile folder quickly
 
-alias ffp=firefox_profile
-function firefox_profile() {
-    local FIREFOX_PROFILE_FOLDER
-    FIREFOX_PROFILE_FOLDER="$HOME/.mozilla/firefox/ty2439dj.default-1558852188159"
-
-    if [ -d "$FIREFOX_PROFILE_FOLDER" ] ; then
-        cd "$FIREFOX_PROFILE_FOLDER" \
-            || return 1
-                else
-                    echo "sorry, the firefox profile folder you defined doesn't exist"
-                    echo "folder: '$FIREFOX_PROFILE_FOLDER'"
+function __cd_to_firefox_profile_dir() {
+    if ! command -v find &>/dev/null; then
+        echo "cannot find firefox directory - please install `find`"
     fi
-}
-
-function update_material_fox() {
-    local GITHUB_FOLDER
-    GITHUB_FOLDER="$HOME/Documents/Github"
-
-    echo "making $GITHUB_FOLDER"
-    mkdir -p "$GITHUB_FOLDER"
-
-    if [ ! -d "$GITHUB_FOLDER/materialfox" ] ; then
-        echo "cloning 'materialfox'"
-        git clone https://github.com/muckSponge/MaterialFox.git "$GITHUB_FOLDER/materialfox"
-    else
-        echo "you already have 'materialfox' - skipping git clone"
+    if ! command -v fzf &>/dev/null; then
+        echo "cannot find firefox directory - please install `fzf`"
     fi
 
-    cd "$GITHUB_FOLDER/materialfox" && git fetch --all --prune && git pull --autostash --rebase
-
-    # function to go to the firefox profile folder
-    firefox_profile
-
-    echo "copying the chrome folder to your firefox profile"
-    cp -rvu "$GITHUB_FOLDER/materialfox/chrome" -t .
-    echo "done copying files!"
-    echo ""
-    echo "check the materialfox README.md"
-    echo "there is some stuff that needs to be added to your user-overrides.js in $PWD"
+    cd "$(find "$HOME/.mozilla/firefox/"*"default"* -maxdepth 0 -type d | fzf)"
 }
-
-# ----------------------------------------------------------------------
-# cheatsheets
-
-# TODO: 
-#  make these cheatsheets use a script and alias the script
-#  and move the alias nearer to the top of this file
-#  and update the Ansible config
-#  https://github.com/apatel762/dotfiles/issues/2
-
-function show_ssh_agent_instructions() {
-    if [ -f "$DOTFILES/cheatsheets/sshagent.txt" ] ; then
-        printf "\n"
-        cat "$DOTFILES/cheatsheets/sshagent.txt"
-        printf "Currently:\n"
-        ssh-add -l
-    else
-        :
-    fi
-}
-
-# this alias is literally just so i can remind myself of how to generate ssh
-# keys because i dont do it often...
-alias ssh_cmds='more $DOTFILES/ssh.txt'
-alias ssh_agent=show_ssh_agent_instructions
+alias ffp=__cd_to_firefox_profile_dir
 
 # ----------------------------------------------------------------------
 # hashing stuff
