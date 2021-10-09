@@ -121,11 +121,9 @@ save_url() {
     (
         set -x;
         nb use notes
-        # use --skip-content to avoid downloading the page
         nb bookmark "$URL" \
             --filename "$(date +"%Y-%m-%dT%H%M%SZ" --universal).md" \
             --comment "::Bookmark::" \
-            --skip-content \
             --edit
     )
 }
