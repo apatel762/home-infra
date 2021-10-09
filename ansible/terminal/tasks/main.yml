@@ -118,4 +118,46 @@
   shell: >
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
   args:
-    creates: "{{ lookup('env', 'HOME') }}/.nvm/nvm.sh"
+      creates: "{{ lookup('env', 'HOME') }}/.nvm/nvm.sh"
+
+# ---------------------------------------------------------------------
+# install exa (can be used as a replacement to ls)
+
+- name: Get the current stat of the exa binary
+  stat:
+      path: "{{ local_bin }}/exa"
+  register: exa_binary
+
+- name: Download exa v0.10.0
+  get_url:
+      url: https://github.com/ogham/exa/releases/download/v0.10.0/exa-linux-x86_64-v0.10.0.zip
+      dest: /tmp/exa.zip
+      checksum: "sha256:25780ed5b4beb71295770baaa464759f60765b8246347694eeecebd0bc319e1c"
+  when: >
+    exa_binary.stat.exists == false
+
+- name: Ensure that the .config/dotfiles directory exists
+  file:
+      path: /tmp/exa
+      state: directory
+  when: >
+    exa_binary.stat.exists == false
+
+- name: Extract the exa zip
+  unarchive:
+      src: /tmp/exa.zip
+      dest: /tmp/exa
+  when: >
+    exa_binary.stat.exists == false
+
+- name: Ensure that the exa binary is in the local bin
+  copy:
+      src: /tmp/exa/bin/exa
+      dest: "{{ local_bin }}/exa"
+  when: >
+    exa_binary.stat.exists == false
+
+- name: Ensure that the exa binary can be executed by current user
+  file:
+      path: "{{ local_bin }}/exa"
+      mode: u=rx,go-rwx

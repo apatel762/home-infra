@@ -350,8 +350,13 @@ alias cite='python3 $DOTFILES/scripts/cite.py'
 # ls
 
 # I want to add symbols for symlinks and use human readable sizes by default
-# and I want to use the long format
-alias ll='ls -l --all --classify --human-readable'
+# and I want to use the long format. If `exa`, then use that instead of `ls`
+if command -v exa &>/dev/null; then
+    alias ls='exa'
+    alias ll='exa -l --all --classify --git --header'
+else
+    alias ll='ls -l --all --classify --human-readable'
+fi
 
 # ----------------------------------------------------------------------
 # archive.org
