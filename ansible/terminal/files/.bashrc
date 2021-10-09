@@ -233,6 +233,7 @@ PS1="$PS1""\[$DIM\]\[$YELLOW\]\$(__shortpath)\[$RESET_COLOURS\]"
 PS1="$PS1""\$(__gitinfo)"
 PS1="$PS1""\[$WHITE\]"']'"\[$RESET_COLOURS\]"
 
+PS1="$PS1""\n"
 PS1="$PS1""\[$RESET_COLOURS\]\\$ "
 
 # ----------------------------------------------------------------------
