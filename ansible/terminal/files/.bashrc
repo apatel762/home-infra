@@ -278,10 +278,14 @@ append_to_path "$HOME/.local/bin"
 append_to_path "$HOME/.bin"
 
 # pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-append_to_path "$PYENV_ROOT/bin"
-prepend_to_path "$PYENV_ROOT/shims" # alternative to `eval "$(pyenv init --path)"`
-eval "$(pyenv init -)"
+if command -v pyenv &>/dev/null; then
+    export PYENV_ROOT="$HOME/.pyenv"
+    append_to_path "$PYENV_ROOT/bin"
+    prepend_to_path "$PYENV_ROOT/shims" # alternative to `eval "$(pyenv init --path)"`
+
+    # start pyenv now that the PATH variables are set
+    eval "$(pyenv init -)"
+fi
 
 # ----------------------------------------------------------------------
 # terminal editor
