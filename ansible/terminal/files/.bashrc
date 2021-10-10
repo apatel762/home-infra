@@ -440,7 +440,14 @@ function vpn-work() {
 # git
 
 alias fp='git fetch --all --prune && git pull'
-alias dmb='git branch --merged | egrep -v "(^\*|master|main|dev)" | xargs git branch -d'
+
+function __delete_merged_branches() {
+    git fetch -p
+    for branch in $(git branch -vv | grep ': gone]' | awk '{print $1}'); do
+        git branch -D "$branch";
+    done
+}
+alias dmb=__delete_merged_branches
 
 # ----------------------------------------------------------------------
 # zip utils
@@ -450,7 +457,7 @@ alias zipall='for i in */; do zip -r "${i%/}.zip" "$i"; done'
 
 # desc: extract an archive using one of many different archive commands
 # args: $1 = the path to the archive to extract
-ex ()
+ex()
 {
     if [ -f "$1" ] ; then
         case "$1" in
