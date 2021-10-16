@@ -29,8 +29,6 @@
   copy:
       src: yt-dlp.conf
       dest: "{{ local_bin }}/yt-dlp.conf"
-  when: >
-    ytdlp_conf.stat.exists == false
 
 # set the correct file permissions
 
