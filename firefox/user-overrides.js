@@ -1,3 +1,7 @@
+// make performance faster
+// https://linuxreviews.org/HOWTO_Make_Mozilla_Firefox_Blazing_Fast_On_Linux
+user_pref("gfx.x11-egl.force-enabled", true);
+
 // stuff that makes the url bar easier to use
 user_pref("keyword.enabled", true);
 user_pref("browser.urlbar.oneOffSearches", true);
