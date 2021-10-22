@@ -1,7 +1,7 @@
 ---
 - name: Ensure that vim and neovim are installed
   become: yes
-  apt:
+  ansible.builtin.apt:
       state: present
       name:
         - vim
@@ -11,7 +11,7 @@
 # vim config
 
 - name: Ensure that custom .vimrc is in the home folder
-  copy:
+  ansible.builtin.copy:
       src: .vimrc
       dest: "{{ lookup('env', 'HOME') }}/.vimrc"
 
@@ -19,7 +19,7 @@
 # vim-plug (for managing vim plugins)
 
 - name: Ensure that the .vim/autoload folder exists
-  file:
+  ansible.builtin.file:
       path: "{{ lookup('env', 'HOME') }}/.vim/autoload"
       state: directory
 
@@ -27,11 +27,11 @@
 # neovim config
 
 - name: Ensure that the nvim config folder exists
-  file:
+  ansible.builtin.file:
       path: "{{ lookup('env', 'HOME') }}/.config/nvim"
       state: directory
 
 - name: Ensure that custom neovim init file is in nvim config folder
-  copy:
+  ansible.builtin.copy:
       src: init.vim
       dest: "{{ lookup('env', 'HOME') }}/.config/nvim/init.vim"

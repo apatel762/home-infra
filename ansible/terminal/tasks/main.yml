@@ -4,12 +4,12 @@
 # bashrc
 
 - name: Ensure that custom .bashrc is in the home folder
-  copy:
+  ansible.builtin.copy:
       src: .bashrc
       dest: "{{ bashrc }}"
 
 - name: Ensure that DOTFILES is exported in .bashrc
-  lineinfile:
+  ansible.builtin.lineinfile:
       path: "{{ bashrc }}"
       regexp: "^export DOTFILES"
       line: export DOTFILES="$HOME/.config/dotfiles"
@@ -18,7 +18,7 @@
 # gitconfig
 
 - name: Ensure that custom .gitconfig is in the home folder
-  copy:
+  ansible.builtin.copy:
       src: .gitconfig
       dest: "{{ gitconfig }}"
 
@@ -26,12 +26,12 @@
 # inputrc
 
 - name: Ensure that custom .inputrc is in our dotfiles folder
-  copy:
+  ansible.builtin.copy:
       src: .inputrc
       dest: "{{ dotfiles }}/.inputrc"
 
 - name: Ensure that INPUTRC is exported in .bashrc
-  lineinfile:
+  ansible.builtin.lineinfile:
       path: "{{ bashrc }}"
       regexp: "^export INPUTRC"
       line: export INPUTRC="$DOTFILES/.inputrc"
@@ -40,27 +40,27 @@
 # note-taking stuff
 
 - name: Ensure notes.sh is in .config/dotfiles
-  copy:
+  ansible.builtin.copy:
       src: notes.sh
       dest: "{{ dotfiles }}/scripts/notes.sh"
 
 - name: Ensure notes.sh can be executed by current user
-  file:
+  ansible.builtin.file:
       path: "{{ dotfiles }}/scripts/notes.sh"
       mode: u=rwx,g=r,o=r
 
 - name: Ensure preview.sh is in .config/dotfiles
-  copy:
+  ansible.builtin.copy:
       src: preview.sh
       dest: "{{ dotfiles }}/scripts/preview.sh"
 
 - name: Ensure preview.sh can be executed by current user
-  file:
+  ansible.builtin.file:
       path: "{{ dotfiles }}/scripts/preview.sh"
       mode: u=rwx,g=r,o=r
 
 - name: Ensure that note-taking alias is present in .bashrc
-  lineinfile:
+  ansible.builtin.lineinfile:
       path: "{{ bashrc }}"
       regexp: "^alias nv"
       line: alias nv='$DOTFILES/scripts/notes.sh'
@@ -69,17 +69,17 @@
 # more note-taking stuff (web page citations)
 
 - name: Ensure cite.py is in .config/dotfiles
-  copy:
+  ansible.builtin.copy:
       src: cite.py
       dest: "{{ dotfiles }}/scripts/cite.py"
 
 - name: Ensure cite.py can be executed by current user
-  file:
+  ansible.builtin.file:
       path: "{{ dotfiles }}/scripts/cite.py"
       mode: u=rwx,g=r,o=r
 
 - name: Ensure that citation alias is present in .bashrc
-  lineinfile:
+  ansible.builtin.lineinfile:
       path: "{{ bashrc }}"
       regexp: "^alias cite"
       line: alias cite='python3 $DOTFILES/scripts/cite.py'
@@ -88,17 +88,17 @@
 # games script
 
 - name: Ensure games.sh is in .config/dotfiles
-  copy:
+  ansible.builtin.copy:
       src: games.sh
       dest: "{{ dotfiles }}/scripts/games.sh"
 
 - name: Ensure games.sh can be executed by current user
-  file:
+  ansible.builtin.file:
       path: "{{ dotfiles }}/scripts/games.sh"
       mode: u=rwx,g=r,o=r
 
 - name: Ensure that alias for launching games is present in .bashrc
-  lineinfile:
+  ansible.builtin.lineinfile:
       path: "{{ bashrc }}"
       regexp: "^alias games"
       line: alias games='$DOTFILES/scripts/games.sh'
@@ -107,7 +107,7 @@
 # putting cheatsheets in common folder
 
 - name: Ensure cheatsheets are in .config/dotfiles
-  copy:
+  ansible.builtin.copy:
       src: cheatsheets/
       dest: "{{ dotfiles }}/cheatsheets/"
 
@@ -115,7 +115,7 @@
 # install nvm (for managing node versions)
 
 - name: Ensure that nvm v0.38.0 is installed
-  shell: >
+  ansible.builtin.shell: >
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
   args:
       creates: "{{ lookup('env', 'HOME') }}/.nvm/nvm.sh"
@@ -124,12 +124,12 @@
 # install exa (can be used as a replacement to ls)
 
 - name: Get the current stat of the exa binary
-  stat:
+  ansible.builtin.stat:
       path: "{{ local_bin }}/exa"
   register: exa_binary
 
 - name: Download exa v0.10.0
-  get_url:
+  ansible.builtin.get_url:
       url: https://github.com/ogham/exa/releases/download/v0.10.0/exa-linux-x86_64-v0.10.0.zip
       dest: /tmp/exa.zip
       checksum: "sha256:25780ed5b4beb71295770baaa464759f60765b8246347694eeecebd0bc319e1c"
@@ -137,7 +137,7 @@
     exa_binary.stat.exists == false
 
 - name: Ensure that the .config/dotfiles directory exists
-  file:
+  ansible.builtin.file:
       path: /tmp/exa
       state: directory
   when: >
@@ -151,13 +151,13 @@
     exa_binary.stat.exists == false
 
 - name: Ensure that the exa binary is in the local bin
-  copy:
+  ansible.builtin.copy:
       src: /tmp/exa/bin/exa
       dest: "{{ local_bin }}/exa"
   when: >
     exa_binary.stat.exists == false
 
 - name: Ensure that the exa binary can be executed by current user
-  file:
+  ansible.builtin.file:
       path: "{{ local_bin }}/exa"
       mode: u=rx,go-rwx
