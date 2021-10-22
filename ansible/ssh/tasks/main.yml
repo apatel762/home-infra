@@ -1,22 +1,22 @@
 ---
 - name: Ensure that the .config/systemd/user directory exists
-  file:
+  ansible.builtin.file:
       path: "{{ systemd_local }}"
       state: directory
 
 - name: Ensure that ssh-agent.service exists in local systemd config
-  copy:
+  ansible.builtin.copy:
       src: ssh-agent.service
       dest: "{{ systemd_local }}/ssh-agent.service"
 
 - name: Ensure that SSH_AUTH_SOCK is exported in .bashrc
-  lineinfile:
+  ansible.builtin.lineinfile:
       path: "{{ bashrc }}"
       regexp: "^export SSH_AUTH_SOCK"
       line: export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
 - name: Ensure that ssh-agent.service is running
-  systemd:
+  ansible.builtin.systemd:
       name: ssh-agent
       scope: user
       state: started

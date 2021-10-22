@@ -1,0 +1,25 @@
+---
+
+# ---------------------------------------------------------------------
+# put cheatsheets & script for viewing them into dotfiles config
+
+- name: Ensure that all cheatsheets are in the .config dotfiles folder
+  ansible.posix.synchronize:
+      src: ./cheatsheets/
+      dest: "{{ dotfiles }}/cheatsheets/"
+
+- name: Ensure that the cheatsheet-search script is in the .config dotfiles folder
+  ansible.builtin.copy:
+      src: cheat
+      dest: "{{ dotfiles }}/cheat"
+
+- name: Ensure that the cheatsheet-search script is executable
+  ansible.builtin.file:
+      path: "{{ dotfiles }}/cheat"
+      mode: u=rx,go-rwx
+
+- name: Ensure that an alias for using the cheatsheet-search script is in .bashrc
+  ansible.builtin.lineinfile:
+      path: "{{ bashrc }}"
+      regexp: "^alias cheat"
+      line: alias cheat="$DOTFILES/cheat"

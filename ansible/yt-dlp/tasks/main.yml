@@ -6,19 +6,19 @@
 # registering some facts first (to see if we need to do anything)
 
 - name: Get the current stat of the yt-dlp binary
-  stat:
+  ansible.builtin.stat:
       path: "{{ local_bin }}/yt-dlp"
   register: ytdlp_binary
 
 - name: Get the current stat of the yt-dlp config file
-  stat:
+  ansible.builtin.stat:
       path: "{{ local_bin }}/yt-dlp.conf"
   register: ytdlp_conf
 
 # if necessary, download and install yt-dlp
 
 - name: Download yt-dlp v2021.09.25
-  get_url:
+  ansible.builtin.get_url:
       url: https://github.com/yt-dlp/yt-dlp/releases/download/2021.09.25/yt-dlp
       dest: "{{ local_bin }}/yt-dlp"
       checksum: "sha256:25cc412d1d3c0725a1f2f5b7e4682f6fb40e6d15f7024e96f7afd572e9919535"
@@ -26,18 +26,18 @@
     ytdlp_binary.stat.exists == false
 
 - name: Ensure that the yt-dlp.conf file exists in the local bin
-  copy:
+  ansible.builtin.copy:
       src: yt-dlp.conf
       dest: "{{ local_bin }}/yt-dlp.conf"
 
 # set the correct file permissions
 
 - name: Ensure that the yt-dlp binary can be executed by current user
-  file:
+  ansible.builtin.file:
       path: "{{ local_bin }}/yt-dlp"
       mode: u=rx,go-rwx
 
 - name: Ensure that the yt-dlp.conf is only readable by the current user
-  file:
+  ansible.builtin.file:
       path: "{{ local_bin }}/yt-dlp.conf"
       mode: u=r,go-rwx

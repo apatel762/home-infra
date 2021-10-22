@@ -14,6 +14,11 @@ require() {
 }
 
 require ansible
+require ansible-playbook
+require ansible-galaxy
+
+# install required ansible community modules
+ansible-galaxy collection install ansible.posix
 
 # gets the directory of this script
 ROOTDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

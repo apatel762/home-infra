@@ -1,7 +1,7 @@
 ---
 - name: Ensure that common packages are installed
   become: yes
-  apt:
+  ansible.builtin.apt:
       state: present
       name:
         # all of the useful terminal commands
@@ -23,21 +23,24 @@
         - curl
         - fzf
 
+        # for synchronising files with Ansible
+        - rsync
+
 # ---------------------------------------------------------------------
 # create a folder to put my dotfiles and scripts
 
 - name: Ensure that the .config/dotfiles directory exists
-  file:
+  ansible.builtin.file:
       path: "{{ dotfiles }}"
       state: directory
 
 - name: Ensure that the .config/dotfiles/scripts directory exists
-  file:
+  ansible.builtin.file:
       path: "{{ dotfiles }}/scripts"
       state: directory
 
 - name: Ensure that the .config/dotfiles/scripts directory exists
-  file:
+  ansible.builtin.file:
       path: "{{ dotfiles }}/cheatsheets"
       state: directory
 
@@ -45,17 +48,17 @@
 # put the script for installing updates in the right place
 
 - name: Ensure that .local/bin directory exists
-  file:
+  ansible.builtin.file:
       path: "{{ local_bin }}"
       state: directory
 
 - name: Ensure that the check-for-updates is in the .local/bin
-  copy:
+  ansible.builtin.copy:
       src: check-for-updates
       dest: "{{ local_bin }}/check-for-updates"
 
 - name: Ensure that the check-for-updates script is executable
-  file:
+  ansible.builtin.file:
       path: "{{ local_bin }}/check-for-updates"
       mode: u=rx
 
@@ -63,12 +66,12 @@
 # put the email generator in the right place
 
 - name: Ensure that the generate-email script is in the .local/bin
-  copy:
+  ansible.builtin.copy:
       src: generate-email
       dest: "{{ local_bin }}/generate-email"
 
 - name: Ensure that the generate-email script is executable
-  file:
+  ansible.builtin.file:
       path: "{{ local_bin }}/generate-email"
       mode: u=rx
 
@@ -76,12 +79,12 @@
 # put the bash id generator in its place
 
 - name: Ensure that the bash-id-generator script is in the .local/bin
-  copy:
+  ansible.builtin.copy:
       src: bash-id-generator
       dest: "{{ local_bin }}/bashids"
 
 - name: Ensure that the bash-id-generator script is executable
-  file:
+  ansible.builtin.file:
       path: "{{ local_bin }}/bashids"
       mode: u=rx
 
@@ -89,11 +92,11 @@
 # put my work vpn config into the dotfiles folder
 
 - name: Ensure that my work VPN config is with my dotfiles
-  copy:
+  ansible.builtin.copy:
       src: config-work
       dest: "{{ dotfiles }}/config-work"
 
 - name: Ensure that my work VPN config has hardened permissions
-  file:
+  ansible.builtin.file:
       path: "{{ dotfiles }}/config-work"
       mode: u=r,go-rwx

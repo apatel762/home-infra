@@ -7,4 +7,4 @@
     - role: vim
     - role: ssh
     # clean this up later
-    - role: yt-dlp
+    - role: yt-dlp    - role: cheatsheets

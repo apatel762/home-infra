@@ -325,27 +325,35 @@ fi
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
 # ----------------------------------------------------------------------
-# games
-
-# a script that quickly launches games defined in the file.
-alias games='$DOTFILES/scripts/games.sh'
-
-# ----------------------------------------------------------------------
 # quick config editing
 
 export DOTFILES="$HOME/.config/dotfiles"
 export INPUTRC="$DOTFILES/.inputrc"
 
-# ensure that the current INPUTRC is used in the terminal sesh
-bind -f "$INPUTRC"
+
+if [ -f "$INPUTRC" ] ; then
+    # ensure that the current INPUTRC is used in the terminal sesh
+    # if it's present
+    bind -f "$INPUTRC"
+fi
+
+alias bp='echo "source ~/.bashrc" && source ~/.bashrc'  # refresh bash
 
 alias vimrc='$EDITOR $HOME/.vimrc'                      # edit vimrc
 alias bashrc='$EDITOR $HOME/.bashrc'                    # edit bashrc
 alias gitconfig='$EDITOR $HOME/.gitconfig'              # edit gitconfig
+
 alias dotfiles='pushd $DOTFILES'                        # go to dotfiles
-alias bp='echo "source ~/.bashrc" && source ~/.bashrc'  # refresh bash
+
 alias nv='$DOTFILES/scripts/notes.sh'
+alias cheat='$DOTFILES/cheat'
 alias cite='python3 $DOTFILES/scripts/cite.py'
+
+# ----------------------------------------------------------------------
+# games
+
+# a script that quickly launches games defined in the file.
+alias games='$DOTFILES/scripts/games.sh'
 
 # ----------------------------------------------------------------------
 # ls
