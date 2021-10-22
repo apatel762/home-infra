@@ -96,4 +96,4 @@
 - name: Ensure that my work VPN config has hardened permissions
   file:
       path: "{{ dotfiles }}/config-work"
-      mode: u=r
+      mode: u=r,go-rwx
