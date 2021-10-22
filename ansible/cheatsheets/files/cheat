@@ -59,7 +59,7 @@ pick_a_cheatsheet_and_view_it() {
         cd "$CHEATSHEETS_DIR";
         find . -maxdepth 1 -type f -exec basename {} \; \
             | sort \
-            | fzf \
+            | fzf "${FZF_OPTS[@]}" \
             | xargs -I{} less '{}'
     )
 }

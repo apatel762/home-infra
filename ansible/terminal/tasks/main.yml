@@ -104,14 +104,6 @@
       line: alias games='$DOTFILES/scripts/games.sh'
 
 # ---------------------------------------------------------------------
-# putting cheatsheets in common folder
-
-- name: Ensure cheatsheets are in .config/dotfiles
-  ansible.builtin.copy:
-      src: cheatsheets/
-      dest: "{{ dotfiles }}/cheatsheets/"
-
-# ---------------------------------------------------------------------
 # install nvm (for managing node versions)
 
 - name: Ensure that nvm v0.38.0 is installed

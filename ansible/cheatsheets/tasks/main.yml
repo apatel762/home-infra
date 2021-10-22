@@ -22,4 +22,4 @@
   ansible.builtin.lineinfile:
       path: "{{ bashrc }}"
       regexp: "^alias cheat"
-      line: alias cheat="$DOTFILES/cheat"
+      line: alias cheat='$DOTFILES/cheat'
