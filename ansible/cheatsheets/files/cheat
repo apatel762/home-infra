@@ -1,3 +1,71 @@
 #!/usr/bin/env bash
 
-echo "todo: implement cheatsheet script"
+# ----------------------------------------------------------------------
+# Variables
+
+CHEATSHEETS_DIR="$DOTFILES/cheatsheets"
+
+FZF_OPTS=(
+    "--height" "20%"
+    "--border"
+    "--layout=reverse"
+    "--cycle"
+)
+
+# the directory of this script
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# ----------------------------------------------------------------------
+# Util function/s
+
+# echo an error message and exit the script
+oops() {
+    echo "$0:" "$@" >&2
+    exit 1
+}
+
+# args: $1 = a binary you want to require e.g. tar, gpg, mail
+#       $2 = a message briefly describing what you need the binary for
+require() {
+    command -v "$1" > /dev/null 2>&1 \
+        || oops "you do not have '$1' installed; needed for: $2"
+}
+
+log() {
+    echo "[$(date)] - $1"
+}
+
+do_validation() {
+    require basename "for finding the name of a file without the leading './'"
+    require more "for paging through the notes"
+    require find "for finding files"
+    require sort "for sorting results"
+    require fzf "for picking results from a list"
+
+    if [ ! -d "$CHEATSHEETS_DIR" ] ; then
+        oops "cannot search cheatsheets, the '$CHEATSHEETS_DIR' folder doesn't exist"
+    fi
+
+    if [ -z "$EDITOR" ] ; then
+        oops "please set the EDITOR env variable before continuing"
+    fi
+}
+
+# ----------------------------------------------------------------------
+# Actual logic
+
+pick_a_cheatsheet_and_view_it() {
+    (
+        cd "$CHEATSHEETS_DIR";
+        find . -maxdepth 1 -type f -exec basename {} \; \
+            | sort \
+            | fzf \
+            | xargs -I{} less '{}'
+    )
+}
+
+# ----------------------------------------------------------------------
+# Main script execution
+
+do_validation
+pick_a_cheatsheet_and_view_it
