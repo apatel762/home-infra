@@ -17,11 +17,11 @@
 
 # if necessary, download and install yt-dlp
 
-- name: Download yt-dlp v2021.09.25
+- name: Download yt-dlp v2021.10.22
   ansible.builtin.get_url:
-      url: https://github.com/yt-dlp/yt-dlp/releases/download/2021.09.25/yt-dlp
+      url: https://github.com/yt-dlp/yt-dlp/releases/download/2021.10.22/yt-dlp
       dest: "{{ local_bin }}/yt-dlp"
-      checksum: "sha256:25cc412d1d3c0725a1f2f5b7e4682f6fb40e6d15f7024e96f7afd572e9919535"
+      checksum: "sha256:a8777f1a405db3340530470a0bf472eadd0d0fb2d25c635f4968137644b82f42"
   when: >
     ytdlp_binary.stat.exists == false
 
@@ -35,7 +35,7 @@
 - name: Ensure that the yt-dlp binary can be executed by current user
   ansible.builtin.file:
       path: "{{ local_bin }}/yt-dlp"
-      mode: u=rx,go-rwx
+      mode: u=rwx,go-rwx
 
 - name: Ensure that the yt-dlp.conf is only readable by the current user
   ansible.builtin.file:
