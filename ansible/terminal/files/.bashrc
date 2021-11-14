@@ -368,6 +368,14 @@ else
 fi
 
 # ----------------------------------------------------------------------
+# easy alias for opening stuff
+
+# set the default terminal editor
+if command -v xdg-open &>/dev/null; then
+    alias open='xdg-open'
+fi
+
+# ----------------------------------------------------------------------
 # archive.org
 
 # open the archived version of a link in the web browser
