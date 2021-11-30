@@ -325,6 +325,16 @@ fi
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
 # ----------------------------------------------------------------------
+# nix
+
+# if you have Nix installed on your machine, this will source the Nix profile
+# into your shell every time you start a new shell
+
+if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then
+    source "$HOME/.nix-profile/etc/profile.d/nix.sh"
+fi
+
+# ----------------------------------------------------------------------
 # quick config editing
 
 export DOTFILES="$HOME/.config/dotfiles"
