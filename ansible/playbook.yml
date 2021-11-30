@@ -6,6 +6,7 @@
     - role: terminal
     - role: vim
     - role: ssh
+    - role: nix-stuff
     # clean this up later
     - role: yt-dlp
     - role: cheatsheets
