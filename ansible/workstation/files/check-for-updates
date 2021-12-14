@@ -14,8 +14,3 @@ then
     flatpak uninstall --assumeyes --unused
     flatpak update --assumeyes
 fi
-
-if command -v snap &> /dev/null
-then
-    sudo snap refresh
-fi
