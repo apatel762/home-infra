@@ -5,8 +5,8 @@ set -e
 if command -v apt-get &> /dev/null
 then
     sudo apt-get update
-    sudo apt-get upgrade --autoremove
-    sudo apt-get dist-upgrade
+    sudo apt-get upgrade --assume-yes --autoremove
+    sudo apt-get dist-upgrade --assume-yes
 fi
 
 if command -v flatpak &> /dev/null
