@@ -1,6 +1,7 @@
-/* make the font size smaller (because resist fingerprinting makes it too big) */
-
 /*
+ * make the font size smaller (because resist fingerprinting makes it too big)
+ */
+
 .tabbrowser-tab {
     font-size: 12px !important;
 }
@@ -9,4 +10,4 @@
 #searchbar {
     font-size: 14px !important;
 }
-*/
+
