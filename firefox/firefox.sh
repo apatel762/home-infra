@@ -42,7 +42,7 @@ MY_HOME=$(getent passwd "${MY_USERNAME}" | cut -d: -f6)
 
 # where the custom CSS files are
 # the script will copy the files from here to your themes folder
-FIREFOX_SRC_DIR="$ROOTDIR/edge-firefox/chrome"
+FIREFOX_THEME_USER_CHROME="$ROOTDIR/waterfall/userChrome.css"
 
 # local firefox config
 FIREFOX_DIR_HOME="${MY_HOME}/.mozilla/firefox"
@@ -89,11 +89,11 @@ install_all_firefox_stuff() {
   mkdir -p "${FIREFOX_THEME_DIR}"
 
   # copy all of the custom theme files to the theme folder
-  cp -rf "${FIREFOX_SRC_DIR}"/* -t "${FIREFOX_THEME_DIR}"
+  cp "${FIREFOX_THEME_USER_CHROME}" -t "${FIREFOX_THEME_DIR}"
 
-  # if you've got a custom CSS file then throw that in as well
+  # if you've got a custom CSS file then append that to the userChrome.css
   if [[ -f "$ROOTDIR"/customChrome.css ]]; then
-    cp -rf "$ROOTDIR"/customChrome.css -t "${FIREFOX_THEME_DIR}"
+    cat "$ROOTDIR"/customChrome.css >> "${FIREFOX_THEME_DIR}/userChrome.css"
   fi
 
   # apply custom config & firefox hardening

@@ -47,8 +47,7 @@ user_pref("mousewheel.min_line_scroll_amount", 25);
 // enable customisation via style sheets
 user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
 
-// customisations for edge-frfox
+// customisations for cascade
+user_pref("layers.acceleration.force-enabled", true);
+user_pref("gfx.webrender.all", true);
 user_pref("svg.context-properties.content.enabled", true);
-user_pref("browser.tabs.tabClipWidth", 83);
-user_pref("security.insecure_connection_text.enabled", true);
-user_pref("layout.css.color-mix.enabled", true);
