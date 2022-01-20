@@ -1,3 +1,6 @@
 [submodule "firefox/userjs"]
 	path = firefox/userjs
 	url = https://github.com/arkenfox/user.js
+[submodule "firefox/waterfall"]
+	path = firefox/waterfall
+	url = https://github.com/crambaud/waterfall
