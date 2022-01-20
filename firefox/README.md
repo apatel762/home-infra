@@ -30,7 +30,7 @@ You can remove a submodule using these commands (all of the commands were run fr
 # de-register the submodule
 git submodule deinit -f -- whitesur
 
-rm -r ../.git/modules/firefox/whitesur/
+rm -rf ../.git/modules/firefox/whitesur/
 git rm -f whitesur/
 
 # and then commit the changes
