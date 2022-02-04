@@ -9,3 +9,6 @@
     # Fancy looking commit log
     hist = log --all --graph --decorate --oneline
     last = log --all --graph --decorate --oneline -10
+
+[ghq]
+    root = ~/Documents/Projects
