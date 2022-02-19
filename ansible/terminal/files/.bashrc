@@ -378,6 +378,21 @@ else
 fi
 
 # ----------------------------------------------------------------------
+# ghq (easily change directories)
+
+function __cd_to_git_repos_folder() {
+    if ! command -v ghq &>/dev/null; then
+        echo "install ghq first"
+    fi
+    if ! command -v fzf &>/dev/null; then
+        echo "install fzf first"
+    fi
+    cd "$(ghq list -p | fzf)"
+}
+
+alias proj=__cd_to_git_repos_folder
+
+# ----------------------------------------------------------------------
 # easy alias for opening stuff
 
 # set the default terminal editor
