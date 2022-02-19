@@ -42,7 +42,8 @@ MY_HOME=$(getent passwd "${MY_USERNAME}" | cut -d: -f6)
 
 # where the custom CSS files are
 # the script will copy the files from here to your themes folder
-FIREFOX_THEME_USER_CHROME="$ROOTDIR/compact-fox/userChrome.css"
+FIREFOX_THEME_USER_CHROME="$ROOTDIR/edge-frfox/chrome"
+#FIREFOX_THEME_USER_CHROME="$ROOTDIR/your-theme-folder/userChrome.css"
 
 # local firefox config
 FIREFOX_DIR_HOME="${MY_HOME}/.mozilla/firefox"
@@ -89,7 +90,8 @@ install_all_firefox_stuff() {
   mkdir -p "${FIREFOX_THEME_DIR}"
 
   # copy all of the custom theme files to the theme folder
-  cp "${FIREFOX_THEME_USER_CHROME}" -t "${FIREFOX_THEME_DIR}"
+  #cp "${FIREFOX_THEME_USER_CHROME}" -t "${FIREFOX_THEME_DIR}"
+  cp -ru "${FIREFOX_THEME_USER_CHROME}"/* -t "${FIREFOX_THEME_DIR}"
 
   # if you've got a custom CSS file then append that to the userChrome.css
   if [[ -f "$ROOTDIR"/customChrome.css ]]; then
