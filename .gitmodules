@@ -1,3 +1,6 @@
 [submodule "firefox/userjs"]
 	path = firefox/userjs
 	url = https://github.com/arkenfox/user.js
+[submodule "firefox/compact-fox"]
+	path = firefox/compact-fox
+	url = https://github.com/Tnings/CompactFox
