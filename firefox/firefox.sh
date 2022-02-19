@@ -42,7 +42,7 @@ MY_HOME=$(getent passwd "${MY_USERNAME}" | cut -d: -f6)
 
 # where the custom CSS files are
 # the script will copy the files from here to your themes folder
-FIREFOX_THEME_USER_CHROME="$ROOTDIR/waterfall/userChrome.css"
+FIREFOX_THEME_USER_CHROME="$ROOTDIR/compact-fox/userChrome.css"
 
 # local firefox config
 FIREFOX_DIR_HOME="${MY_HOME}/.mozilla/firefox"
