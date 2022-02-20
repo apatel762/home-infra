@@ -62,7 +62,6 @@ standalone_applications:
 #  gnome boxes
 #  brave browser
 #  calibre
-#  cryptomator
 #  gnome extensions -- might not be necessary, haven't tried out Gnome 41+ properly
 #  flameshot -- could possibly be a native alternative in Gnome 41+?
 #  flatseal
@@ -71,7 +70,6 @@ standalone_applications:
 #  google chrome
 #  jellyfin mpv shim
 #  mpv
-#  keepass xc
 #  microsoft teams
 #  microsoft edge
 #  minecraft
