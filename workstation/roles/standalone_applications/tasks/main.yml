@@ -10,4 +10,5 @@
     url: "{{ item.url }}"
     dest: "{{ standalone_applications_folder }}/{{ item.file_name }}"
     checksum: "sha256:{{ item.sha256 }}"
+    mode: "u=rwx,g=r,o=r"
   loop: "{{ standalone_applications }}"
