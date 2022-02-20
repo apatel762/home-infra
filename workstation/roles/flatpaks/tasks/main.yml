@@ -12,7 +12,6 @@
   community.general.flatpak:
     name: "{{ item.package }}"
     state: absent
-    method: user
     remote: "{{ item.remote }}"
   loop: "{{ flatpak_apps_to_remove | default([]) }}"
 
