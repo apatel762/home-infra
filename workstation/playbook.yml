@@ -4,3 +4,4 @@
   roles:
     - { role: package_layering }
     - { role: flatpaks }
+    - { role: standalone_applications }
