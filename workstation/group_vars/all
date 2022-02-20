@@ -28,3 +28,5 @@ flatpak_apps_to_install:
 flatpak_apps_to_remove:
   - { remote: 'fedora', package: 'org.gnome.Maps' }
   - { remote: 'fedora', package: 'org.gnome.Connections' }
+  - { remote: 'fedora', package: 'org.gnome.Contacts' }
+  - { remote: 'fedora', package: 'org.gnome.Calendar' }
