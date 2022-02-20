@@ -3,3 +3,6 @@ vim/.vim/
 
 # sensitive info
 ansible/vault-password-file
+
+workstation/venv
+workstation/.python-version
