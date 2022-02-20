@@ -5,4 +5,4 @@ install:
 	@./install.sh
 
 apply:
-	ansible-playbook playbook.yml --inventory hosts.ini --ask-become-pass
+	venv/bin/ansible-playbook playbook.yml --inventory hosts.ini --ask-become-pass
