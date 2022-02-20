@@ -2,6 +2,6 @@
 
 - hosts: all
   roles:
-    - { role: package_layering }
-    - { role: flatpaks }
-    - { role: standalone_applications }
+    - role: package_layering
+    - role: flatpaks
+    - role: standalone_applications
