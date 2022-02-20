@@ -30,3 +30,33 @@ flatpak_apps_to_remove:
   - { remote: 'fedora', package: 'org.gnome.Connections' }
   - { remote: 'fedora', package: 'org.gnome.Contacts' }
   - { remote: 'fedora', package: 'org.gnome.Calendar' }
+
+# todo: figure out how to install these apps:
+#  anki
+#  gnome boxes
+#  brave browser
+#  calibre
+#  cryptomator
+#  gnome extensions -- might not be necessary, haven't tried out Gnome 41+ properly
+#  flameshot -- could possibly be a native alternative in Gnome 41+?
+#  flatseal
+#  foliate
+#  freetube
+#  google chrome
+#  jellyfin mpv shim
+#  mpv
+#  keepass xc
+#  microsoft teams
+#  microsoft edge
+#  minecraft
+#  neovim
+#  obsidian
+#  pycharm -- might not be necessary?
+#  spotify
+#  steam
+#  tor -- don't know if this is possible
+#  vscode
+
+# todo: customise wallpaper
+# todo: setup toolboxes?
+# todo: customise gnome?
