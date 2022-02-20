@@ -1,0 +1,13 @@
+---
+
+- name: Ensure that the Applications folder exists
+  ansible.builtin.file:
+    path: "{{ standalone_applications_folder }}"
+    state: directory
+
+- name: Ensure that all standalone apps are present in the Applications folder
+  ansible.builtin.get_url:
+    url: "{{ item.url }}"
+    dest: "{{ standalone_applications_folder }}/{{ item.file_name }}"
+    checksum: "sha256:{{ item.sha256 }}"
+  loop: "{{ standalone_applications }}"

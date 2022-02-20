@@ -31,6 +31,34 @@ flatpak_apps_to_remove:
   - { remote: 'fedora', package: 'org.gnome.Contacts' }
   - { remote: 'fedora', package: 'org.gnome.Calendar' }
 
+# =====================================================================
+# Standalone Applications
+#
+# These are applications that can't be found as Flatpaks (or are
+# difficult to install as Flatpaks).
+#
+# Each application is fully contained in one file (realistically, this
+# means that the applications are all 'AppImage' files).
+
+standalone_applications_folder: "{{ lookup('env', 'HOME') }}/Applications"
+
+standalone_applications:
+  - {
+    url: 'https://github.com/keepassxreboot/keepassxc/releases/download/2.6.6/KeePassXC-2.6.6-x86_64.AppImage',
+    sha256: '0928b4a748ab2a8c95931ffe1afc31c74ff47e3891ef8ff42b87acf014672f18',
+    file_name: 'KeePassXC.AppImage'
+  }
+  - {
+    url: 'https://github.com/cryptomator/cryptomator/releases/download/1.6.5/cryptomator-1.6.5-x86_64.AppImage',
+    sha256: '340bb96df4cf0121640688e9707d51c916cd6257a40ba0b19b1fa21de0cf2b52',
+    file_name: 'Cryptomator.AppImage'
+  }
+  - {
+    url: 'https://github.com/nextcloud/desktop/releases/download/v3.2.4/Nextcloud-3.2.4-x86_64.AppImage',
+    sha256: '5d0c13ba422c445c4a88cd45a1b38878daf67123552b0f4a6020a73734c47ce6',
+    file_name: 'Nextcloud.AppImage'
+  }
+
 # todo: figure out how to install these apps:
 #  anki
 #  gnome boxes
