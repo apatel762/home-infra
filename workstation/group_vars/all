@@ -21,6 +21,10 @@ flatpak_remotes:
   - { name: 'flathub', url: 'https://dl.flathub.org/repo/flathub.flatpakrepo' }
   - { name: 'flathub-beta', url: 'https://flathub.org/beta-repo/flathub-beta.flatpakrepo' }
 
-flatpak_apps:
+flatpak_apps_to_install:
   - { remote: 'flathub', package: 'com.github.tchx84.Flatseal' }
   - { remote: 'flathub-beta', package: 'com.microsoft.Edge' }
+
+flatpak_apps_to_remove:
+  - { remote: 'fedora', package: 'org.gnome.Maps' }
+  - { remote: 'fedora', package: 'org.gnome.Connections' }
