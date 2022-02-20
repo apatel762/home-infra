@@ -6,13 +6,13 @@
     state: present
   become: yes
   become_method: sudo
-  loop: "{{ packages_to_layer | default([]) }}"
+  loop: "{{ packages_to_layer }}"
 
 - name: Ensuring that unnecessary layered packages are removed
   ansible.builtin.command: rpm-ostree override remove {{ item }}
   become: yes
   become_method: sudo
-  loop: "{{ packages_to_remove | default([]) }}"
+  loop: "{{ packages_to_remove }}"
 
 - debug:
     msg: "Reboot your machine to complete the package layering changes"

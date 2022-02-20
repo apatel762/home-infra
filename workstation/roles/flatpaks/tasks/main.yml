@@ -6,14 +6,14 @@
     state: present
     method: user
     flatpakrepo_url: "{{ item.url }}"
-  loop: "{{ flatpak_remotes | default([]) }}"
+  loop: "{{ flatpak_remotes }}"
 
 - name: Ensure that all unwanted Flatpak apps are absent
   community.general.flatpak:
     name: "{{ item.package }}"
     state: absent
     remote: "{{ item.remote }}"
-  loop: "{{ flatpak_apps_to_remove | default([]) }}"
+  loop: "{{ flatpak_apps_to_remove }}"
 
 - name: Ensure that all required Flatpak apps are present
   community.general.flatpak:
@@ -21,4 +21,4 @@
     state: present
     method: user
     remote: "{{ item.remote }}"
-  loop: "{{ flatpak_apps_to_install | default([]) }}"
+  loop: "{{ flatpak_apps_to_install }}"
