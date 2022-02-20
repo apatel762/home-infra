@@ -40,8 +40,6 @@ flatpak_apps_to_remove:
 # Each application is fully contained in one file (realistically, this
 # means that the applications are all 'AppImage' files).
 
-standalone_applications_folder: "{{ lookup('env', 'HOME') }}/Applications"
-
 standalone_applications:
   - {
     url: 'https://github.com/keepassxreboot/keepassxc/releases/download/2.6.6/KeePassXC-2.6.6-x86_64.AppImage',

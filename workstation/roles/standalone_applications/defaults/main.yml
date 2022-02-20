@@ -1,3 +1,4 @@
 ---
 
+standalone_applications_folder: "{{ lookup('env', 'HOME') }}/Applications"
 standalone_applications: []
