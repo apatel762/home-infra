@@ -22,15 +22,22 @@ cd "home-infra/workstation"
 
 ## Usage
 
-TODO: Write an install.sh script. The script should:
+Use:
 
-- Create a python venv
-- Install ansible (& any other important stuff) via `requirements.txt`
-- Install the ansible-galaxy collections in `requirements.yaml`
+```bash
+make install
+```
 
-TODO: create a `Makefile` with targets that will help you:
+to set up any required software. Everything will be installed into a Python virtual environment, so it will all live inside of this folder and you won't have to worry about it polluting your system.
 
-- Run the above install.sh script
-- Apply the playbook
+You will need to have at least Python 3.8 for the installation to succeed. If `python` doesn't point to a recent enough version of Python, then you might want to use something like `pyenv` to change the active version of Python for this repo (just so that you can create the virtual environment, after that it doesn't matter).
 
-Check the variables in `group_vars/all` and make sure you're happy with everything that is about to be installed onto the machine.
+Once the installation is done, check the variables in the `group_vars/all` file and make sure you're happy with everything that is about to be installed onto (or removed from) the machine.
+
+When you're happy with the group vars, use:
+
+```
+make apply
+```
+
+to run the playbook. It will prompt you for your `sudo` password - this is needed to change any of package overlays and remove any system flatpaks.
