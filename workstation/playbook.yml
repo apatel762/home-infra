@@ -1,0 +1,6 @@
+---
+
+- hosts: all
+  roles:
+    - { role: package_layering }
+    - { role: flatpaks }

@@ -1,0 +1,26 @@
+# =====================================================================
+# Layered packages
+#
+# These should be used sparingly to install stuff that needs to be
+# available system-wide and can't be used via toolboxes or Flatpak.
+
+# packages_to_layer:
+#   - your_packages_here
+#
+# packages_to_remove:
+#   - your_packages_here
+
+# =====================================================================
+# Flatpaks
+#
+# All apps installed on the machine should come from here so that they
+# can easily be installed into your home dir and have their updates
+# managed by the OS.
+
+flatpak_remotes:
+  - { name: 'flathub', url: 'https://dl.flathub.org/repo/flathub.flatpakrepo' }
+  - { name: 'flathub-beta', url: 'https://flathub.org/beta-repo/flathub-beta.flatpakrepo' }
+
+flatpak_apps:
+  - { remote: 'flathub', package: 'com.github.tchx84.Flatseal' }
+  - { remote: 'flathub-beta', package: 'com.microsoft.Edge' }
