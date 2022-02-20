@@ -1,17 +1,25 @@
 ---
 
-- name: Add Flatpak remotes
+- name: Ensure that all required Flatpak remotes are present
   community.general.flatpak_remote:
     name: "{{ item.name }}"
     state: present
     method: user
     flatpakrepo_url: "{{ item.url }}"
-  loop: "{{ flatpak_remotes }}"
+  loop: "{{ flatpak_remotes | default([]) }}"
 
-- name: Install Flatpak apps
+- name: Ensure that all unwanted Flatpak apps are absent
+  community.general.flatpak:
+    name: "{{ item.package }}"
+    state: absent
+    method: user
+    remote: "{{ item.remote }}"
+  loop: "{{ flatpak_apps_to_remove | default([]) }}"
+
+- name: Ensure that all required Flatpak apps are present
   community.general.flatpak:
     name: "{{ item.package }}"
     state: present
     method: user
     remote: "{{ item.remote }}"
-  loop: "{{ flatpak_apps }}"
+  loop: "{{ flatpak_apps_to_install | default([]) }}"
