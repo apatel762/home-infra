@@ -6,5 +6,5 @@ install:
 	@./install.sh
 
 apply:
-	./await-ostree-idle.sh
+	@./await-ostree-idle.sh
 	venv/bin/ansible-playbook playbook.yml --inventory hosts.ini --ask-become-pass

@@ -20,7 +20,11 @@
 #                 GPGSignature: Valid signature by 787EA6AE1147EEE56C40B30CDB4639719867C58F
 #
 
-while ! $(rpm-ostree status| grep ^State | grep idle > /dev/null) ; do \
-    echo "Waiting for rpm-ostree to be idle..." \
-    sleep 3 \
+echo "Checking rpm-ostree status..."
+
+while ! $(rpm-ostree status| grep ^State | grep idle > /dev/null) ; do
+    echo "Waiting for rpm-ostree to be idle..."
+    sleep 3
 done;
+
+echo "All good! rpm-ostree is idle and free to use."
