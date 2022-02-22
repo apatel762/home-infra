@@ -46,7 +46,3 @@ user_pref("mousewheel.min_line_scroll_amount", 25);
 
 // enable customisation via style sheets
 user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
-
-// customisations for edge-frfox
-user_pref("svg.context-properties.content.enabled", true);
-user_pref("layout.css.color-mix.enabled", true);
