@@ -46,6 +46,7 @@ create_venv_if_not_present() {
         # ...but first, ensure that we are using Python 3.8+
         if echo "$(python --version)" | egrep 'Python 3\.(([89])|([0-9]{2}))'; then
             log "creating venv with version: $(python --version)"
+            python -m ensurepip
             python -m venv venv
         else
             oops "Installation failed! You must have Python 3.8+"
