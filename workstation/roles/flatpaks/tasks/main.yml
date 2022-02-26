@@ -28,3 +28,20 @@
   loop: "{{ flatpak_apps_to_install }}"
   loop_control:
     label: "{{ item.package }}"
+
+# ---------------------------------------------------------------------
+# Create an outer loop so that multiple wrapper scripts can be created
+# per Flatpak
+
+- name: Ensure that {{ lookup('env','HOME') }}/.local/bin directory exists
+  ansible.builtin.file:
+    path: "{{ lookup('env','HOME') }}/.local/bin"
+    state: directory
+    mode: "u=rwx,go=rx"
+
+- name: Ensure that Flatpak wrapper scripts are present in {{ lookup('env','HOME') }}/.local/bin
+  include_tasks: wrappers.yaml
+  loop: "{{ flatpak_apps_to_install }}"
+  loop_control:
+    loop_var: flatpak
+    label: "{{ flatpak.name }}"
