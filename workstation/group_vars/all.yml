@@ -41,12 +41,12 @@ flatpak_apps_to_install:
     commands: [brave]
     overrides:
       # remove some default filesystem access permissions
-      - { scope: user, name: "--nofilesystem=host-etc" }
-      - { scope: user, name: "--nofilesystem=xdg-music" }
-      - { scope: user, name: "--nofilesystem=xdg-videos" }
-      - { scope: user, name: "--nofilesystem=xdg-desktop" }
+      - { scope: user, setting: "--nofilesystem=host-etc" }
+      - { scope: user, setting: "--nofilesystem=xdg-music" }
+      - { scope: user, setting: "--nofilesystem=xdg-videos" }
+      - { scope: user, setting: "--nofilesystem=xdg-desktop" }
       # whitelist ~/Documents read-only
-      - { scope: user, name: "--filesystem=xdg-documents:ro" }
+      - { scope: user, setting: "--filesystem=xdg-documents:ro" }
 
 flatpak_apps_to_remove:
   - remote: fedora
