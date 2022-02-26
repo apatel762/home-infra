@@ -1,0 +1,19 @@
+---
+
+- hosts: all
+  roles:
+    - role: flatpaks
+
+  tasks:
+    - name: Ensure that {{ lookup('env','HOME') }}/.local/bin directory exists
+      ansible.builtin.file:
+        path: "{{ lookup('env','HOME') }}/.local/bin"
+        state: directory
+        mode: "u=rwx,go=rx"
+
+    - name: Install Flatpak wrapper scripts to {{ lookup('env','HOME') }}/.local/bin
+      include_tasks: tasks/wrappers.yaml
+      loop: "{{ flatpak_apps_to_install }}"
+      loop_control:
+        loop_var: flatpak
+        #label: "{{ flatpak.name }}"

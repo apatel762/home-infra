@@ -10,15 +10,15 @@
 
 - name: Ensure that all unwanted Flatpak apps are absent
   community.general.flatpak:
+    remote: "{{ item.remote }}"
     name: "{{ item.package }}"
     state: absent
-    remote: "{{ item.remote }}"
   loop: "{{ flatpak_apps_to_remove }}"
 
 - name: Ensure that all required Flatpak apps are present
   community.general.flatpak:
+    remote: "{{ item.remote }}"
     name: "{{ item.package }}"
     state: present
     method: user
-    remote: "{{ item.remote }}"
   loop: "{{ flatpak_apps_to_install }}"
