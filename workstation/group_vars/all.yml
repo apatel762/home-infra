@@ -28,8 +28,16 @@ flatpak_apps_to_install:
   - remote: flathub
     package: com.github.tchx84.Flatseal
 
+  - remote: flathub
+    package: io.neovim.nvim
+    commands: [vi, vim, nvim]
+
   - remote: flathub-beta
-    package: com.microsoft.Edge
+    package: com.brave.Browser
+    commands: [brave]
+    #overrides:
+    #  - { name: "--filesystem=~/.local/share/applications", scope: user }
+    #  - { name: "--filesystem=~/.local/share/icons", scope: user }
 
 flatpak_apps_to_remove:
   - remote: fedora
