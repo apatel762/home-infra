@@ -276,6 +276,7 @@ prepend_to_path() {
 
 append_to_path "$HOME/.local/bin"
 append_to_path "$HOME/.bin"
+append_to_path "/usr/local/go/bin"
 
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv"
