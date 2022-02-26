@@ -1,6 +1,6 @@
 ---
 
-- name: Ensuring that the required layered packages are present
+- name: Ensure that the required layered packages are present
   community.general.rpm_ostree_pkg:
     name: "{{ item }}"
     state: present
@@ -8,7 +8,7 @@
   become_method: sudo
   loop: "{{ packages_to_layer }}"
 
-- name: Ensuring that unnecessary layered packages are removed
+- name: Ensure that unnecessary layered packages are removed
   ansible.builtin.command: rpm-ostree override remove {{ item }}
   become: yes
   become_method: sudo
