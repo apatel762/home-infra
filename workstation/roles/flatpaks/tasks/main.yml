@@ -44,4 +44,4 @@
   loop: "{{ flatpak_apps_to_install }}"
   loop_control:
     loop_var: flatpak
-    label: "{{ flatpak.name }}"
+    label: "{{ flatpak.package }}"
