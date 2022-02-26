@@ -40,7 +40,7 @@
     mode: "u=rwx,go=rx"
 
 - name: Ensure that Flatpak wrapper scripts are present in {{ lookup('env','HOME') }}/.local/bin
-  include_tasks: wrappers.yaml
+  include_tasks: wrappers.yml
   loop: "{{ flatpak_apps_to_install }}"
   loop_control:
     loop_var: flatpak
