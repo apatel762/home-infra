@@ -2,7 +2,7 @@
 
 - name: Ensure that wrapper for {{ flatpak.package }} is in {{ lookup('env','HOME') }}/.local/bin/
   ansible.builtin.copy:
-    content: "{{ user | replace('/usr/bin/', '') }}"
+    content: "{{ lookup('vars', 'user' ) | replace('/usr/bin/', '') }}"
     dest: "{{ lookup('env','HOME') }}/.local/bin/{{ command }}"
     mode: "a+x"
   vars:
