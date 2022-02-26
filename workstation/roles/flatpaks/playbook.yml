@@ -12,8 +12,8 @@
         mode: "u=rwx,go=rx"
 
     - name: Install Flatpak wrapper scripts to {{ lookup('env','HOME') }}/.local/bin
-      include_tasks: tasks/wrappers.yaml
+      include_tasks: ./tasks/wrappers.yaml
       loop: "{{ flatpak_apps_to_install }}"
       loop_control:
         loop_var: flatpak
-        #label: "{{ flatpak.name }}"
+        label: "{{ flatpak.name }}"

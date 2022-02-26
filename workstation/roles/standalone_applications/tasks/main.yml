@@ -12,3 +12,5 @@
     checksum: "{{ item.checksum }}"
     mode: "u=rwx,g=r,o=r"
   loop: "{{ standalone_applications }}"
+  loop_control:
+    label: "{{ item.file_name }}"

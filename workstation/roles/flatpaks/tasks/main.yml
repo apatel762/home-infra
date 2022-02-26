@@ -7,6 +7,8 @@
     method: user
     flatpakrepo_url: "{{ item.url }}"
   loop: "{{ flatpak_remotes }}"
+  loop_control:
+    label: "{{ item.name }}"
 
 - name: Ensure that all unwanted Flatpak apps are absent
   community.general.flatpak:
@@ -14,6 +16,8 @@
     name: "{{ item.package }}"
     state: absent
   loop: "{{ flatpak_apps_to_remove }}"
+  loop_control:
+    label: "{{ item.package }}"
 
 - name: Ensure that all required Flatpak apps are present
   community.general.flatpak:
@@ -22,3 +26,5 @@
     state: present
     method: user
   loop: "{{ flatpak_apps_to_install }}"
+  loop_control:
+    label: "{{ item.package }}"
