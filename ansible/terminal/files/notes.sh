@@ -123,7 +123,7 @@ save_url() {
         nb use notes
         nb bookmark "$URL" \
             --filename "$(date +"%Y-%m-%dT%H%M%SZ" --universal).md" \
-            --comment "::Bookmark::" \
+            --comment "#bookmark" \
             --edit
     )
 }
