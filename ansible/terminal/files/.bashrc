@@ -278,6 +278,10 @@ append_to_path "$HOME/.local/bin"
 append_to_path "$HOME/.bin"
 append_to_path "/usr/local/go/bin"
 
+# recommended as part of the rootless Docker installation
+prepend_to_path "/usr/bin"
+export DOCKER_HOST="unix:///run/user/$UID/docker.sock"
+
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv"
 append_to_path "$PYENV_ROOT/bin"
