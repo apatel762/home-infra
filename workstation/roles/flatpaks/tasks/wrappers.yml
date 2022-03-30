@@ -4,7 +4,7 @@
   ansible.builtin.copy:
     content: "{{ lookup('vars', 'user' ) | replace('/usr/bin/', '') }}"
     dest: "{{ lookup('env','HOME') }}/.local/bin/{{ command }}"
-    mode: "a+x"
+    mode: "u+x"
   vars:
     #system: "/var/lib/flatpak/app/{{ flatpak.package }}/current/active/export/bin/{{ flatpak.package }}"
     user: "{{ lookup('env','HOME') }}/.local/share/flatpak/app/{{ flatpak.package }}/current/active/export/bin/{{ flatpak.package }}"
