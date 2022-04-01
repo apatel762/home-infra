@@ -38,25 +38,25 @@ cleanup() {
 trap cleanup EXIT
 
 create_venv_if_not_present() {
-    log "checking for venv..."
-    if [ ! -d "venv" ]; then
-        log "could not find a venv"
+    log "checking for .venv..."
+    if [ ! -d ".venv" ]; then
+        log "could not find a .venv"
 
         # we couldn't find a virtual environment, so now we'll create one
         # ...but first, ensure that we are using Python 3.8+
         if echo "$(python --version)" | egrep 'Python 3\.(([89])|([0-9]{2}))'; then
-            log "creating venv with version: $(python --version)"
+            log "creating .venv with version: $(python --version)"
             python -m ensurepip
-            python -m venv venv
+            python -m venv .venv
         else
             oops "Installation failed! You must have Python 3.8+"
         fi
 
-        source venv/bin/activate
-        pip install --upgrade pip
-        pip install -r "$DIR/requirements.txt"
+        source .venv/bin/activate
+        python -m pip install --upgrade pip setuptools wheel
+        python -m pip install -r "$DIR/requirements.txt"
     else
-        log "venv already exists - skipping"
+        log ".venv already exists - skipping"
     fi
 }
 
