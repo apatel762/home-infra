@@ -48,18 +48,9 @@ flatpak_apps_to_install:
       # whitelist ~/Documents read-only
       - { scope: user, setting: "--filesystem=xdg-documents:ro" }
 
-flatpak_apps_to_remove:
-  - remote: fedora
-    package: org.gnome.Maps
-
-  - remote: fedora
-    package: org.gnome.Connections
-
-  - remote: fedora
-    package: org.gnome.Contacts
-
-  - remote: fedora
-    package: org.gnome.Calendar
+#flatpak_apps_to_remove:
+#  - remote: fedora
+#    package: org.gnome.Maps
 
 # =====================================================================
 # Standalone Applications
@@ -102,11 +93,14 @@ standalone_applications:
 #  neovim
 #  obsidian
 #  pycharm -- might not be necessary?
+#  remmina
 #  spotify
 #  steam
 #  tor -- don't know if this is possible
 #  vscode
+# +
+#  my vpn setups
+#  ssh agent setup (there are GNOME apps for this, see if they are any good)
 
 # todo: customise wallpaper
 # todo: setup toolboxes?
-# todo: customise gnome?
