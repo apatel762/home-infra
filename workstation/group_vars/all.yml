@@ -52,6 +52,10 @@ flatpak_apps_to_install:
       - { scope: user, setting: "--filesystem=xdg-data/applications" }
       - { scope: user, setting: "--filesystem=xdg-data/icons" }
 
+  # for managing GNOME extensions easily
+  - remote: flathub
+    package: com.mattjakeman.ExtensionManager
+
   # for opening encrypted vaults
   - remote: flathub
     package: org.cryptomator.Cryptomator
