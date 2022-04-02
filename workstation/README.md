@@ -2,7 +2,7 @@
 
 Running Fedora Silverblue.
 
-Currently just using a VM, but eventually, will migrate my main workstation to use this.
+TODO: this documentation needs to be re-written now that I've fully migrated to Silverblue. There were some things in here that needed to be done *really* differently to how I did it in the VM (lots of un-documented manual steps).
 
 ## Preparation
 

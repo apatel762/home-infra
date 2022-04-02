@@ -2,7 +2,11 @@
 *
 !*/
 
+# Ignore any potential Python virtual env folders
 venv/
+.venv/
+env/
+.env/
 
 # ----------------------
 
@@ -12,6 +16,9 @@ venv/
 
 !Makefile
 !requirements.txt
+
+# my wallpaper!
+!fabrizio-conti-kXVogATbFgA-unsplash.jpg
 
 !*.yml
 !*.yaml
@@ -24,6 +31,7 @@ venv/
 !.inputrc
 !.vimrc
 !*.vim
+![0-9]{2}-*
 
 # temporary?
 !files/
