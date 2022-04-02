@@ -1,0 +1,14 @@
+[user]
+    email = relay-git-1LKQ1GqLp0Nn4@aspatel.com
+    name = Arjun Patel
+
+[color]
+    ui = auto
+
+[alias]
+    # Fancy looking commit log
+    lg = log --all --graph --decorate --oneline
+    last = log --all --graph --decorate --oneline -10
+
+[ghq]
+    root = ~/Documents/Projects
