@@ -54,8 +54,8 @@ The only system packages that we are going to install are `setuptools` and `whee
 Run the below commands inside of the toolbox that you created earlier (to ensure that you still have access to all of those dependencies that you installed into the toolbox earlier):
 
 ```bash
-mkdir -p ~/Documents/tmp/pipx-in-pipx
-cd ~/Documents/tmp/pipx-in-pipx
+mkdir -p /tmp/pipx-in-pipx
+cd /tmp/pipx-in-pipx
 python -m pip install --upgrade pip setuptools wheel
 python -m venv .venv
 source .venv/bin/activate
