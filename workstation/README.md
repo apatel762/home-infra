@@ -1,41 +1,21 @@
 # Workstation
 
-Running Fedora Silverblue.
+**tl;dr** - start [here](docs/01-FreshInstall.md).
 
-TODO: this documentation needs to be re-written now that I've fully migrated to Silverblue. There were some things in here that needed to be done *really* differently to how I did it in the VM (lots of un-documented manual steps).
+My workstation is running Fedora Silverblue. Why?
 
-## Preparation
+- It's really hard to brick the system thanks to OSTree and automatic rollbacks.
+- ...this means that automatic updates are really easy and stable.
+- ...this means that I can have the latest software without worrying about it.
 
-Clone this repo to the machine:
+Also the `toolbx` containers are really handy for installing one-time stuff without polluting the system.
 
-```bash
-ANSIBLE_PLAYBOOK_FOLDER="$HOME/Projects/github.com/apatel762"
+## Notes
 
-mkdir -p "$ANSIBLE_PLAYBOOK_FOLDER"
-cd "$ANSIBLE_PLAYBOOK_FOLDER"
+File and folder layout:
 
-git clone https://github.com/apatel762/home-infra.git
-cd "home-infra/workstation"
-```
+- `~/.local/bin` for standalone terminal apps.
+- `~/Applications` for standalone GUI apps (e.g. `.AppImage` files).
+- `~/Documents/Projects` for all git repositories & dev projects
 
-## Usage
-
-Use:
-
-```bash
-make install
-```
-
-to set up any required software. Everything will be installed into a Python virtual environment, so it will all live inside of this folder and you won't have to worry about it polluting your system.
-
-You will need to have at least Python 3.8 for the installation to succeed. If `python` doesn't point to a recent enough version of Python, then you might want to use something like `pyenv` to change the active version of Python for this repo (just so that you can create the virtual environment, after that it doesn't matter).
-
-Once the installation is done, check the variables in the `group_vars/all` file and make sure you're happy with everything that is about to be installed onto (or removed from) the machine.
-
-When you're happy with the group vars, use:
-
-```
-make apply
-```
-
-to run the playbook. It will prompt you for your `sudo` password - this is needed to change any of package overlays and remove any system flatpaks.
+In general, the home folder (`~`) should be really clean and most stuff should go into `~/.local` or `~/.config`.
