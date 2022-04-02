@@ -1,8 +1,34 @@
-nvim/.config/nvim/.netrwhist
-vim/.vim/
+# Ignore everything, but still check in sub-directories
+*
+!*/
 
-# sensitive info
-ansible/vault-password-file
+venv/
 
-workstation/venv
-workstation/.python-version
+# ----------------------
+
+!.gitignore
+!README.md
+!LICENSE
+
+!Makefile
+!requirements.txt
+
+!*.yml
+!*.yaml
+!*.sh
+!*.ini
+!*.py
+
+!.bashrc
+!.gitconfig
+!.inputrc
+!.vimrc
+!*.vim
+
+# temporary?
+!files/
+!*.js
+!*.css
+!*.service
+!config-work
+!*.conf
