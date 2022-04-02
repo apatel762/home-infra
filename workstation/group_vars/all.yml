@@ -115,6 +115,11 @@ flatpak_apps_to_install:
   - remote: flathub
     package: org.remmina.Remmina
 
+  # for opening up and looking at repositories
+  - remote: flathub
+    package: com.vscodium.codium
+    commands: [codium, code]
+
 # todo: figure out how to install these apps:
 #  google chrome
 #  steam
