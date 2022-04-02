@@ -2,6 +2,3 @@ $include /etc/inputrc
 
 # make file/folder autocompletion case insensitive
 set completion-ignore-case On
-
-# paste text into the terminal safely
-set enable-bracketed-paste On
