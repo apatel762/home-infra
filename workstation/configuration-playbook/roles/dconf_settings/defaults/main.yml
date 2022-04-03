@@ -1,0 +1,6 @@
+---
+
+wallpaper_file_name: "fabrizio-conti-kXVogATbFgA-unsplash.jpg"
+wallpaper_directory: "{{ lookup('env', 'HOME') }}/Pictures"
+
+dconf_settings: []

@@ -1,0 +1,39 @@
+---
+
+# ==============================
+# CUSTOM WALLPAPER & LOCK SCREEN
+
+- name: Ensure that wallpapers directory exists
+  ansible.builtin.file:
+    path: "{{ wallpaper_directory }}"
+    state: directory
+
+- name: Ensure that the custom wallpaper is in the wallpapers folder
+  ansible.builtin.copy:
+    src: "{{ wallpaper_file_name }}"
+    dest: "{{ wallpaper_directory }}/{{ wallpaper_file_name }}"
+  when: wallpaper_file_name is defined
+
+- name: Ensure that dconf has registered the custom wallpaper
+  community.general.dconf:
+    key: "{{ item.key }}"
+    value: "'file://{{ wallpaper_directory }}/{{ wallpaper_file_name }}'"
+    state: present
+  when: wallpaper_file_name is defined
+  loop:
+    - key: "/org/gnome/desktop/background/picture-uri"
+    - key: "/org/gnome/desktop/screensaver/picture-uri"
+  loop_control:
+    label: "{{ item.key }}"
+
+# ===========================
+# OTHER CUSTOM dconf SETTINGS
+
+- name: Ensure that other custom dconf changes are applied
+  community.general.dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value | string }}"
+    state: present # should this be configurable?
+  loop: "{{ dconf_settings }}"
+  loop_control:
+    label: "{{ item.key }}"

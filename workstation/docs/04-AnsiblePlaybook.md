@@ -28,3 +28,31 @@ make apply
 ```
 
 And the machine should be configured when it's all done. The only thing you will have to do is to reboot so that it can finalise the package overlays & other system-level stuff that might have been modified.
+
+## Caveats
+
+There are some things that aren't configurable at the moment via Ansible (or I am too lazy to add it to the playbook). I will write down those things below.
+
+- Adding VPS as a VPN (Network Manager applet) via the GNOME network settings.
+  - Create a folder: `mkdir -p ~/Documents/Secrets/VPN`.
+  - Copy files: `rsync -avzh user@host:/media/sd_[0-9]/user/private/vpn/* ~/Documents/Secrets/VPN`.
+  - Go to 'Settings > Network > VPN' and click '+'.
+  - Click 'Import from file...'.
+  - Select the `client.ovpn` file.
+- Adding a profile picture to my user.
+  - Go to 'Settings > Users'.
+  - Click on the profile picture and change it to an actual picture of me.
+- GNOME extensions (currently managed via `Extension Manager` Flatpak):
+  - Disabled extensions:
+    - 'window-list@gnome-shell-extensions.gcampax.github.com'
+    - 'launch-new-instance@gnome-shell-extensions.gcampax.github.com'
+  - Enabled extensions:
+    - 'background-logo@fedorahosted.org'
+    - 'places-menu@gnome-shell-extensions.gcampax.github.com'
+    - 'blur-my-shell@aunetx'
+    - 'trayIconsReloaded@selfmade.pl'
+    - 'apps-menu@gnome-shell-extensions.gcampax.github.com'
+    - 'screenshot-window-sizer@gnome-shell-extensions.gcampax.github.com'
+- Installing `nb` (for note taking):
+  - The playbook will get `nb` onto the workstation, just need to add the notes folder:
+  - `git clone git@github.com:apatel762/notes.git ~/Documents/Notes`

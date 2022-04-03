@@ -1,3 +1,8 @@
+
+
+# todo: setup toolboxes?
+
+
 # =====================================================================
 # Layered packages
 #
@@ -151,8 +156,28 @@ standalone_applications:
   - url: https://github.com/nextcloud/desktop/releases/download/v3.2.4/Nextcloud-3.2.4-x86_64.AppImage
     checksum: sha256:5d0c13ba422c445c4a88cd45a1b38878daf67123552b0f4a6020a73734c47ce6
     file_name: Nextcloud.AppImage
+  - url: https://raw.githubusercontent.com/xwmx/nb/6.10.0/nb
+    checksum: sha256:6840973acf6a678e16793089acb953f697562eaffc6082bc7796adc8d41bac1b
+    file_name: nb
+    location: "{{ lookup('env', 'HOME') }}/.local/bin"
 
-# todo: my vpn setups
-# todo: ssh agent setup (there are GNOME apps for this, see if they are any good)
-# todo: customise wallpaper
-# todo: setup toolboxes?
+# =====================================================================
+# GNOME config
+#
+# https://opensource.com/article/18/5/manage-your-workstation-ansible-part-3
+#
+# Use `dconf dump /` to see all of your GNOME config. You could even
+# do something like:
+#
+#  dconf dump / > before.txt
+#  dconf dump / > after.txt
+#  diff --unified --color before.txt after.txt
+#
+# if you're not sure what changes you want to do (you would make the
+# changes manually and see what is different in the `dconf` output
+# before and after)
+
+dconf_settings:
+  # the apps that appear in the dock when you press the 'super' key
+  - key: /org/gnome/shell/favorite-apps
+    value: "['firefox.desktop', 'com.brave.Browser.desktop', 'com.spotify.Client.desktop', 'org.gnome.Terminal.desktop', 'org.keepassxc.KeePassXC.desktop', 'com.vscodium.codium.desktop', 'org.gnome.Nautilus.desktop', 'net.ankiweb.Anki.desktop', 'org.cryptomator.Cryptomator.desktop']"
