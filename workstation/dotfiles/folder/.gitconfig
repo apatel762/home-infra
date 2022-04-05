@@ -1,6 +1,8 @@
 [user]
     email = relay-git-1LKQ1GqLp0Nn4@aspatel.com
     name = Arjun Patel
+[init]
+    defaultBranch = master
 
 [color]
     ui = auto
