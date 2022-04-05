@@ -60,7 +60,7 @@ There are some things that aren't configurable at the moment via Ansible (or I a
   - `ranger-fm`
   - `yt-dlp`
 - Hugo (static site generator)
-  - `wget https://github.com/gohugoio/hugo/releases/download/v0.96.0/hugo_0.96.0_Linux-64bit.tar.gz`
+  - `wget https://github.com/gohugoio/hugo/releases/download/v0.96.0/hugo_extended_0.96.0_Linux-64bit.tar.gz`
   - `ex hugo_*.tar.gz`
   - `rm hugo_*.tar.gz`
   - `mv -vu hugo -t ~/.local/bin`
