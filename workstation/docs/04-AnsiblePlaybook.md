@@ -56,3 +56,11 @@ There are some things that aren't configurable at the moment via Ansible (or I a
 - Installing `nb` (for note taking):
   - The playbook will get `nb` onto the workstation, just need to add the notes folder:
   - `git clone git@github.com:apatel762/notes.git ~/Documents/Notes`
+- Stuff installed via `pipx`
+  - `ranger-fm`
+  - `yt-dlp`
+- Hugo (static site generator)
+  - `wget https://github.com/gohugoio/hugo/releases/download/v0.96.0/hugo_0.96.0_Linux-64bit.tar.gz`
+  - `ex hugo_*.tar.gz`
+  - `rm hugo_*.tar.gz`
+  - `mv -vu hugo -t ~/.local/bin`
