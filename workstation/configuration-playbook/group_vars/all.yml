@@ -54,8 +54,8 @@ flatpak_apps_to_install:
       - { scope: user, setting: "--nofilesystem=xdg-desktop" }
       # whitelist ~/Documents read-only
       - { scope: user, setting: "--filesystem=xdg-documents:ro" }
-      - { scope: user, setting: "--filesystem=xdg-data/applications" }
-      - { scope: user, setting: "--filesystem=xdg-data/icons" }
+      - { scope: user, setting: "--filesystem=home/.local/share/applications:create" }
+      - { scope: user, setting: "--filesystem=home/.local/share/icons:create" }
 
   # backup web browser
   - remote: flathub-beta
