@@ -11,6 +11,7 @@
 
 packages_to_layer:
   - mozilla-ublock-origin
+  - neovim
 
 # packages_to_remove:
 #   - your_packages_here

@@ -9,7 +9,9 @@
   loop: "{{ packages_to_layer }}"
 
 - name: Ensure that unnecessary layered packages are removed
-  ansible.builtin.command: rpm-ostree override remove {{ item }}
+  community.general.rpm_ostree_pkg:
+    name: "{{ item }}"
+    state: absent
   become: yes
   become_method: sudo
   loop: "{{ packages_to_remove }}"
