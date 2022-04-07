@@ -1,4 +1,4 @@
-alias fp='git fetch --all --prune && git pull'
+alias fp='git fetch --all --prune && git pull --rebase --autostash'
 
 function __delete_merged_branches() {
     git fetch -p
