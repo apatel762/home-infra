@@ -62,6 +62,9 @@ EOF
 " ensure that we are using the custom theme
 lua vim.cmd[[colorscheme tokyonight]]
 
+" TODO: configure which_key mappings
+"  https://github.com/folke/which-key.nvim#%EF%B8%8F-mappings
+
 " ---------------------------------------------------------------------
 
 " line numbers
