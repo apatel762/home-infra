@@ -54,16 +54,36 @@ call plug#end()
 " ensure that coq loads on startup
 lua << EOF
 vim.g.coq_settings = {
-  auto_start = true,
+	auto_start = true,
 }
 local coq = require "coq"
 EOF
 
 " ensure that we are using the custom theme
-lua vim.cmd[[colorscheme tokyonight]]
+lua << EOF
+vim.cmd[[colorscheme tokyonight]]
+EOF
 
-" TODO: configure which_key mappings
 "  https://github.com/folke/which-key.nvim#%EF%B8%8F-mappings
+lua << EOF
+require("which-key").setup {
+	-- your configuration comes here
+	-- or leave it empty to use the default settings
+	-- refer to the configuration section below
+}
+
+require("which-key").register({
+	["<leader>"] = {
+		f = {
+			name = "+file",
+			f = { "<cmd>Telescope find_files<cr>", "Find File" },
+			r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
+			n = { "<cmd>enew<cr>", "New File" },
+		},
+	},
+}
+)
+EOF
 
 " ---------------------------------------------------------------------
 
