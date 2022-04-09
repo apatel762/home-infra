@@ -22,3 +22,9 @@ This may be out of date soon as it appears that GNOME itself will be moving from
 - Renamed default profile to 'Main'
 - Changed initial terminal size to '140 columns' and '40 rows'
 - Disabled the 'Terminal bell' setting
+
+Download [Mayccoll/Gogh](https://github.com/Mayccoll/Gogh) via the one-line command and select theme number 203 (Tokyo Night)
+
+```bash
+bash -c "$(wget -qO- https://git.io/vQgMr)"
+```
