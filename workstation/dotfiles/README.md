@@ -4,7 +4,7 @@ These are my dotfiles. They are intended for use on Linux and probably won't wor
 
 ## Installation
 
-Use the provided `install.sh` script to copy all of the files over and read the below informatin to make sure that everything is set up properly (because you may need to manually add stuff to `.bashrc` to make it all work).
+Use the provided `install` script to create symlinks for all the config files and read the below information to make sure that everything is set up properly (because you may need to manually add stuff to `.bashrc` to make it all work).
 
 ## `.bashrc`
 
@@ -22,6 +22,8 @@ fi
 
 unset rc
 ```
+
+TODO: add this to playbook?
 
 ## `.inputrc`
 
