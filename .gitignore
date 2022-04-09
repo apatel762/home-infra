@@ -16,6 +16,11 @@ env/
 !Makefile
 !requirements.txt
 
+# the dotfile manager submodule
+!dotbot/
+!install
+!install.conf.yaml
+
 # my wallpaper!
 !fabrizio-conti-kXVogATbFgA-unsplash.jpg
 

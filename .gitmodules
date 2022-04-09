@@ -1,0 +1,3 @@
+[submodule "workstation/dotfiles/dotbot"]
+	path = workstation/dotfiles/dotbot
+	url = https://github.com/anishathalye/dotbot
