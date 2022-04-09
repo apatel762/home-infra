@@ -181,4 +181,4 @@ standalone_applications:
 dconf_settings:
   # the apps that appear in the dock when you press the 'super' key
   - key: /org/gnome/shell/favorite-apps
-    value: "['firefox.desktop', 'com.brave.Browser.desktop', 'com.spotify.Client.desktop', 'org.gnome.Terminal.desktop', 'org.keepassxc.KeePassXC.desktop', 'com.vscodium.codium.desktop', 'org.gnome.Nautilus.desktop', 'net.ankiweb.Anki.desktop', 'org.cryptomator.Cryptomator.desktop']"
+    value: "['com.brave.Browser.desktop', 'com.spotify.Client.desktop', 'org.keepassxc.KeePassXC.desktop', 'org.cryptomator.Cryptomator.desktop', 'org.gnome.Terminal.desktop', 'com.vscodium.codium.desktop', 'org.gnome.Nautilus.desktop', 'net.ankiweb.Anki.desktop']"
