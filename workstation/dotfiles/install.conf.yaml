@@ -4,6 +4,7 @@
     - ~/.bashrc.d
     - ~/.config
     - ~/.config/nvim
+    - ~/Documents/Notes/.plugins
 
 - link:
     # nvimrc
@@ -14,6 +15,9 @@
 
     # nb (note taking app) config
     ~/.nbrc: dots/nb/.nbrc
+    ~/Documents/Notes/.plugins/:
+      glob: true
+      path: dots/nb/plugins/*.nb-plugin
 
     # bash config
     ~/.bashrc.d/:

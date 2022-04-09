@@ -38,6 +38,7 @@ env/
 !.vimrc
 !*.vim
 !.nbrc
+!*.nb-plugin
 !Containerfile
 
 # temporary?

@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+###############################################################################
+# fzf.nb-plugin
+#
+# A notational-velocity style search command for notes, where you can search
+# for notes AND create them using the same interface.
+#
+###############################################################################
+
+# Add the new subcommand name with `_subcommands add <name>`.
+_subcommands add "fzf"
+
+# Define help and usage text with `_subcommands describe <subcommand> <usage>`.
+_subcommands describe "fzf" <<HEREDOC
+Usage:
+  nb fzf
+
+Description:
+  Search through current notebook using fzf and then edit selected item.
+
+  If the note that you're searching for doesn't exist, a new note will be
+  created with the search term as the title.
+HEREDOC
+
+_fzf() {
+	# TODO: this doesn't search the contents of the notes, just the title
+	local note=$(\
+		_list -t note --no-color --no-indicator --no-id \
+			| fzf-tmux $(echo ${FZF_TMUX_OPTS:-}) \
+				--header "$(_notebook current --name)" \
+				--preview "nb show -p {} | bat -l md" \
+				--bind=enter:replace-query+print-query)
+
+	local search_result="$(\
+		_list -t note --no-color --no-indicator --no-id \
+			| grep "$note")"
+
+
+	if ! [[ -z "$search_result" ]]; then
+		_edit "$note"
+	else
+		_add \
+			--title "$note" \
+			--filename "$(date +"%Y-%m-%dT%H%M%SZ" --universal).md"
+	fi
+}
