@@ -9,7 +9,7 @@ These are all managed by `toolbox` (via `podman`).
 To build one of the container images, use:
 
 ```bash
-podman build --tag localhost/container-name:version ./my.Containerfile
+podman build --tag localhost/dev:1 dev/
 ```
 
 ### Entering a container
@@ -17,7 +17,7 @@ podman build --tag localhost/container-name:version ./my.Containerfile
 After building the container, use the below command to create a toolbox which will use the container.
 
 ```bash
-toolbox create --image localhost/container-name:version
+toolbox create --image localhost/dev:1
 ```
 
 ### Removing unused images
@@ -26,6 +26,6 @@ Use the following commands to remove an unused container image. There's probably
 
 ```bash
 toolbox list
-toolbox rm --force my-toolbox
+toolbox rm --force dev-1
 podman image prune # or podman image rm <container-id>
 ```
