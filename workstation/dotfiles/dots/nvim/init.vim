@@ -99,3 +99,17 @@ nnoremap <C-g> <cmd>Telescope git_files<cr>
 nmap <Tab> >>
 imap <S-Tab> <Esc><<i
 nmap <S-tab> <<
+
+" hightlight on yank
+" from https://neovim.io/news/2021/07
+au TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=150, on_visual=true}
+
+" copy and paste helpers
+vmap <C-c> "+y
+vmap <C-x> "+c
+vmap <C-v> c<ESC>"+p
+
+" move through buffers
+nmap <leader>[ :bp!<CR>
+nmap <leader>] :bn!<CR>
+nmap <leader>x :bd<CR>
