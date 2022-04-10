@@ -12,3 +12,4 @@
     - role: flatpaks
     - role: standalone_applications
     - role: dconf_settings
+    - role: os_updates

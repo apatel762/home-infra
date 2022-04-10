@@ -182,3 +182,18 @@ dconf_settings:
   # the apps that appear in the dock when you press the 'super' key
   - key: /org/gnome/shell/favorite-apps
     value: "['com.brave.Browser.desktop', 'com.spotify.Client.desktop', 'org.keepassxc.KeePassXC.desktop', 'org.cryptomator.Cryptomator.desktop', 'org.gnome.Terminal.desktop', 'com.vscodium.codium.desktop', 'org.gnome.Nautilus.desktop', 'net.ankiweb.Anki.desktop']"
+
+# =====================================================================
+# OS updates
+#
+# https://github.com/j1mc/ansible-silverblue
+#
+# Manage the rpm-ostreed.conf settings; this is where I configure the
+# automatic staging of updates, because I want the system to
+# automatically check for updates AND stage them in the background. The
+# changes should then be picked up the next time I reboot my machine.
+#
+# See `man rpm-ostreed.conf` for more info
+
+update_policy: stage
+idle_timeout: '60'

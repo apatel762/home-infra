@@ -1,0 +1,19 @@
+---
+
+- name: Configure update settings
+  become: yes
+  become_method: sudo
+  ansible.builtin.template:
+    src: templates/rpm-ostreed.conf.jinja2
+    dest: /etc/rpm-ostreed.conf
+    owner: root
+    group: root
+    mode: u=rw,go=r
+
+- name: Ensure that the rpm-ostree auto-update timer is enabled
+  become: yes
+  become_method: sudo
+  ansible.builtin.systemd:
+    name: rpm-ostreed-automatic.timer
+    state: started
+    enabled: yes
