@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 ###############################################################################
-# fzf.nb-plugin
+# fuzzy.nb-plugin
 #
 # A notational-velocity style search command for notes, where you can search
 # for notes AND create them using the same interface.
@@ -8,19 +8,23 @@
 ###############################################################################
 
 # Add the new subcommand name with `_subcommands add <name>`.
-_subcommands add "fzf"
+_subcommands add "fuzzy"
+_subcommands add "skim"
 
 # Define help and usage text with `_subcommands describe <subcommand> <usage>`.
-_subcommands describe "fzf" <<HEREDOC
+_subcommands describe "fuzzy" <<HEREDOC
 Usage:
-  nb fzf
+  nb fuzzy
 
 Description:
-  Search through current notebook using fzf and then edit the selected
+  Search through current notebook using skim and then edit the selected
   item.
 
   If the note that you're searching for doesn't exist, a new note will be
   created with the search term as the title.
+
+Alias:
+  nb skim
 HEREDOC
 
 # args: $1 = a binary you want to require e.g. tar, gpg, mail
@@ -46,7 +50,7 @@ __check_required_programs() {
 	__require date "Creating unique file names."
 }
 
-_fzf() {
+_fuzzy() {
 	__check_required_programs
 
 	(
@@ -80,3 +84,5 @@ _fzf() {
 			--preview-window="right:70%:wrap"
 	)
 }
+
+_alias_subcommand "fuzzy" "skim"
