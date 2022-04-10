@@ -16,31 +16,67 @@ Usage:
   nb fzf
 
 Description:
-  Search through current notebook using fzf and then edit selected item.
+  Search through current notebook using fzf and then edit the selected
+  item.
 
   If the note that you're searching for doesn't exist, a new note will be
   created with the search term as the title.
 HEREDOC
 
+# args: $1 = a binary you want to require e.g. tar, gpg, mail
+#       $2 = a message briefly describing what you need the binary for
+__require() {
+	command -v "$1" > /dev/null 2>&1 \
+		|| _exit_1 cat <<HEREDOC
+$(_color_primary "Error"):
+
+$(_color_secondary "Could not find:") $1
+$(_color_secondary "Needed for:") $2
+
+Please install this program and ensure that it is on your $(_color_primary "PATH") before
+attempting to use this plugin.
+
+HEREDOC
+}
+
+__check_required_programs() {
+	__require sk "Performing fuzzy search across files."
+	__require rg "Performing fast search on large amounts of text."
+	__require nb-fzf-preview "Showing previews during fuzzy search."
+	__require date "Creating unique file names."
+}
+
 _fzf() {
-	# TODO: this doesn't search the contents of the notes, just the title
-	local note=$(\
-		_list -t note --no-color --no-indicator --no-id \
-			| fzf-tmux $(echo ${FZF_TMUX_OPTS:-}) \
-				--header "$(_notebook current --name)" \
-				--preview "nb show -p {} | bat -l md" \
-				--bind=enter:replace-query+print-query)
+	__check_required_programs
 
-	local search_result="$(\
-		_list -t note --no-color --no-indicator --no-id \
-			| grep "$note")"
-
-
-	if ! [[ -z "$search_result" ]]; then
-		_edit "$note"
-	else
-		_add \
-			--title "$note" \
-			--filename "$(date +"%Y-%m-%dT%H%M%SZ" --universal).md"
-	fi
+	(
+		cd "$(_notebook current --path)"
+		sk \
+			--ansi \
+			--interactive \
+			--cmd "(rg --files | rg -S \"{}\" & rg -S -l \"{}\" & echo {}) \
+					| sort \
+					| uniq" \
+			--bind "enter:execute(
+				if [[ -z {} ]]; then
+					if [[ -n $EDITOR ]]; then
+						$EDITOR {}
+					else
+						vim {}
+					fi
+				else
+					if test -f {}; then
+						nb $(nb notebook current --name):edit {}
+					else
+						# if our search term didn't match anything, we should
+						# create a new file to record this new topic
+						nb $(nb notebook current --name):add \
+							--title {} \
+							--filename \"$(date +"%Y-%m-%dT%H%M%SZ" --universal).md\"
+					fi
+				fi;
+			)+abort" \
+			--preview "nb-fzf-preview {}" \
+			--preview-window="right:70%"
+	)
 }
