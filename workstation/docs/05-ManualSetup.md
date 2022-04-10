@@ -65,6 +65,7 @@ I've got some Python apps that I've installed via `pipx` (might add this to the 
 
 - `ranger-fm`
 - `yt-dlp`
+- `poetry`
 
 ### Install `ghq`
 
