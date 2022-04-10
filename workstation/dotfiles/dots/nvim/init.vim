@@ -91,8 +91,9 @@ EOF
 set number
 set relativenumber
 
-" ctrl+p - find files
+" ctrl+p - find files, ctrl+g - find tracked files
 nnoremap <C-p> <cmd>Telescope find_files<cr>
+nnoremap <C-g> <cmd>Telescope git_files<cr>
 
 " indent/unindent with tab/shift-tab
 nmap <Tab> >>
