@@ -77,6 +77,6 @@ _fzf() {
 				fi;
 			)+abort" \
 			--preview "nb-fzf-preview {}" \
-			--preview-window="right:70%"
+			--preview-window="right:70%:wrap"
 	)
 }
