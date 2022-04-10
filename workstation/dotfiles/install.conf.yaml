@@ -1,4 +1,9 @@
-- clean: ['~']
+- clean:
+    - '~'
+    - ~/.bashrc.d
+    - ~/.config
+    - ~/.config/nvim
+    - ~/Documents/Notes/.plugins
 
 - create:
     - ~/.bashrc.d
