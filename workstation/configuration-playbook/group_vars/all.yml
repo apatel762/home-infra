@@ -44,7 +44,7 @@ flatpak_apps_to_install:
   # A web browser that isn't installed at the system-level, and
   # has some sandboxing to prevent it from having access to all
   # of my stuff.
-  - remote: flathub-beta
+  - remote: flathub
     package: com.brave.Browser
     commands: [brave]
     overrides:
