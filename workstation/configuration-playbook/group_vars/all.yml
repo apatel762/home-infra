@@ -126,6 +126,9 @@ flatpak_apps_to_install:
     package: com.vscodium.codium
     commands: [codium, code]
 
+  - remote: flathub
+    package: org.onlyoffice.desktopeditors
+
 # todo: figure out how to install these apps:
 #  google chrome
 #  steam
