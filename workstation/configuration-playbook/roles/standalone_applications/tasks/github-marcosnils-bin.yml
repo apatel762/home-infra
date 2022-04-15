@@ -1,0 +1,37 @@
+---
+
+- name: Capture current version of bin
+  shell:  bin -v | grep bin | awk '{print $3}'
+  register: actual_bin_version
+  changed_when: False
+
+- name: Download bin if not present on system
+  get_url:
+    url: https://github.com/marcosnils/bin/releases/download/v{{ bin_base_version }}/bin_{{ bin_base_version }}_Linux_x86_64
+    dest: /tmp/bin
+    mode: u=rwx,go=rw
+  when: not actual_bin_version.stdout or actual_bin_version.stdout is version(bin_base_version, '<')
+
+- name: Check current status of bin config file
+  stat:
+    path: $HOME/.config/bin/config.json
+  register: bin_config_file
+
+- name: Ensure that bin config folders exist in home dir
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - $HOME/.config/bin/
+    - $HOME/.local/bin/
+
+- name: Ensure that bin config file exists in home dir
+  template:
+    src: templates/github-marcosnils-bin-config.json.jinja2
+    dest: $HOME/.config/bin/config.json
+    mode: u=rw,g=r,o-rwx
+  when: not bin_config_file.stat.exists
+
+- name: Ensure that bin is managing itself
+  shell: /tmp/bin list | grep github.com/marcosnils/bin || /tmp/bin install github.com/marcosnils/bin
+  when: not actual_bin_version.stdout or actual_bin_version.stdout is version(bin_base_version, '<')

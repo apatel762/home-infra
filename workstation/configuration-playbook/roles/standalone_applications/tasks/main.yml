@@ -17,3 +17,6 @@
   loop: "{{ standalone_applications }}"
   loop_control:
     label: "{{ item.file_name }}"
+
+- name: Install github.com/marcosnils/bin for managing compiled binaries from GitHub
+  include_tasks: github-marcosnils-bin.yml

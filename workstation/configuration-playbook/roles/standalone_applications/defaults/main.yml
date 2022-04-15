@@ -2,3 +2,6 @@
 
 standalone_applications_folder: "{{ lookup('env', 'HOME') }}/Applications"
 standalone_applications: []
+
+# find appropriate version here: https://github.com/marcosnils/bin/releases
+bin_base_version: "0.13.1"
