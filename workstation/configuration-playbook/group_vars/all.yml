@@ -165,6 +165,14 @@ standalone_applications:
     file_name: nb
     location: "{{ lookup('env', 'HOME') }}/.local/bin"
 
+# find appropriate version here: https://github.com/marcosnils/bin/releases
+bin_base_version: "0.13.1"
+cli_apps:
+  - binary: exa
+    namespace: "github.com/ogham/exa"
+  - binary: rg
+    namespace: "github.com/burntsushi/ripgrep"
+
 # =====================================================================
 # GNOME config
 #

@@ -1,7 +1,122 @@
 #!/usr/bin/env bash
 
-main() {
-	echo "TODO: maintain 'bin' installation"
+###############################################################################
+# These two (error & warning) functions are taken from https://github.com/xwmx/nb/
+# and have been modified slightly
+###############################################################################
+
+# _exit_1()
+#
+# Usage:
+#   _exit_1 <command>
+#
+# Description:
+#   Exit with status 1 after executing the specified command with output
+#   redirected to standard error. The command is expected to print a message
+#   and should typically be either `echo`, `printf`, or `cat`.
+_exit_1() {
+  {
+    printf "\n%s " "ERROR:"
+    "${@}"
+  } 1>&2
+  exit 1
 }
 
-main
+# _warn()
+#
+# Usage:
+#   _warn <command>
+#
+# Description:
+#   Print the specified command with output redirected to standard error.
+#   The command is expected to print a message and should typically be either
+#   `echo`, `printf`, or `cat`.
+_warn() {
+  {
+    printf "\n%s " "WARN:"
+    "${@}"
+  } 1>&2
+}
+
+###############################################################################
+
+# desc: check that a binary is installed, otherwise output error message
+# args:
+#  $1 = the name of the binary that we require
+#  $2 = the reason why the binary is needed
+_require() {
+	command -v "$1" > /dev/null 2>&1 \
+		|| _exit_1 cat <<HEREDOC
+
+Not found: $1
+Needed for: $2
+
+Please install this program and ensure that it is on your PATH before
+attempting to use this script.
+
+HEREDOC
+}
+
+# desc: check that all pre-requisites for this script are installed
+_check_requirements() {
+	_require bin "Installing binaries"
+}
+
+# desc: install a given app using 'bin'
+# args:
+#  $1 = the name of the binary that we are installing
+#  $2 = the namespace of the binary (i.e. the bit that we give to 'bin')
+_ensure_installed() {
+	if ! command -v "$1" &>/dev/null; then
+		bin install "$2"
+	fi
+}
+
+# desc: display a message to STDOUT telling the user that they should
+#   check for updates if they haven't done so already
+_show_update_reminder() {
+	# we decide whether or not to remind the user to check for updates
+	# based on whether or not we've got a file in /tmp. This way, we
+	# can show the reminder once, and then create the temp file to ensure
+	# that the user doesn't see the reminder again until they reboot (because
+	# the /tmp folder contents are deleted on reboot).
+	local BIN_MAINTAIN_REMINDER_FILE
+	BIN_MAINTAIN_REMINDER_FILE="/tmp/bin-maintain.reminder"
+
+	if [[ ! -f "$BIN_MAINTAIN_REMINDER_FILE" ]]; then
+		touch "$BIN_MAINTAIN_REMINDER_FILE"
+		bin update
+	fi
+}
+
+# desc: display a warning message to STDOUT telling the user that
+#   they should set up a GitHub API token (& why they should do so)
+_show_github_api_token_setup_reminder() {
+	if [[ -z "${GITHUB_AUTH_TOKEN}" ]]; then
+		_warn cat <<HEREDOC
+
+Consider setting up a personal access token for GitHub and adding the
+token to your environment variables to avoid getting rate-limited by
+GitHub when using 'bin'.
+
+The GITHUB_AUTH_TOKEN variable should be used to hold your API token.
+
+Ref:
+https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
+
+HEREDOC
+	fi
+}
+
+_main() {
+	_check_requirements
+
+	{% for item in cli_apps %}
+	_ensure_installed "{{ item.binary }}" "{{ item.namespace }}"
+	{% endfor %}
+
+	_show_update_reminder
+	_show_github_api_token_setup_reminder
+}
+
+_main
