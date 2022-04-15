@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 ###############################################################################
-# These two (error & warning) functions are taken from https://github.com/xwmx/nb/
-# and have been modified slightly
+# This function was taken from https://github.com/xwmx/nb/ and has been
+# modified slightly to work with this script
 ###############################################################################
 
 # _exit_1()
@@ -20,22 +20,6 @@ _exit_1() {
     "${@}"
   } 1>&2
   exit 1
-}
-
-# _warn()
-#
-# Usage:
-#   _warn <command>
-#
-# Description:
-#   Print the specified command with output redirected to standard error.
-#   The command is expected to print a message and should typically be either
-#   `echo`, `printf`, or `cat`.
-_warn() {
-  {
-    printf "\n%s " "WARN:"
-    "${@}"
-  } 1>&2
 }
 
 ###############################################################################
