@@ -71,22 +71,6 @@ I've got some Python apps that I've installed via `pipx` (might add this to the 
 - `yt-dlp`
 - `poetry`
 
-### Install `ghq`
-
-TODO: move this into the playbook
-
-This is for managing `git` repos. I literally just use this to stay organised and make sure that the repos I clone aren't spread across my system.
-
-```bash
-mkdir -p /tmp/download-ghq && cd /tmp/download-ghq
-wget https://github.com/x-motemen/ghq/releases/download/v1.2.1/ghq_linux_amd64.zip
-wget https://github.com/x-motemen/ghq/releases/download/v1.2.1/SHASUMS
-grep linux SHASUMS | sha1sum --check
-
-# ...if the checksum is OK
-unzip -j ghq_linux_amd64.zip ghq_linux_amd64/ghq -d ~/.local/bin/
-```
-
 ### Install `fzf`
 
 TODO: move this into the playbook
@@ -99,48 +83,6 @@ ghq get https://github.com/junegunn/fzf.git
 ```
 
 We want to use `--no-update-rc` because my dotfiles already have the relevant snippets in them.
-
-### Install ripgrep
-
-TODO: move this into the playbook
-
-Had to install this manually:
-
-```bash
-mkdir -p /tmp/download-ripgrep && cd /tmp/download-ripgrep
-wget https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgrep-13.0.0-x86_64-unknown-linux-musl.tar.gz
-ex ripgrep-13.0.0-x86_64-unknown-linux-musl.tar.gz
-
-cp -vu ripgrep-13.0.0-x86_64-unknown-linux-musl/rg -t ~/.local/bin
-```
-
-### Install `sk`
-
-TODO: move this into the playbook
-
-More complex alternative to `fzf` that I'm using to manage my notes.
-
-```bash
-mkdir -p /tmp/download-skim && cd /tmp/download-skim
-wget https://github.com/lotabout/skim/releases/download/v0.9.4/skim-v0.9.4-x86_64-unknown-linux-musl.tar.gz
-ex skim-v0.9.4-x86_64-unknown-linux-musl.tar.gz
-
-cp -vu sk -t ~/.local/bin
-```
-
-### Install `bat`
-
-TODO: move this into the playbook
-
-Nicer alternative to `cat` (with lots of colours).
-
-```bash
-mkdir -p /tmp/download-bat && cd /tmp/download-bat
-wget https://github.com/sharkdp/bat/releases/download/v0.20.0/bat-v0.20.0-x86_64-unknown-linux-musl.tar.gz
-ex bat-v0.20.0-x86_64-unknown-linux-musl.tar.gz
-
-cp -vu bat-v0.20.0-x86_64-unknown-linux-musl/bat -t ~/.local/bin
-```
 
 ### Install PWAs via Brave
 

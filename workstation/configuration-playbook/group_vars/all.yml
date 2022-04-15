@@ -172,6 +172,18 @@ cli_apps:
     namespace: "github.com/ogham/exa"
   - binary: rg
     namespace: "github.com/burntsushi/ripgrep"
+  - binary: sysz
+    namespace: "github.com/joehillen/sysz"
+  - binary: ctop
+    namespace: "github.com/bcicen/ctop"
+  - binary: ghq
+    namespace: "github.com/x-motemen/ghq"
+  - binary: bat
+    namespace: "github.com/sharkdp/bat"
+  - binary: delta
+    namespace: "github.com/dandavison/delta"
+  - binary: sk
+    namespace: "github.com/lotabout/skim"
 
 # =====================================================================
 # GNOME config
