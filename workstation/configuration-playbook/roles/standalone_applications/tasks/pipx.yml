@@ -1,0 +1,7 @@
+---
+
+- name: Ensure that the pipx-maintain script is present in local bin
+  ansible.builtin.template:
+    src: templates/pipx-maintain.jinja2
+    dest: "{{ lookup('env','HOME') }}/.local/bin/pipx-maintain"
+    mode: "u=rx,g=r,o-rwx"

@@ -183,6 +183,15 @@ cli_apps:
   - binary: sk
     namespace: "github.com/lotabout/skim"
 
+pipx_apps:
+  - name: poetry
+  - name: ranger-fm
+  - name: yt-dlp
+#  - name: ptpython
+#    dependencies:
+#      - requests
+#      - pendulum
+
 # =====================================================================
 # GNOME config
 #

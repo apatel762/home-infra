@@ -59,66 +59,58 @@ HEREDOC
 
 # desc: check that all pre-requisites for this script are installed
 _check_requirements() {
-	_require bin "Installing binaries"
+	_require pipx "Installing apps"
 }
 
-# desc: install a given app using 'bin'
+# desc: installs an app using pipx
 # args:
-#  $1 = the name of the binary that we are installing
-#  $2 = the namespace of the binary (i.e. the bit that we give to 'bin')
+#   $1 = the name of the app (will be used like: 'pipx install $1')
 _ensure_installed() {
-	if ! command -v "$1" &>/dev/null; then
-		echo ""
-		echo "Installing $1"
-		bin install "$2"
-		echo ""
+	if  [[ ! -d "{{ lookup('env','HOME') }}/.local/pipx/venvs/$1" ]]  &>/dev/null; then
+		pipx install "$1"
 	fi
 }
 
-# desc: install updates for all installed 'bin' apps
-_install_bin_updates() {
+# desc: injects a dependency into a pipx venv
+# args:
+#   $1 = the name of the app that needs the dependency
+#   $2 = the name of the dependency
+_ensure_injected() {
+	if  [[ -z "$("{{ lookup('env','HOME') }}"/.local/pipx/venvs/"$1"/bin/python -m pip freeze | grep "$2")" ]] &>/dev/null; then
+		pipx inject "$1" "$2"
+	fi
+}
+
+# desc: install updates for all installed pipx apps
+_update_all_installed() {
 	# we decide whether or not to install updated based on whether or not
 	# we've got a file in /tmp. This way, we can install updates once, and
 	# then create the temp file to ensure that the user doesn't have to
 	# install updates again until they reboot (because the /tmp folder
 	# contents are deleted on reboot).
-	local BIN_MAINTAIN_UPDATES_FILE
-	BIN_MAINTAIN_UPDATES_FILE="/tmp/bin-maintain-updates.done"
+	local PIPX_UPDATES_FILE
+	PIPX_UPDATES_FILE="/tmp/pipx-maintain.done"
 
-	if [[ ! -f "$BIN_MAINTAIN_UPDATES_FILE" ]]; then
-		touch "$BIN_MAINTAIN_UPDATES_FILE"
-		bin update
-	fi
-}
-
-# desc: display a warning message to STDOUT telling the user that
-#   they should set up a GitHub API token (& why they should do so)
-_show_github_api_token_setup_reminder() {
-	if [[ -z "${GITHUB_AUTH_TOKEN}" ]]; then
-		_warn cat <<HEREDOC
-
-Consider setting up a personal access token for GitHub and adding the
-token to your environment variables to avoid getting rate-limited by
-GitHub when using 'bin'.
-
-The GITHUB_AUTH_TOKEN variable should be used to hold your API token.
-
-Ref:
-https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
-
-HEREDOC
+	if [[ ! -f "$PIPX_UPDATES_FILE" ]]; then
+		touch "$PIPX_UPDATES_FILE"
+		pipx upgrade-all
 	fi
 }
 
 _main() {
 	_check_requirements
 
-	{% for item in cli_apps %}
-	_ensure_installed "{{ item.binary }}" "{{ item.namespace }}"
+	{% for item in pipx_apps %}
+	_ensure_installed "{{ item.name }}"
+	{% if 'dependencies' in item -%}
+	{% for dependency in item.dependencies %}
+	_ensure_injected "{{ item.name }}" "{{ dependency }}"
+	{% endfor %}
+	{% endif %}
+
 	{% endfor %}
 
-	_install_bin_updates
-	_show_github_api_token_setup_reminder
+	_update_all_installed
 }
 
 _main
