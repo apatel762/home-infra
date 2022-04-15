@@ -182,6 +182,8 @@ cli_apps:
     namespace: "github.com/dandavison/delta"
   - binary: sk
     namespace: "github.com/lotabout/skim"
+  - binary: shellcheck
+    namespace: "github.com/koalaman/shellcheck"
 
 pipx_apps:
   - name: poetry

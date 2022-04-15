@@ -60,7 +60,7 @@ _ensure_installed() {
 #   $1 = the name of the app that needs the dependency
 #   $2 = the name of the dependency
 _ensure_injected() {
-	if  [[ -z "$("{{ lookup('env','HOME') }}"/.local/pipx/venvs/"$1"/bin/python -m pip freeze | grep "$2")" ]] &>/dev/null; then
+	if  [[ -z "$("{{ lookup('env','HOME') }}/.local/pipx/venvs/$1/bin/python" -m pip freeze | grep "$2")" ]] &>/dev/null; then
 		pipx inject "$1" "$2"
 	fi
 }
