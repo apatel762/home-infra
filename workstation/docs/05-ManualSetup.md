@@ -71,19 +71,6 @@ I've got some Python apps that I've installed via `pipx` (might add this to the 
 - `yt-dlp`
 - `poetry`
 
-### Install `fzf`
-
-TODO: move this into the playbook
-
-I basically use this all the time when I'm in the terminal. It can be installed using the `install` script in the `fzf` repo, which makes things really easy.
-
-```bash
-ghq get https://github.com/junegunn/fzf.git
-"$(ghq list -p | grep "github.com/junegunn/fzf")"/install --xdg --all --no-update-rc
-```
-
-We want to use `--no-update-rc` because my dotfiles already have the relevant snippets in them.
-
 ### Install PWAs via Brave
 
 I've got some apps installed as PWAs through Brave:
