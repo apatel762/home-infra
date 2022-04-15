@@ -68,7 +68,10 @@ _check_requirements() {
 #  $2 = the namespace of the binary (i.e. the bit that we give to 'bin')
 _ensure_installed() {
 	if ! command -v "$1" &>/dev/null; then
+		echo ""
+		echo "Installing $1"
 		bin install "$2"
+		echo ""
 	fi
 }
 
