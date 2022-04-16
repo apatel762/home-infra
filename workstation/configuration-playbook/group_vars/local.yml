@@ -117,6 +117,7 @@ flatpak_apps_to_install:
   # alternative to MPV
   - remote: flathub
     package: io.github.celluloid_player.Celluloid
+    commands: [celluloid, mpv]
 
 flatpak_apps_to_remove:
   - remote: fedora
