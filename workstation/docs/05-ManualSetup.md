@@ -70,6 +70,7 @@ I've got some apps installed as PWAs through Brave:
 - Fastmail
 - GitHub
 - Reddit
+- YouTube
 
 This is so that I can launch these are separate apps and still have the ad-block and other stuff available.
 
