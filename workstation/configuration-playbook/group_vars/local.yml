@@ -10,7 +10,6 @@
 # available system-wide and can't be used via toolboxes or Flatpak.
 
 packages_to_layer:
-  - mozilla-ublock-origin
   - neovim
 
 # packages_to_remove:
