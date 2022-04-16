@@ -53,7 +53,7 @@ Currently managed via `Extension Manager` Flatpak, which was installed by the pl
 
 ### Download `nb` notes folder
 
-TODO: move this into the playbook
+TODO: automate this via the bash init scripts (as done with `pipx` and `bin`)
 
 This is the CLI app that I use for note-taking. The playbook will get this onto the workstation, but I need to pull my notes down from GitHub:
 
@@ -61,21 +61,12 @@ This is the CLI app that I use for note-taking. The playbook will get this onto 
 git clone git@github.com:apatel762/notes.git ~/Documents/Notes
 ```
 
-### Install `pipx` apps
-
-TODO: move this into the playbook
-
-I've got some Python apps that I've installed via `pipx` (might add this to the playbook at some point, but for now it's a manual process):
-
-- `ranger-fm`
-- `yt-dlp`
-- `poetry`
-
 ### Install PWAs via Brave
 
 I've got some apps installed as PWAs through Brave:
 
 - Jellyfin
+- Komga
 - Fastmail
 - GitHub
 - Reddit
