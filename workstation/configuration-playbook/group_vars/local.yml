@@ -98,22 +98,8 @@ flatpak_apps_to_install:
   - remote: flathub
     package: io.freetubeapp.FreeTube
 
-  # watch videos on Jellyfin via mpv (instead of having
-  # to use the web client)
-  - remote: flathub
-    package: com.github.iwalton3.jellyfin-mpv-shim
-
-  # best video player!
-  - remote: flathub
-    package: io.mpv.Mpv
-    commands: [mpv]
-
   - remote: flathub
     package: com.mojang.Minecraft
-
-  # for managing my notes
-#  - remote: flathub
-#    package: md.obsidian.Obsidian
 
   # for remote desktop connections; I prefer this to the built-in
   # GNOME app org.gnome.Connections
@@ -128,10 +114,9 @@ flatpak_apps_to_install:
   - remote: flathub
     package: org.onlyoffice.desktopeditors
 
-# todo: figure out how to install these apps:
-#  google chrome
-#  steam
-#  vscode
+  # alternative to MPV
+  - remote: flathub
+    package: io.github.celluloid_player.Celluloid
 
 flatpak_apps_to_remove:
   - remote: fedora
