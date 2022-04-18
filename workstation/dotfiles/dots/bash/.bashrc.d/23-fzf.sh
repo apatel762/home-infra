@@ -1,3 +1,9 @@
+# Ensure that the fzf bin is in PATH (or else we will end up installing
+# it below when we don't need to
+command -v ghq &>/dev/null \
+	&& ghq list -p | grep -q "github.com/junegunn/fzf" \
+	&& append_to_path "$(ghq list -p | grep "github.com/junegunn/fzf")/bin"
+
 # This snippet will install fzf if it's not already installed.
 # The installation will happen by cloning the git repo.
 if ! command -v fzf &>/dev/null; then
