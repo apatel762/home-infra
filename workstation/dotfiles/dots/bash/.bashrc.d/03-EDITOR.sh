@@ -5,21 +5,41 @@ function _ensure_neovim_appimage_extracted() {
 	local EXPECTED_NEOVIM_BINARY
 	EXPECTED_NEOVIM_BINARY="$LOCAL_BIN/nvim" 
 
+	local EXPECTED_NEOVIM_APPIMAGE
+	EXPECTED_NEOVIM_APPIMAGE="$LOCAL_BIN/nvim.AppImage" 
+
+	# ensure that we re-extract the Neovim AppImage if AppImage version is
+	# different to the extracted binary. We make sure of this by deleting
+	# the extracted binary if there's a difference in the version output,
+	# and the code down below should detect that it needs to re-extract
+	# stuff.
+	if [ -e "$EXPECTED_NEOVIM_BINARY" ] && [ -e "$EXPECTED_NEOVIM_APPIMAGE" ]; then
+		local NEOVIM_APPIMAGE_VERSION
+		NEOVIM_APPIMAGE_VERSION="$("$EXPECTED_NEOVIM_APPIMAGE" --version)"
+		local NEOVIM_BINARY_VERSION
+		NEOVIM_BINARY_VERSION="$("$EXPECTED_NEOVIM_BINARY" --version)"
+
+		if [[ "$NEOVIM_APPIMAGE_VERSION" != "$NEOVIM_BINARY_VERSION" ]]; then
+			echo "Detected mismatch between nvim.AppImage and nvim binary; deleting the binary."
+			rm -f "$EXPECTED_NEOVIM_BINARY" 
+		fi
+	fi
+
 	# if the symlink is broken, ensure that the target is removed
 	# ...and remove the squashfs root while we're at it (if it's there)
-	if [ ! -e "$EXPECTED_NEOVIM_BINARY" ] ; then
+	if [ ! -e "$EXPECTED_NEOVIM_BINARY" ]; then
 		rm -f "$EXPECTED_NEOVIM_BINARY" 
 		rm -rf "$LOCAL_BIN/nvim-root"
 	fi 
 
 	if ! command -v nvim &>/dev/null \
-		&& [ -f "$HOME/.local/bin/nvim.AppImage" ]; then
-		# if we are in here, we have the AppImage in the local bin and we
-		# DON'T have the plain Neovim binary, so here, we need to extract
-		# it from the AppImage and create a symlink
+		&& [ -f "$EXPECTED_NEOVIM_APPIMAGE" ]; then
+		# if we are in here, we have the AppImage in the local bin and
+		# we DON'T have the plain Neovim binary, so here, we need to
+		# extract it from the AppImage and create a symlink
 		(
 			echo "Creating physical nvim.AppImage alias"
-			cd "$HOME/.local/bin/" 
+			cd "$LOCAL_BIN" 
 			./nvim.AppImage --appimage-extract &>/dev/null
 
 			# rename the fs root folder
