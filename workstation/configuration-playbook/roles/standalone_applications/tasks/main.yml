@@ -19,7 +19,7 @@
     label: "{{ item.file_name }}"
 
 - name: Install github.com/marcosnils/bin for managing compiled binaries from GitHub
-  include_tasks: github-marcosnils-bin.yml
+  include_tasks: bin.yml
 
 - name: Install pipx apps
   include_tasks: pipx.yml
