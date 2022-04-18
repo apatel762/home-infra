@@ -1,0 +1,95 @@
+#!/usr/bin/env bash
+
+###############################################################################
+# This function was taken from https://github.com/xwmx/nb/ and has been
+# modified slightly to work with this script
+###############################################################################
+
+# _exit_1()
+#
+# Usage:
+#   _exit_1 <command>
+#
+# Description:
+#   Exit with status 1 after executing the specified command with output
+#   redirected to standard error. The command is expected to print a message
+#   and should typically be either `echo`, `printf`, or `cat`.
+_exit_1() {
+  {
+    printf "\n%s " "ERROR:"
+    "${@}"
+  } 1>&2
+  exit 1
+}
+
+###############################################################################
+
+# desc: converts a given number of seconds to days.
+# args:
+#   $1 = a number of seconds.
+function _days_from_seconds {
+	printf '%d days' $(("$1"/60/60/24))
+}
+
+# desc: outputs a message to STDOUT if an app is 'stale' (old).
+# args:
+#   $1 = the absolute path to the app.
+#   $2 = number of days before the app is considered stale.
+_warn_if_old() {
+	if [ ! -f "$1" ]; then
+		# sanity check, shouldn't happen if we've gotten this far, but
+		# might as well let the user know
+		echo "WARNING: $1 doesn't exist, cannot check if stale"
+	fi
+	if [[ "$2" =~ ^[0-9]+$ ]]; then
+		:
+	else
+		# sanity check again
+		echo "WARNING: $2 is not a valid 'number of days' for a stale app"
+	fi
+
+	local CURRENT_UNIX_TIMESTAMP
+	CURRENT_UNIX_TIMESTAMP="$(date +%s)"
+
+	local APP_FILE_UNIX_TIMESTAMP
+	APP_FILE_UNIX_TIMESTAMP="$(stat --format=%Y "$1")"
+
+	local AGE_OF_FILE_IN_SECONDS
+	AGE_OF_FILE_IN_SECONDS=$(($CURRENT_UNIX_TIMESTAMP-$APP_FILE_UNIX_TIMESTAMP))
+
+	local STALE_SECONDS
+	STALE_SECONDS=$(("$2" * 24 * 60 * 60))
+
+	if [[ "$AGE_OF_FILE_IN_SECONDS" -ge "$STALE_SECONDS" ]]; then
+		echo "$(basename "$1") is stale; consider checking for updates. Currently $(_days_from_seconds "$AGE_OF_FILE_IN_SECONDS") old."
+	fi
+}
+
+_create_completion_file() {
+	# we decide whether or not to install updated based on whether or not
+	# we've got a file in /tmp. This way, we can install updates once, and
+	# then create the temp file to ensure that the user doesn't have to
+	# install updates again until they reboot (because the /tmp folder
+	# contents are deleted on reboot).
+	local APPS_UPDATES_FILE
+	APPS_UPDATES_FILE="/tmp/apps-maintain.done"
+
+	if [[ ! -f "$APPS_UPDATES_FILE" ]]; then
+		touch "$APPS_UPDATES_FILE"
+		echo "No stale apps found."
+	fi
+}
+
+_main() {
+	{% for item in standalone_applications %}
+	{% if 'stale_days' in item -%}
+	_warn_if_old \
+		"{{ item.location | default(standalone_applications_folder) }}/{{ item.file_name }}" \
+		"{{ item.stale_days | default(999) }}"
+	{% endif %}
+	{% endfor %}
+
+	_create_completion_file
+}
+
+_main

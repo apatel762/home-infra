@@ -140,11 +140,6 @@ flatpak_apps_to_remove:
 #
 # Each application is fully contained in one file (realistically, this
 # means that the applications are all 'AppImage' files).
-#
-# TODO: add an optional update check policy property and create
-#  a script 'apps-maintain' which checks against this
-#    update_check_policy:
-#      stale_days: 30
 
 standalone_applications:
   - url: https://github.com/nextcloud/desktop/releases/download/v3.2.4/Nextcloud-3.2.4-x86_64.AppImage
@@ -154,10 +149,12 @@ standalone_applications:
     checksum: sha256:ac1caae4f1c54e0ce126b9313d993cb0d1cc4a81ef3e09dd26772be37aaa61db
     file_name: nvim.AppImage
     location: "{{ lookup('env', 'HOME') }}/.local/bin"
+    stale_days: 180
   - url: https://raw.githubusercontent.com/xwmx/nb/6.10.0/nb
     checksum: sha256:6840973acf6a678e16793089acb953f697562eaffc6082bc7796adc8d41bac1b
     file_name: nb
     location: "{{ lookup('env', 'HOME') }}/.local/bin"
+    stale_days: 30
 
 # find appropriate version here: https://github.com/marcosnils/bin/releases
 bin_base_version: "0.13.1"

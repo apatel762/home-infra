@@ -18,6 +18,12 @@
   loop_control:
     label: "{{ item.file_name }}"
 
+- name: Ensure that the apps-maintain script is present in local bin
+  ansible.builtin.template:
+    src: templates/apps-maintain.jinja2
+    dest: "{{ lookup('env','HOME') }}/.local/bin/apps-maintain"
+    mode: "u=rx,g=r,o-rwx"
+
 - name: Install github.com/marcosnils/bin for managing compiled binaries from GitHub
   include_tasks: bin.yml
 
