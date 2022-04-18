@@ -169,8 +169,6 @@ cli_apps:
     namespace: "github.com/lotabout/skim"
   - binary: shellcheck
     namespace: "github.com/koalaman/shellcheck"
-  - binary: pandoc
-    namespace: "github.com/jgm/pandoc"
 
 pipx_apps:
   - name: poetry
