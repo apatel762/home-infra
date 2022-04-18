@@ -9,11 +9,11 @@
 # These should be used sparingly to install stuff that needs to be
 # available system-wide and can't be used via toolboxes or Flatpak.
 
-packages_to_layer:
-  - neovim
-
-# packages_to_remove:
+#packages_to_layer:
 #   - your_packages_here
+
+#packages_to_remove:
+#  - neovim
 
 # =====================================================================
 # Flatpaks
@@ -140,11 +140,20 @@ flatpak_apps_to_remove:
 #
 # Each application is fully contained in one file (realistically, this
 # means that the applications are all 'AppImage' files).
+#
+# TODO: add an optional update check policy property and create
+#  a script 'apps-maintain' which checks against this
+#    update_check_policy:
+#      stale_days: 30
 
 standalone_applications:
   - url: https://github.com/nextcloud/desktop/releases/download/v3.2.4/Nextcloud-3.2.4-x86_64.AppImage
     checksum: sha256:5d0c13ba422c445c4a88cd45a1b38878daf67123552b0f4a6020a73734c47ce6
     file_name: Nextcloud.AppImage
+  - url: https://github.com/neovim/neovim/releases/download/v0.7.0/nvim.appimage
+    checksum: sha256:ac1caae4f1c54e0ce126b9313d993cb0d1cc4a81ef3e09dd26772be37aaa61db
+    file_name: nvim
+    location: "{{ lookup('env', 'HOME') }}/.local/bin"
   - url: https://raw.githubusercontent.com/xwmx/nb/6.10.0/nb
     checksum: sha256:6840973acf6a678e16793089acb953f697562eaffc6082bc7796adc8d41bac1b
     file_name: nb
