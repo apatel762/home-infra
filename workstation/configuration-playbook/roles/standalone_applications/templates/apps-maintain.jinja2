@@ -65,31 +65,29 @@ _warn_if_old() {
 	fi
 }
 
-_create_completion_file() {
-	# we decide whether or not to install updated based on whether or not
-	# we've got a file in /tmp. This way, we can install updates once, and
-	# then create the temp file to ensure that the user doesn't have to
-	# install updates again until they reboot (because the /tmp folder
-	# contents are deleted on reboot).
+_main() {
 	local APPS_UPDATES_FILE
 	APPS_UPDATES_FILE="/tmp/apps-maintain.done"
 
-	if [[ ! -f "$APPS_UPDATES_FILE" ]]; then
-		touch "$APPS_UPDATES_FILE"
-		echo "No stale apps found."
+	if [[ -f "$APPS_UPDATES_FILE" ]]; then
+		# in this case, we have already run the script so there's no need to
+		# run it again; we can safely exit here
+		exit 0
 	fi
-}
 
-_main() {
 	{% for item in standalone_applications %}
-	{% if 'stale_days' in item -%}
+	{% if 'stale_days' in item %}
 	_warn_if_old \
 		"{{ item.location | default(standalone_applications_folder) }}/{{ item.file_name }}" \
 		"{{ item.stale_days | default(999) }}"
 	{% endif %}
 	{% endfor %}
 
-	_create_completion_file
+	# create a file in /tmp to mark this script as 'complete' so that it
+	# doesn't keep running every time we open a terminal window
+	if [[ ! -f "$APPS_UPDATES_FILE" ]]; then
+		touch "$APPS_UPDATES_FILE"
+	fi
 }
 
 _main

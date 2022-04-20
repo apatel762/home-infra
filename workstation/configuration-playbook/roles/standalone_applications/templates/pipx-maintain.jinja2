@@ -76,6 +76,8 @@ _update_all_installed() {
 	PIPX_UPDATES_FILE="/tmp/pipx-maintain.done"
 
 	if [[ ! -f "$PIPX_UPDATES_FILE" ]]; then
+		echo ""
+		echo "CHECKING FOR PIPX UPDATES"
 		touch "$PIPX_UPDATES_FILE"
 		pipx upgrade-all
 	fi
@@ -91,7 +93,6 @@ _main() {
 	_ensure_injected "{{ item.name }}" "{{ dependency }}"
 	{% endfor %}
 	{% endif %}
-
 	{% endfor %}
 
 	_update_all_installed

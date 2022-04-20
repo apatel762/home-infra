@@ -83,9 +83,11 @@ _install_bin_updates() {
 	# install updates again until they reboot (because the /tmp folder
 	# contents are deleted on reboot).
 	local BIN_MAINTAIN_UPDATES_FILE
-	BIN_MAINTAIN_UPDATES_FILE="/tmp/bin-maintain-updates.done"
+	BIN_MAINTAIN_UPDATES_FILE="/tmp/bin-maintain.done"
 
 	if [[ ! -f "$BIN_MAINTAIN_UPDATES_FILE" ]]; then
+		echo ""
+		echo "CHECKING FOR APP UPDATES"
 		touch "$BIN_MAINTAIN_UPDATES_FILE"
 		bin update
 	fi
