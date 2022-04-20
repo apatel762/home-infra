@@ -1,3 +1,8 @@
 if command -v bin-maintain &>/dev/null; then
-	bin-maintain
+	# If not running interactively, don't do anything
+	if [[ $- != *i* ]]; then
+		:
+	else
+		bin-maintain
+	fi
 fi
