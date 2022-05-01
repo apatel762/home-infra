@@ -42,12 +42,9 @@ Using the below command:
 
 you can see the SELinux permissions on a file. The before & after of the above `ls` command will look something like this:
 
-```
-# before
--rw-------. 1 apatel apatel unconfined_u:object_r:user_home_t:s0 1095 Mar 22  2020 client.ovpn
-
-#after
--rw-------. 1 apatel apatel unconfined_u:object_r:home_cert_t:s0 1095 Mar 22  2020 client.ovpn
+```diff
+-  -rw-------. 1 apatel apatel unconfined_u:object_r:user_home_t:s0 1095 Mar 22  2020 client.ovpn
++  -rw-------. 1 apatel apatel unconfined_u:object_r:home_cert_t:s0 1095 Mar 22  2020 client.ovpn
 ```
 
 References:
