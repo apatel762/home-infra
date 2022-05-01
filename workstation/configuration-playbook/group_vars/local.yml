@@ -106,11 +106,6 @@ flatpak_apps_to_install:
   - remote: flathub
     package: org.remmina.Remmina
 
-  # for opening up and looking at repositories
-  - remote: flathub
-    package: com.vscodium.codium
-    commands: [codium, code]
-
   - remote: flathub
     package: org.onlyoffice.desktopeditors
 
