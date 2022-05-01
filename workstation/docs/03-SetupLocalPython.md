@@ -51,11 +51,10 @@ We're going to install `pipx` via a virtual environment, following the theme of 
 
 The only system packages that we are going to install are `setuptools` and `wheel`. I think this is fine compared to installing everything that `pipx` depends on *and* those two packages.
 
-Run the below commands inside of the toolbox that you created earlier (to ensure that you still have access to all of those dependencies that you installed into the toolbox earlier):
+**Run the below commands inside of the toolbox that you created earlier** (to ensure that you still have access to all of those dependencies that you installed into the toolbox earlier):
 
 ```bash
-mkdir -p /tmp/pipx-in-pipx
-cd /tmp/pipx-in-pipx
+cd "$(mktemp --directory)"
 python -m pip install --upgrade pip setuptools wheel
 python -m venv .venv
 source .venv/bin/activate
