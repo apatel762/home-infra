@@ -13,8 +13,6 @@ There are some things that aren't configurable at the moment via Ansible (or I a
 
 ### VPS as VPN
 
-**TODO: this doesn't actually work** - when I try to use the VPN, it won't run.
-
 To get easy access to the VPN setup, I need to add my VPS as a VPN (Network Manager applet) via the GNOME network settings. First copy the secrets to a local folder from the VPS:
 
 ```bash
@@ -22,11 +20,40 @@ mkdir -p ~/Documents/Secrets/VPN
 rsync -avzh user@host:/media/sd_[0-9]/user/private/vpn/* ~/Documents/Secrets/VPN
 ```
 
-...and once you have the settings, follow these steps to set up the NM applet:
+...and once you have the settings, follow these steps to set up the NetworkManager applet:
 
 - Go to 'Settings > Network > VPN' and click '+'.
 - Click 'Import from file...'.
 - Select the `client.ovpn` file.
+
+You may also need to change the SELinux permissions on the OpenVPN config files in the folder or else the VPN connection won't work.
+
+```bash
+# change the SELinux context type of everything in the folder
+su root
+chcon -R -t home_cert_t /var/home/apatel/Documents/Secrets/VPN/
+```
+
+Using the below command:
+
+```bash
+\ls -al -d -Z client.ovpn
+```
+
+you can see the SELinux permissions on a file. The before & after of the above `ls` command will look something like this:
+
+```
+# before
+-rw-------. 1 apatel apatel unconfined_u:object_r:user_home_t:s0 1095 Mar 22  2020 client.ovpn
+
+#after
+-rw-------. 1 apatel apatel unconfined_u:object_r:home_cert_t:s0 1095 Mar 22  2020 client.ovpn
+```
+
+References:
+
+- https://ask.fedoraproject.org/t/nm-openvpn-cannot-pre-load-keyfile/19532/2
+- https://unix.stackexchange.com/questions/166807/selinux-and-openvpn
 
 ### Add profile picture for user
 
