@@ -199,7 +199,7 @@ pipx_apps:
 dconf_settings:
   # the apps that appear in the dock when you press the 'super' key
   - key: /org/gnome/shell/favorite-apps
-    value: "['com.brave.Browser.desktop', 'com.spotify.Client.desktop', 'org.keepassxc.KeePassXC.desktop', 'org.cryptomator.Cryptomator.desktop', 'org.gnome.Terminal.desktop', 'com.vscodium.codium.desktop', 'org.gnome.Nautilus.desktop', 'net.ankiweb.Anki.desktop']"
+    value: "['com.brave.Browser.desktop', 'com.spotify.Client.desktop', 'org.keepassxc.KeePassXC.desktop', 'org.cryptomator.Cryptomator.desktop', 'org.gnome.Terminal.desktop', 'org.gnome.Nautilus.desktop', 'net.ankiweb.Anki.desktop']"
 
 # =====================================================================
 # OS updates
