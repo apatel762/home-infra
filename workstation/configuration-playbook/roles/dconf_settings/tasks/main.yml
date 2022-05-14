@@ -8,21 +8,32 @@
     path: "{{ wallpaper_directory }}"
     state: directory
 
-- name: Ensure that the custom wallpaper is in the wallpapers folder
+- name: Ensure that the custom wallpapers are in the wallpapers folder
   ansible.builtin.copy:
-    src: "{{ wallpaper_file_name }}"
-    dest: "{{ wallpaper_directory }}/{{ wallpaper_file_name }}"
-  when: wallpaper_file_name is defined
+    src: "{{ item.file }}"
+    dest: "{{ wallpaper_directory }}/{{ item.file }}"
+  loop:
+    - file: "{{ wallpaper_light_file_name }}"
+    - file: "{{ wallpaper_dark_file_name }}"
+  loop_control:
+    label: "{{ item.file }}"
 
-- name: Ensure that dconf has registered the custom wallpaper
+- name: Ensure that dconf has registered the custom DARK theme wallpaper
   community.general.dconf:
     key: "{{ item.key }}"
-    value: "'file://{{ wallpaper_directory }}/{{ wallpaper_file_name }}'"
+    value: "{{ item.value }}"
     state: present
-  when: wallpaper_file_name is defined
   loop:
+    # dark theme
+    - key: "/org/gnome/desktop/background/picture-uri-dark"
+      value: "'file://{{ wallpaper_directory }}/{{ wallpaper_dark_file_name }}'"
+    - key: "/org/gnome/desktop/screensaver/picture-uri-dark"
+      value: "'file://{{ wallpaper_directory }}/{{ wallpaper_dark_file_name }}'"
+    # light theme
     - key: "/org/gnome/desktop/background/picture-uri"
+      value: "'file://{{ wallpaper_directory }}/{{ wallpaper_light_file_name }}'"
     - key: "/org/gnome/desktop/screensaver/picture-uri"
+      value: "'file://{{ wallpaper_directory }}/{{ wallpaper_light_file_name }}'"
   loop_control:
     label: "{{ item.key }}"
 

@@ -1,6 +1,8 @@
 ---
 
-wallpaper_file_name: "fabrizio-conti-kXVogATbFgA-unsplash.jpg"
+#wallpaper_file_name: "fabrizio-conti-kXVogATbFgA-unsplash.jpg"
+wallpaper_dark_file_name: "blobs-d.svg"
+wallpaper_light_file_name: "blobs-l.svg"
 wallpaper_directory: "{{ lookup('env', 'HOME') }}/Pictures"
 
 dconf_settings: []
