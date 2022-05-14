@@ -32,6 +32,7 @@ env/
 !*.ini
 !*.py
 !*.jinja2
+!*.repo
 
 !.bashrc
 !.gitconfig

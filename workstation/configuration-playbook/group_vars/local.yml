@@ -9,8 +9,8 @@
 # These should be used sparingly to install stuff that needs to be
 # available system-wide and can't be used via toolboxes or Flatpak.
 
-#packages_to_layer:
-#   - your_packages_here
+packages_to_layer:
+   - code
 
 #packages_to_remove:
 #  - neovim
