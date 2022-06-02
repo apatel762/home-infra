@@ -1,6 +1,9 @@
+#!/usr/bin/env bash
+
 function _ensure_neovim_appimage_extracted() {
 	local LOCAL_BIN
 	LOCAL_BIN="$HOME/.local/bin"
+	mkdir -p "$LOCAL_BIN"
 
 	local EXPECTED_NEOVIM_BINARY
 	EXPECTED_NEOVIM_BINARY="$LOCAL_BIN/nvim" 
@@ -13,7 +16,12 @@ function _ensure_neovim_appimage_extracted() {
 	# the extracted binary if there's a difference in the version output,
 	# and the code down below should detect that it needs to re-extract
 	# stuff.
-	if [ -e "$EXPECTED_NEOVIM_BINARY" ] && [ -e "$EXPECTED_NEOVIM_APPIMAGE" ]; then
+	#
+	# version mismatch checking is disabled when you are in a toolbox
+	# because we can't check the .AppImage version without having FUSE
+	# installed, and it isn't installed in a container.
+	if [ -e "$EXPECTED_NEOVIM_BINARY" ] && [ -e "$EXPECTED_NEOVIM_APPIMAGE" ] \
+		&& [ ! -f /run/.containerenv ] && [ ! -f /run/.toolboxenv ] ; then
 		local NEOVIM_APPIMAGE_VERSION
 		NEOVIM_APPIMAGE_VERSION="$("$EXPECTED_NEOVIM_APPIMAGE" --version)"
 		local NEOVIM_BINARY_VERSION
@@ -39,7 +47,7 @@ function _ensure_neovim_appimage_extracted() {
 		# extract it from the AppImage and create a symlink
 		(
 			echo "Creating physical nvim.AppImage alias"
-			cd "$LOCAL_BIN" 
+			cd "$LOCAL_BIN" || return 1
 			./nvim.AppImage --appimage-extract &>/dev/null
 
 			# rename the fs root folder
