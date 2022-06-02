@@ -3,4 +3,5 @@ ARG FEDORA_VERSION=36
 FROM registry.fedoraproject.org/fedora-toolbox:${FEDORA_VERSION}
 
 RUN dnf install -y \
-    "@Development Tools"
+    "@Development Tools" \
+	pandoc
