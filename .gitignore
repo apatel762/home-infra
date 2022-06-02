@@ -41,6 +41,7 @@ env/
 !*.vim
 !.nbrc
 !*.nb-plugin
+!nb-fzf-preview
 !Containerfile
 
 # temporary?
