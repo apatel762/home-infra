@@ -4,4 +4,6 @@ FROM registry.fedoraproject.org/fedora-toolbox:${FEDORA_VERSION}
 
 RUN dnf install -y \
     "@Development Tools" \
-	pandoc
+	pandoc \
+    openssl \
+    openssl1.1-devel.x86_64
