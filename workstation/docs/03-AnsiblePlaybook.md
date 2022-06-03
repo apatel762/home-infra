@@ -5,7 +5,7 @@ Links:
 - [Previous](./02-AcquireRepo.md)
 - [Next](./04-ManualSetup.md)
 
-**You should be in a toolbox container now**. Enter the folder with the configuration playbook use the Makefile to install dependencies.
+**You should be in a toolbox container now**. Enter the folder with the Ansible playbook and use the Makefile to install dependencies.
 
 ```bash
 make install
