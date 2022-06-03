@@ -192,6 +192,7 @@ pipx_apps:
 # before and after)
 
 dconf_settings:
+
   # the apps that appear in the dock when you press the 'super' key
   - key: /org/gnome/shell/favorite-apps
     value: "['com.brave.Browser.desktop', 'com.spotify.Client.desktop', 'org.keepassxc.KeePassXC.desktop', 'org.cryptomator.Cryptomator.desktop', 'code.desktop', 'org.gnome.Terminal.desktop', 'org.gnome.Nautilus.desktop', 'net.ankiweb.Anki.desktop']"
@@ -204,12 +205,144 @@ dconf_settings:
   - key: /org/gnome/settings-daemon/plugins/color/night-light-temperature
     value: "uint32 1700"
 
-  ###############################################
-  # terminal config & pet container integration #
-  ###############################################
+  ##################
+  # custom hotkeys #
+  ##################
 
-  # terminal colours taken from [Mayccoll/Gogh](https://github.com/Mayccoll/Gogh)
+  # hotkey to open a terminal with the 'Toolbox' profile
+  - key: /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/name
+    value: "'toolbox'"
+  - key: /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/command
+    value: "'gnome-terminal --profile=Toolbox'"
+  - key: /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/binding
+    value: "'<Primary><Alt>f'"
 
+  # hotkey to open a host terminal
+  - key: /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/name
+    value: "'terminal'"
+  - key: /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/command
+    value: "'gnome-terminal --profile=Host'"
+  - key: /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/binding
+    value: "'<Primary><Alt>t'"
+
+  # finalise custom keybindings
+  - key: /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings
+    value: "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/']"
+
+  #####################
+  # terminal profiles #
+  #####################
+
+  # colours taken from [Mayccoll/Gogh](https://github.com/Mayccoll/Gogh)
+  # host     = ( 114 ) Mona Lisa
+  # toolbox  = ( 157 ) Pixiefloss
+
+  - key: /org/gnome/terminal/legacy/profiles:/default
+    value: "'3593294f-b67f-4d64-b90e-5b7281edee75'"
+  - key: /org/gnome/terminal/legacy/profiles:/list
+    value: "['3593294f-b67f-4d64-b90e-5b7281edee75', 'c8908255-1368-4492-aa30-2cc2fbf3095a']"
+
+  ##############################
+  # terminal profile - Toolbox #
+  ##############################
+
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/allow-bold
+    value: "true"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/audible-bell
+    value: "false"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/background-color
+    value: "'#24241f1f3333'"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/background-transparency-percent
+    value: "5"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/bold-color
+    value: "'#d1d1cacae8e8'"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/bold-color-same-as-fg
+    value: "true"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/cursor-background-color
+    value: "'#d1d1cacae8e8'"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/cursor-colors-set
+    value: "true"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/cursor-foreground-color
+    value: "'#24241f1f3333'"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/custom-command
+    value: "'toolbox enter main'"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/default-size-columns
+    value: "140"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/default-size-rows
+    value: "40"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/foreground-color
+    value: "'#d1d1cacae8e8'"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/highlight-colors-set
+    value: "true"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/palette
+    value: "['#2f2f29294242', '#ffff85857f7f', '#4848b6b68585', '#e6e6c0c00000', '#aeae8181ffff', '#efef61615555', '#c2c2ffffdfdf', '#f8f8f8f8f2f2', '#757550507b7b', '#f1f156568e8e', '#5a5adbdba2a2', '#d5d5a4a42525', '#c5c5a3a3ffff', '#efef61615555', '#c2c2ffffffff', '#f8f8f8f8f0f0']"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/title
+    value: "'Toolbox'"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/title-mode
+    value: "'ignore'"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/use-custom-command
+    value: "true"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/use-system-font
+    value: "true"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/use-theme-background
+    value: "false"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/use-theme-colors
+    value: "false"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/use-theme-transparency
+    value: "false"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/use-transparent-background
+    value: "true"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/visible-name
+    value: "'Toolbox'"
+
+  ###########################
+  # terminal profile - Host #
+  ###########################
+
+  - key: /org/gnome/terminal/legacy/profiles:/:3593294f-b67f-4d64-b90e-5b7281edee75/allow-bold
+    value: "true"
+  - key: /org/gnome/terminal/legacy/profiles:/:3593294f-b67f-4d64-b90e-5b7281edee75/audible-bell
+    value: "false"
+  - key: /org/gnome/terminal/legacy/profiles:/:3593294f-b67f-4d64-b90e-5b7281edee75/background-color
+    value: "'#12120b0b0d0d'"
+  - key: /org/gnome/terminal/legacy/profiles:/:3593294f-b67f-4d64-b90e-5b7281edee75/background-transparency-percent
+    value: "5"
+  - key: /org/gnome/terminal/legacy/profiles:/:3593294f-b67f-4d64-b90e-5b7281edee75/bold-color
+    value: "'#f7f7d6d66a6a'"
+  - key: /org/gnome/terminal/legacy/profiles:/:3593294f-b67f-4d64-b90e-5b7281edee75/bold-color-same-as-fg
+    value: "true"
+  - key: /org/gnome/terminal/legacy/profiles:/:3593294f-b67f-4d64-b90e-5b7281edee75/cursor-background-color
+    value: "'#f7f7d6d66a6a'"
+  - key: /org/gnome/terminal/legacy/profiles:/:3593294f-b67f-4d64-b90e-5b7281edee75/cursor-colors-set
+    value: "true"
+  - key: /org/gnome/terminal/legacy/profiles:/:3593294f-b67f-4d64-b90e-5b7281edee75/cursor-foreground-color
+    value: "'#12120b0b0d0d'"
+  - key: /org/gnome/terminal/legacy/profiles:/:3593294f-b67f-4d64-b90e-5b7281edee75/default-size-columns
+    value: "140"
+  - key: /org/gnome/terminal/legacy/profiles:/:3593294f-b67f-4d64-b90e-5b7281edee75/default-size-rows
+    value: "40"
+  - key: /org/gnome/terminal/legacy/profiles:/:3593294f-b67f-4d64-b90e-5b7281edee75/foreground-color
+    value: "'#f7f7d6d66a6a'"
+  - key: /org/gnome/terminal/legacy/profiles:/:3593294f-b67f-4d64-b90e-5b7281edee75/highlight-colors-set
+    value: "true"
+  - key: /org/gnome/terminal/legacy/profiles:/:3593294f-b67f-4d64-b90e-5b7281edee75/palette
+    value: "['#35351b1b0e0e', '#9b9b29291c1c', '#636362623232', '#c3c36e6e2828', '#51515c5c5d5d', '#9b9b1d1d2929', '#585880805656', '#f7f7d7d75c5c', '#878742422828', '#ffff43433131', '#b4b4b2b26464', '#ffff95956666', '#9e9eb2b2b4b4', '#ffff5b5b6a6a', '#8a8acdcd8f8f', '#ffffe5e59898']"
+  - key: /org/gnome/terminal/legacy/profiles:/:3593294f-b67f-4d64-b90e-5b7281edee75/title
+    value: "'Terminal'"
+  - key: /org/gnome/terminal/legacy/profiles:/:3593294f-b67f-4d64-b90e-5b7281edee75/title-mode
+    value: "'ignore'"
+  - key: /org/gnome/terminal/legacy/profiles:/:3593294f-b67f-4d64-b90e-5b7281edee75/use-system-font
+    value: "true"
+  - key: /org/gnome/terminal/legacy/profiles:/:3593294f-b67f-4d64-b90e-5b7281edee75/use-theme-background
+    value: "false"
+  - key: /org/gnome/terminal/legacy/profiles:/:3593294f-b67f-4d64-b90e-5b7281edee75/use-theme-colors
+    value: "false"
+  - key: /org/gnome/terminal/legacy/profiles:/:3593294f-b67f-4d64-b90e-5b7281edee75/use-theme-transparency
+    value: "false"
+  - key: /org/gnome/terminal/legacy/profiles:/:3593294f-b67f-4d64-b90e-5b7281edee75/use-transparent-background
+    value: "true"
+  - key: /org/gnome/terminal/legacy/profiles:/:3593294f-b67f-4d64-b90e-5b7281edee75/visible-name
+    value: "'Host'"
 
 # =====================================================================
 # OS updates
