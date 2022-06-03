@@ -48,3 +48,27 @@
   loop: "{{ dconf_settings }}"
   loop_control:
     label: "{{ item.key }}"
+
+# =============================================
+# USER PROFILE PICTURE
+# not really a dconf setting but fits in here
+
+- name: Gather information about profile picture
+  ansible.builtin.stat:
+    path: "/var/lib/AccountsService/icons/{{ ansible_user_id }}"
+  register: profile_picture
+
+- name: Copy profile picture if not present
+  become: true
+  ansible.builtin.copy:
+    src: "{{ user_icon_file_name }}"
+    dest: "/var/lib/AccountsService/icons/{{ ansible_user_id }}"
+    force: yes
+  when: profile_picture.stat.checksum != user_icon_sha1
+
+- name: set profile picture
+  become: true
+  lineinfile:
+    path: "/var/lib/AccountsService/users/{{ ansible_user_id }}"
+    regexp: '^Icon='
+    line: "Icon=/var/lib/AccountsService/icons/{{ ansible_user_id }}"

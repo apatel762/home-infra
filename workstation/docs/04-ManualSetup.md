@@ -52,13 +52,6 @@ References:
 - <https://ask.fedoraproject.org/t/nm-openvpn-cannot-pre-load-keyfile/19532/2>
 - <https://unix.stackexchange.com/questions/166807/selinux-and-openvpn>
 
-## User avatar
-
-Adding a profile picture to my user.
-
-- Go to 'Settings > Users'.
-- Click on the profile picture and change it.
-
 ## Install GNOME extensions
 
 GNOME Extensions are currently managed via the Extension Manager Flatpak, which is installed for you by the playbook.

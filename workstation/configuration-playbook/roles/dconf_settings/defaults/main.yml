@@ -5,4 +5,7 @@ wallpaper_dark_file_name: "blobs-d.svg"
 wallpaper_light_file_name: "blobs-l.svg"
 wallpaper_directory: "{{ lookup('env', 'HOME') }}/Pictures"
 
+user_icon_file_name: "user-icon.png"
+user_icon_sha1: "3984d76d12f00081da2855052a2657f3f8e596e7"
+
 dconf_settings: []
