@@ -15,4 +15,6 @@ git clone https://github.com/apatel762/home-infra.git --recursive
 
 You should now have a copy of this repo. Enter this repo and run the `bootstrap0.sh` script.
 
-This script will create a toolbox container. Enter the container and follow the rest of the instructions, which can be found using the links at the top of this page.
+This script will create a toolbox container.
+
+Before moving on to the next set of instructions, enter the toolbox container.
