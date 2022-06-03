@@ -113,3 +113,28 @@ Only using one script at the moment: [Bring Back Old Reddit](https://greasyfork.
 ```javascript
 window.location.replace("https://old.reddit.com" + window.location.pathname + window.location.search);
 ```
+
+### Jetbrains Toolbox
+
+You install it once and it will manage itself.
+
+```bash
+cd "$(mktemp --directory)"
+
+# go to https://www.jetbrains.com/toolbox-app/ for the links to the latest version
+wget https://download.jetbrains.com/toolbox/jetbrains-toolbox-1.24.12080.tar.gz
+wget https://download.jetbrains.com/toolbox/jetbrains-toolbox-1.24.12080.tar.gz.sha256
+
+sha256sum --check jetbrains-toolbox-*.tar.gz.sha256
+
+# if the checksum is OK...
+ex jetbrains-toolbox-*.tar.gz
+cd jetbrains-toolbox-*/
+cp -vu jetbrains-toolbox -t "$HOME/.local/bin"
+```
+
+Once you've installed it, run the `jetbrains-toolbox` command in your host terminal to start it up. **Make sure that you turn off the setting that keeps it running in the background and upon startup**.
+
+Install the IDEs that you need and they will be put into the `~/.local/share` folder by default.
+
+The `.desktop` files are created automatically, so you don't need to worry about those.
