@@ -462,16 +462,45 @@ function parse_params() {
 # https://discussion.fedoraproject.org/t/using-ansible-in-fedora-toolbox-to-configure-local-system/1061/5
 # Prepare the system to be configured via Ansible
 
-# Enable SSH
-#sudo systemctl enable sshd.service
+# DESC: Ensure that a line of text is in a file
+# ARGS: $1 (required): The file that you are ensuring the line of text is in
+#       $2 (required): The line of text that you are checking for
+# NOTE: https://stackoverflow.com/a/3557165
+function line_in_file() {
+    local FILE
+    FILE="$1"
+    local LINE
+    LINE="$2"
 
-# For security, only accept connections from localhost
-# Add the below configuration to sshd_config
-#ListenAddress 127.0.0.1
-#ListenAddress ::1
+    run_as_root grep -qxF "$LINE" "$FILE" \
+        || (echo "$LINE" | run_as_root tee --append "$FILE" > /dev/null)
+    pretty_print "  $FILE contains $LINE"
+}
 
-# Put the current hostname into Ansible's hosts.ini file
-#sed -i 2s/.*/"$(hostname)"/ configuration-playbook/hosts.ini
+function restart_ssh_service() {
+    pretty_print "Restarting the SSH service" "${fg_white-}"
+    run_as_root systemctl restart sshd.service
+}
+
+function harden_ssh_service() {
+    pretty_print "Hardening SSH service configuration" "${fg_white-}"
+    line_in_file "/etc/ssh/sshd_config" "ListenAddress 127.0.0.1"
+    line_in_file "/etc/ssh/sshd_config" "ListenAddress ::1"
+    restart_ssh_service
+}
+
+function enable_ssh_service() {
+    pretty_print "Enabling the SSH service" "${fg_white-}"
+    run_as_root systemctl enable sshd.service
+}
+
+function configure_ansible_hosts_file() {
+    pretty_print "Configuring Ansible hosts.ini file" "${fg_white-}"
+
+    # Put the current hostname into Ansible's hosts.ini file
+    sed -i 2s/.*/"$(hostname)"/ configuration-playbook/hosts.ini
+    pretty_print "  $(hostname) is the playbook target"
+}
 
 # ---------------------------------------------------------------------
 # MAIN SCRIPT EXECUTION
@@ -489,7 +518,23 @@ function main() {
     colour_init
     lock_init user
 
-    # TODO: main script execution here
+    pretty_print "=======================================================================
+Beginning pre-Ansible bootstrap of $(hostname)
+=======================================================================" "${fg_white-}"
+
+    enable_ssh_service
+    harden_ssh_service
+    configure_ansible_hosts_file
+
+    script_exit "
+=======================================================================
+All done. Connect to a host terminal session from within a toolbox
+container using the below command:
+
+   ssh ::1
+
+The password is your sudo password.
+======================================================================="
 }
 
 # Invoke main with args if not sourced
