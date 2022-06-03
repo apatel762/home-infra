@@ -1,15 +1,9 @@
 ---
 
 - hosts: all
-  vars:
-    # the dconf_settings role needs the psutils dependency
-    # installed; my system installation of Python has no
-    # dependencies, so it won't work. Must use the venv
-    # instead (even though it's a bit hacky).
-    ansible_python_interpreter: "./venv/bin/python"
   roles:
-    - role: package_layering
-    - role: flatpaks
-    - role: standalone_applications
+    #    - role: package_layering
+    #    - role: flatpaks
+    #    - role: standalone_applications
     - role: dconf_settings
-    - role: os_updates
+      #- role: os_updates

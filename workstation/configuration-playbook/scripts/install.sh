@@ -44,7 +44,7 @@ create_venv_if_not_present() {
 
         # we couldn't find a virtual environment, so now we'll create one
         # ...but first, ensure that we are using Python 3.8+
-        if echo "$(python --version)" | egrep 'Python 3\.(([89])|([0-9]{2}))'; then
+        if python --version | grep -E 'Python 3\.(([89])|([0-9]{2}))'; then
             log "creating venv with version: $(python --version)"
             python -m ensurepip
             python -m venv venv
@@ -52,6 +52,7 @@ create_venv_if_not_present() {
             oops "Installation failed! You must have Python 3.8+"
         fi
 
+        # shellcheck source=/dev/null
         source venv/bin/activate
         python -m pip install --upgrade pip setuptools wheel
         python -m pip install -r "$DIR/requirements.txt"
@@ -62,9 +63,9 @@ create_venv_if_not_present() {
 
 check_freshly_installed_packages() {
     # these should all be installed now
-    require ansible
-    require ansible-playbook
-    require ansible-galaxy
+    require ansible "configuring your machine"
+    require ansible-playbook "configuring your machine"
+    require ansible-galaxy "installing plugins for Ansible"
 }
 
 install_ansible_galaxy_requirements() {

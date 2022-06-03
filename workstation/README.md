@@ -2,13 +2,7 @@
 
 **tl;dr** - start [here](docs/01-FreshInstall.md).
 
-My workstation is running Fedora Silverblue. Why?
-
-- It's really hard to brick the system thanks to OSTree and automatic rollbacks.
-- ...this means that automatic updates are really easy and stable.
-- ...this means that I can have the latest software without worrying about it.
-
-Also the `toolbx` containers are really handy for installing one-time stuff without polluting the system.
+My workstation is running Fedora Silverblue.
 
 ## Notes
 
@@ -18,4 +12,6 @@ File and folder layout:
 - `~/Applications` for standalone GUI apps (e.g. `.AppImage` files).
 - `~/Documents/Projects` for all git repositories & dev projects
 
-In general, the home folder (`~`) should be really clean and most stuff should go into `~/.local` or `~/.config`.
+In general, the home folder (`~`) should be kept clean and most files should go into `~/.local` or `~/.config`.
+
+**All tasks requiring a terminal must be done inside of a toolbox container**. The exception to this is administrative work that can only be done in the host terminal, e.g. operations involving OSTree and Flatpak.

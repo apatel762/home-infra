@@ -494,12 +494,29 @@ function enable_ssh_service() {
     run_as_root systemctl enable sshd.service
 }
 
-function configure_ansible_hosts_file() {
-    pretty_print "Configuring Ansible hosts.ini file" "${fg_white-}"
+function install_psutil() {
+    pretty_print "Installing psutil via Python" "${fg_white-}"
+    pip install psutil
+    pretty_print "  psutil is now on the system"
+}
 
-    # Put the current hostname into Ansible's hosts.ini file
-    sed -i 2s/.*/"$(hostname)"/ configuration-playbook/hosts.ini
-    pretty_print "  $(hostname) is the playbook target"
+function create_toolbox_container() {
+    pretty_print "Creating toolbox container" "${fg_white-}"
+    podman build --tag localhost/main toolboxes/main/
+    if toolbox create --image localhost/main; then
+        pretty_print "  localhost/main toolbox container created"
+    else
+        pretty_print "  toolbox already exists, will re-create it" "${fg_yellow-}"
+        toolbox rm --force main
+        toolbox create --image localhost/main
+        pretty_print "  localhost/main toolbox container re-created"
+    fi
+}
+
+function ensure_host_terminal() {
+    if [ -f /run/.containerenv ] && [ -f /run/.toolboxenv ]; then
+        script_exit "You cannot run this script from a toolbox environment. Please try again from a host session." 1
+    fi
 }
 
 # ---------------------------------------------------------------------
@@ -518,22 +535,26 @@ function main() {
     colour_init
     lock_init user
 
+    ensure_host_terminal
+
     pretty_print "=======================================================================
 Beginning pre-Ansible bootstrap of $(hostname)
 =======================================================================" "${fg_white-}"
 
     enable_ssh_service
     harden_ssh_service
-    configure_ansible_hosts_file
+    install_psutil
+    create_toolbox_container
 
     script_exit "
 =======================================================================
-All done. Connect to a host terminal session from within a toolbox
-container using the below command:
+All done. Enter the toolbox pet container and connect to a host session
+using the below commands to verify that everything has worked:
 
-   ssh ::1
+    toolbox enter main
+    ssh ::1
 
-The password is your sudo password.
+If you have a sudo password, use that as the SSH password.
 ======================================================================="
 }
 
