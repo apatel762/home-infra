@@ -7,24 +7,16 @@ Links:
 
 ---
 
-As I was installing the operating system there were a few things that needed to be done manually. I don't see any way of automating this stuff so I've written it all down here:
+There are some steps that must be completed manually. They only need to be completed once.
 
-- Hard drive partitioning; let the installer handle it.
-- Create a user.
-- Connect the keyboard via Bluetooth in the Settings app.
-- Change the hostname
-- Install updates
+1. Partition hard drives during OS installation.
+2. Create a user.
+3. Connect the bluetooth keyboard via the 'Bluetooth' menu in the Settings app.
+4. Change the device `hostname` via the 'About' menu in the Settings app.
+5. Install updates via the GNOME software app and reboot if necessary.
 
-## GNOME Terminal
+## Bootstrapping
 
-This may be out of date soon as it appears that GNOME itself will be moving from Terminal to Console, but here are some manual bits of config that I did:
+Run the `bootstrap0.sh` script.
 
-- Renamed default profile to 'Main'
-- Changed initial terminal size to '140 columns' and '40 rows'
-- Disabled the 'Terminal bell' setting
-
-Download [Mayccoll/Gogh](https://github.com/Mayccoll/Gogh) via the one-line command and select theme number 203 (Tokyo Night)
-
-```bash
-bash -c "$(wget -qO- https://git.io/vQgMr)"
-```
+This script will create a toolbox container. Enter the container and follow the rest of the instructions, which can be found using the links at the top of this page.

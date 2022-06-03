@@ -7,6 +7,8 @@ Links:
 
 ---
 
+TODO: couldn't this be done in the `bootstrap0.sh` script
+
 Run these commands:
 
 ```bash
