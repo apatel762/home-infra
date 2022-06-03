@@ -22,8 +22,10 @@ env/
 !install
 !install.conf.yaml
 
-# my wallpaper!
+# my wallpapers!
 !fabrizio-conti-kXVogATbFgA-unsplash.jpg
+!blobs-d.svg
+!blobs-l.svg
 
 !*.md
 !*.yml
