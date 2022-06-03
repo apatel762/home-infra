@@ -6,4 +6,5 @@ RUN dnf install -y \
     "@Development Tools" \
 	pandoc \
     openssl \
-    openssl1.1-devel.x86_64
+    openssl1.1-devel.x86_64 \
+    java
