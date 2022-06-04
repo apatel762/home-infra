@@ -48,9 +48,14 @@ _check_requirements() {
 
 # desc: installs an app using pipx
 # args:
-#   $1 = the name of the app (will be used like: 'pipx install $1')
+#   $1 = the name used to install the app (will be used like: 'pipx install $1')
+#   $2 = the name of the app after installed (would be used like: 'pipx upgrade $2')
+# note:
+#   the two names will be different if, for example, you are installing
+#   from a git repository, where $1 would be the git repo URL and
+#   $2 would be the name of the package after it's installed
 _ensure_installed() {
-	if  [[ ! -d "{{ lookup('env','HOME') }}/.local/pipx/venvs/$1" ]]  &>/dev/null; then
+	if  [[ ! -d "{{ lookup('env','HOME') }}/.local/pipx/venvs/$2" ]]  &>/dev/null; then
 		pipx install "$1"
 	fi
 }
@@ -87,7 +92,7 @@ _main() {
 	_check_requirements
 
 	{% for item in pipx_apps %}
-	_ensure_installed "{{ item.name }}"
+	_ensure_installed "{{ item.install | default(item.name) }}" "{{ item.name }}"
 	{% if 'dependencies' in item -%}
 	{% for dependency in item.dependencies %}
 	_ensure_injected "{{ item.name }}" "{{ dependency }}"

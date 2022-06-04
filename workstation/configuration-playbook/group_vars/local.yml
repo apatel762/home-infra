@@ -166,10 +166,14 @@ cli_apps:
   - binary: shellcheck
     namespace: "github.com/koalaman/shellcheck"
 
+# the 'install' field is used when the name of the package that you're
+# installing is different to the name/URL that you use to install it
 pipx_apps:
   - name: poetry
   - name: ranger-fm
   - name: yt-dlp
+  - name: toolbox-export
+    install: git+https://github.com/apatel762/toolbox-export.git
 #  - name: ptpython
 #    dependencies:
 #      - requests
