@@ -14,6 +14,7 @@ RUN dnf install -y \
     sshpass
 
 # Add the custom repo for VSCode and install it
+# https://code.visualstudio.com/docs/setup/linux#_rhel-fedora-and-centos-based-distributions
 COPY files/vscode.repo /etc/yum.repos.d/
 RUN rpm --import https://packages.microsoft.com/keys/microsoft.asc \
     && dnf check-update || true \
