@@ -22,6 +22,10 @@ if ! command -v fzf &>/dev/null; then
 	fi
 fi
 
-[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash ] \
-    && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash
+# only use this inside of toolbox containers because the ctrl+r
+# shortcut depends on Perl, which isn't included in Fedora Silverblue
+if [ -f /run/.containerenv ] && [ -f /run/.toolboxenv ]; then
+	[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash ] \
+		&& source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash
+fi
 

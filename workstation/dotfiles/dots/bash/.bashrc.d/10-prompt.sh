@@ -111,9 +111,13 @@ else
     PS1="$PS1""\[$WHITE\]""\u""\[$RESET_COLOURS\]"
 fi
 
-# @hostname
+# @hostname (show in red if we're outside of a container)
 PS1="$PS1""\[$WHITE\]"'@'"\[$RESET_COLOURS\]"
-PS1="$PS1""\[$WHITE\]""\H""\[$RESET_COLOURS\]"
+if [ -f /run/.containerenv ] && [ -f /run/.toolboxenv ]; then
+    PS1="$PS1""\[$WHITE\]""\H""\[$RESET_COLOURS\]"
+else
+    PS1="$PS1""\[$RED\]""\H""\[$RESET_COLOURS\]"
+fi
 
 # short path
 PS1="$PS1"" "
