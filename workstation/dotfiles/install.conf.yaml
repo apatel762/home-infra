@@ -27,6 +27,7 @@
     ~/.local/bin/nb-fzf-preview: dots/nb/nb-fzf-preview
 
     # bash config
+    ~/.bashrc: dots/bash/.bashrc
     ~/.bashrc.d/:
       glob: true
       path: dots/bash/.bashrc.d/*
