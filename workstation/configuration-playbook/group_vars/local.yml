@@ -179,6 +179,10 @@ pipx_apps:
 #      - requests
 #      - pendulum
 
+desktop_entries:
+  - app: code
+    entry: code.desktop
+
 # =====================================================================
 # GNOME config
 #
@@ -199,7 +203,7 @@ dconf_settings:
 
   # the apps that appear in the dock when you press the 'super' key
   - key: /org/gnome/shell/favorite-apps
-    value: "['com.brave.Browser.desktop', 'com.spotify.Client.desktop', 'org.keepassxc.KeePassXC.desktop', 'org.cryptomator.Cryptomator.desktop', 'org.gnome.Nautilus.desktop', 'net.ankiweb.Anki.desktop']"
+    value: "['com.brave.Browser.desktop', 'com.spotify.Client.desktop', 'org.keepassxc.KeePassXC.desktop', 'org.cryptomator.Cryptomator.desktop', 'code.desktop', 'org.gnome.Nautilus.desktop', 'net.ankiweb.Anki.desktop']"
 
   # ensure that the night light feature is configured how I like it
   - key: /org/gnome/settings-daemon/plugins/color/night-light-enabled

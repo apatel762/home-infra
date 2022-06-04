@@ -1,0 +1,7 @@
+---
+
+- name: Ensure that the desktop-maintain script is present in local bin
+  ansible.builtin.template:
+    src: templates/desktop-maintain.jinja2
+    dest: "{{ lookup('env','HOME') }}/.local/bin/desktop-maintain"
+    mode: "u=rx,g=r,o-rwx"

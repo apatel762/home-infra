@@ -8,3 +8,5 @@ bin_base_version: "0.13.1"
 cli_apps: []
 
 pipx_apps: []
+
+desktop_entries: []

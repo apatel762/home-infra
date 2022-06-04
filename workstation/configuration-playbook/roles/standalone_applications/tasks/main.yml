@@ -29,3 +29,6 @@
 
 - name: Install pipx apps
   include_tasks: pipx.yml
+
+- name: Install .desktop entries
+  include_tasks: desktop.yml
