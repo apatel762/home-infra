@@ -27,7 +27,7 @@
 
 - name: Ensure that bin config file exists in home dir
   ansible.builtin.template:
-    src: templates/github-marcosnils-bin-config.json.jinja2
+    src: templates/bin-config.json.jinja2
     dest: "{{ lookup('env', 'HOME') }}/.config/bin/config.json"
     mode: "u=rw,g=r,o-rwx"
   when: not bin_config_file.stat.exists
@@ -38,6 +38,6 @@
 
 - name: Ensure that the bin-maintain script is present in local bin
   ansible.builtin.template:
-    src: templates/github-marcosnils-bin-maintain.jinja2
+    src: templates/bin-maintain.jinja2
     dest: "{{ lookup('env','HOME') }}/.local/bin/bin-maintain"
     mode: "u=rx,g=r,o-rwx"
