@@ -12,3 +12,9 @@ RUN dnf install -y \
     pip \
     pipx \
     sshpass
+
+# Add the custom repo for VSCode and install it
+COPY files/vscode.repo /etc/yum.repos.d/
+RUN rpm --import https://packages.microsoft.com/keys/microsoft.asc \
+    && dnf check-update || true \
+    && dnf install -y code
