@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+###############################################################################
+# janitor.nb-plugin
+###############################################################################
+
+# Add the new subcommand name with `_subcommands add <name>`.
+_subcommands add "janitor"
+_subcommands add "jan"
+
+# Define help and usage text with `_subcommands describe <subcommand> <usage>`.
+_subcommands describe "janitor" <<HEREDOC
+Usage:
+  nb janitor
+
+Description:
+  Maintain backlink structure across notes
+
+Alias:
+  nb jan
+HEREDOC
+
+# args: $1 = a binary you want to require e.g. tar, gpg, mail
+#       $2 = a message briefly describing what you need the binary for
+__require() {
+	command -v "$1" > /dev/null 2>&1 \
+		|| _exit_1 cat <<HEREDOC
+$(_color_primary "Error"):
+
+$(_color_secondary "Could not find:") $1
+$(_color_secondary "Needed for:") $2
+
+Please install this program and ensure that it is on your $(_color_primary "PATH") before
+attempting to use this plugin.
+
+HEREDOC
+}
+
+__check_required_programs() {
+	__require janitor "Managing your notes."
+}
+
+_janitor() {
+	__check_required_programs
+
+	local _notebook_path
+	_notebook_path="$(_notebooks current --path)"
+
+	janitor scan "${_notebook_path}" --assume-yes
+	janitor apply "${_notebook_path}" --assume-yes
+
+	_git checkpoint "${_notebook_path}" "[${_ME}] Apply changes from Janitor"
+}
+
+_alias_subcommand "janitor" "jan"
