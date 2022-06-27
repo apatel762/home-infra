@@ -2,7 +2,7 @@
 
 # Use com.github.tchx84.Flatseal to view Flatpak overrides using a GUI
 
-- name: Ensure that override for {{ flatpak.package }} is present
+- name: Ensure that override(s) for {{ flatpak.package }} is present
   ansible.builtin.shell:
     cmd: "flatpak override --{{ override.scope }} {{ override.setting }} {{ flatpak.package }}"
   changed_when: false
