@@ -130,8 +130,8 @@ standalone_applications:
   - url: https://github.com/nextcloud/desktop/releases/download/v3.2.4/Nextcloud-3.2.4-x86_64.AppImage
     checksum: sha256:5d0c13ba422c445c4a88cd45a1b38878daf67123552b0f4a6020a73734c47ce6
     file_name: Nextcloud.AppImage
-  - url: https://github.com/neovim/neovim/releases/download/v0.7.0/nvim.appimage
-    checksum: sha256:ac1caae4f1c54e0ce126b9313d993cb0d1cc4a81ef3e09dd26772be37aaa61db
+  - url: https://github.com/neovim/neovim/releases/download/v0.7.2/nvim.appimage
+    checksum: sha256:33b5d020c730b6d1b5185b1306ead83b6b8f8fab0239e0580c72b5224a9658e1
     file_name: nvim.AppImage
     location: "{{ lookup('env', 'HOME') }}/.local/bin"
     stale_days: 180
