@@ -40,7 +40,6 @@ flatpak_apps_to_install:
   # of my stuff.
   - remote: flathub
     package: com.brave.Browser
-    commands: [brave]
     overrides:
       # remove some default filesystem access permissions
       - { scope: user, setting: "--nofilesystem=host-etc" }
@@ -59,7 +58,6 @@ flatpak_apps_to_install:
   # for opening encrypted vaults
   - remote: flathub
     package: org.cryptomator.Cryptomator
-    commands: [cryptomator]
 
   # for opening KeePass databases (e.g. so that I can open my
   # encrypted vaults...)
@@ -71,10 +69,8 @@ flatpak_apps_to_install:
     package: com.spotify.Client
 
   # flashcards; they help me remember things
-  # AnkiConnect addon: https://ankiweb.net/shared/info/2055492159
   - remote: flathub
     package: net.ankiweb.Anki
-    commands: [anki]
 
   # for quickly spinning up VMs
   - remote: flathub
@@ -107,7 +103,6 @@ flatpak_apps_to_install:
   # alternative to MPV
   - remote: flathub
     package: io.github.celluloid_player.Celluloid
-    commands: [celluloid, mpv]
 
 flatpak_apps_to_remove:
   - remote: fedora

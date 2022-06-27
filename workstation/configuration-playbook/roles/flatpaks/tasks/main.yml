@@ -29,21 +29,6 @@
   loop_control:
     label: "{{ item.package }}"
 
-# Flatpak wrapper scripts
-
-- name: Ensure that {{ lookup('env','HOME') }}/.local/bin directory exists
-  ansible.builtin.file:
-    path: "{{ lookup('env','HOME') }}/.local/bin"
-    state: directory
-    mode: "u=rwx,go=rx"
-
-- name: Ensure that Flatpak wrapper scripts are present in {{ lookup('env','HOME') }}/.local/bin
-  include_tasks: wrappers.yml
-  loop: "{{ flatpak_apps_to_install }}"
-  loop_control:
-    loop_var: flatpak
-    label: "{{ flatpak.package }}"
-
 # Flatpak overrides
 
 - name: Ensure that Flatpak overrides are set up
