@@ -45,8 +45,7 @@ _janitor() {
 	local _notebook_path
 	_notebook_path="$(_notebooks current --path)"
 
-	janitor scan "${_notebook_path}" --assume-yes
-	janitor apply "${_notebook_path}" --assume-yes
+	janitor maintain "${_notebook_path}" --assume-yes
 
 	_git checkpoint "${_notebook_path}" "[${_ME}] Apply changes from Janitor"
 }
