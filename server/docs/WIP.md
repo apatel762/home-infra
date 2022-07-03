@@ -72,11 +72,13 @@ Use a custom Python script to manage it.
 
 ### Uptime monitoring
 
-Use something like [Healthchecks](https://healthchecks.io/) or [Uptime Kuma](https://uptime.kuma.pet/) to keep track of things.
+Use something like [Healthchecks](https://healthchecks.io/) or [Uptime Kuma](https://uptime.kuma.pet/) (preferred) to keep track of things.
 
-Healthchecks uses a client-side ping, whereas I think Uptime Kuma uses a server side ping, so it depends which one suits my setup. Healthchecks is designed around recurring jobs, and can integrate with anything, so could be worth a try?
+Uptime Kuma supports monitoring in both directions. Kuma can ping servers and perform checks by itself, but it also supports client-side health checks via push-based monitoring (see https://github.com/louislam/uptime-kuma/ issue 279).
 
-Uptime Kuma on the other hand seems easier to self-host. It can be loosely integrated with auth walls like Authelia (_ref9_) by disabling the Uptime Kuma auth and proxying through Authelia. If you do this, you should require login for the admin pages, but keep the public status page open.
+Also, of the two monitoring systems, Uptime Kuma seems easier to self-host. It can also be loosely integrated with auth walls like Authelia (_ref9_) by disabling the built-in Uptime Kuma authentication and proxying through Authelia. If you do this, you should require Authelia login for the admin pages, but allow users to bypass Authelia for the public status page.
+
+Not sure how Authelia will work though, if Uptime Kuma is hosted on a VPS? Something to think about.
 
 ### Miscellaneous
 
