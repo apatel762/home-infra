@@ -10,6 +10,8 @@ Ansible for the host machines, with Ansible Vault to encrypt and version control
 
 Kubernetes manifest files for the Podman containers (_ref5_), and may be able to use the Renovate bot to keep packages up to date, as it can apparently detect new versions of container images from manifest files (_ref6_) (example: https://github.com/eifrach/ansible-role-assisted-installer-pod/).
 
+Remote view of system with [Cockpit](https://cockpit-project.org/). Provides a web interface that can be used to manage the system. If you configure `journald` as a logging driver for all running containers, you can then view the container logs here, which is useful because you then don't need to SSH to the system directly. This web interface should, of course, be locked down and **NOT** accessible from the wider internet.
+
 ### Operating System
 
 Since there will be more than one machine in the 'cluster', I plan to use the following OSs:
