@@ -74,7 +74,7 @@ Use something like [Healthchecks](https://healthchecks.io/) or [Uptime Kuma](htt
 
 Healthchecks uses a client-side ping, whereas I think Uptime Kuma uses a server side ping, so it depends which one suits my setup. Healthchecks is designed around recurring jobs, and can integrate with anything, so could be worth a try?
 
-Uptime Kuma on the other hand seems easier to self-host.
+Uptime Kuma on the other hand seems easier to self-host. It can be loosely integrated with auth walls like Authelia (_ref9_) by disabling the Uptime Kuma auth and proxying through Authelia. If you do this, you should require login for the admin pages, but keep the public status page open.
 
 ### Miscellaneous
 
@@ -94,3 +94,4 @@ Potentially could use [GeoIP blocks](https://www.ipdeny.com/ipblocks/) to restri
 6. docs.renovatebot.com. ["Renovate supports upgrading dependencies in various types of Docker definition files [...] Kubernetes manifest files"](https://docs.renovatebot.com/docker/)
 7. https://www.brull.me/postfix/debian/fastmail/2016/08/16/fastmail-smtp.html
 8. old.reddit.com, 2021. ["Authelia OpenID with NextCloud"](https://old.reddit.com/r/selfhosted/comments/r4zk43/authelia_openid_with_nextcloud/)
+9. github.com, 2021. https://github.com/louislam/uptime-kuma/ issue 553
