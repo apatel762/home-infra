@@ -45,7 +45,7 @@ Mildly related, you can easily manage a Wireguard mesh network using Ansible by 
 
 Email; Fastmail via Postfix (_ref7_). Add custom domain to Fastmail so that sending and receiving is OK and doesn't appear to come from my personal address (even though it technically is?).
 
-[Send notifications when SSH sessions starts and ends](https://old.reddit.com/r/selfhosted/comments/mihcl2/checklist_for_hardening_a_linux_vps/gt4vvev/). May be a bit spammy for commands that use SSH (e.g. `rsync`) but worth a try? Example [here](https://askubuntu.com/questions/179889/how-do-i-set-up-an-email-alert-when-a-ssh-login-is-successful).
+[Send notifications when SSH sessions starts and ends](https://old.reddit.com/r/selfhosted/comments/mihcl2/checklist_for_hardening_a_linux_vps/gt4vvev/). May be a bit spammy for commands that use SSH (e.g. `rsync`) but worth a try? Example [here](https://askubuntu.com/questions/179889/how-do-i-set-up-an-email-alert-when-a-ssh-login-is-successful) and another example (using Telegram instead of email) [here](https://blog.tommyku.com/blog/send-telegram-notification-on-ssh-login/).
 
 ### Proper Nextcloud Setup
 
