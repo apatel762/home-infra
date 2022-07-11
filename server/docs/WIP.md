@@ -64,7 +64,13 @@ Authelia, can function as an OpenID Connect provider (though this is still in Be
 
 I'm already using Authelia with LDAP as a barrier in front of my apps, but I think with OIDC it will get even better.
 
-I need to figure out how to better manage the LDAP users though. I'm not good at it.
+I need to figure out how to better manage the LDAP users though. I'm not good at it. Found [this comment](https://news.ycombinator.com/item?id=32056659) on Hacker News saying:
+
+> It's trivial to reload openldap data from ldif, so you can already manage LDAP via Ansible easily enough
+
+...in response to somebody else saying that you should try a different user directory service to make it easy to manage. I didn't know about LDIF before, but perhaps I could use that to manage users. On top of that, Ansible has some pre-built roles that you can use to manage LDAP - [community.general.ldap_entry](https://docs.ansible.com/ansible/latest/collections/community/general/ldap_entry_module.html).
+
+See also [Use LDIF files to make changes on an OpenLDAP system](https://www.digitalocean.com/community/tutorials/how-to-use-ldif-files-to-make-changes-to-an-openldap-system)
 
 ### Dynamic DNS
 
