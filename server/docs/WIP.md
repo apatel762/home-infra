@@ -29,6 +29,8 @@ Also, now that I am using Fedora on my laptop, I'm more comfortable with that fa
 
 ### SELinux
 
+**EDIT:** Have just discovered that OpenSUSE prefers AppArmor to SELinux, and though you can enable SELinux, they don't have any default policies (so you'd have to manage it entirely yourself). Could either use AppArmor or go for something like Fedora CoreOS instead.
+
 SELinux must be enabled.
 
 Thankfully, [MicroOS supports SELinux](https://en.opensuse.org/Portal:MicroOS/SELinux) **however** it is [not enabled out of the box](https://lists.opensuse.org/archives/list/selinux@lists.opensuse.org/thread/FVL5VUZDONYY7N3TXQVBUBQPRPZD3AGY/) due to some missing functionality in YaST.
