@@ -27,6 +27,27 @@ Both operating systems will have access to new packages, unlike the Debian 10 in
 
 Also, now that I am using Fedora on my laptop, I'm more comfortable with that family of Linux than I am with Debian so it makes sense to move the servers that way as well.
 
+### SELinux
+
+SELinux must be enabled.
+
+Thankfully, [MicroOS supports SELinux](https://en.opensuse.org/Portal:MicroOS/SELinux) **however** it is [not enabled out of the box](https://lists.opensuse.org/archives/list/selinux@lists.opensuse.org/thread/FVL5VUZDONYY7N3TXQVBUBQPRPZD3AGY/) due to some missing functionality in YaST.
+
+You can still enable it manually:
+
+```bash
+transactional-update setup-selinux
+```
+
+and then check the status with the `sestatus` command. There are a couple of things that you need to be careful with when using SELinux on MicroOS.
+
+1. You need to enable auto-relabelling of the file system (`touch /etc/selinux/.autorelabel`).
+2. You need to mount container volumes with `:z` or `:Z` to integrate with SELinux.
+
+Lowercase 'z' means that a shared label will be applied to the mount, so other containers can access it, whereas the uppercase 'Z' means that a private label will be applied and only that container may access the mount.
+
+See also "[SELinux For Mere Mortals](https://www.youtube.com/watch?v=MxjenQ31b70)" (talk given by Thomas Cameron of Red Hat back in 2012)
+
 ### VPN
 
 I want to rip out my dependency on Cloudflare. At the moment, I have moved the DNS records for my home server to Cloudflare so that I can take advantage of the Cloudflare proxy to hide my home IP address (and protect from various attacks).
