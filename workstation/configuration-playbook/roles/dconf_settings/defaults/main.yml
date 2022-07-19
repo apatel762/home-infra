@@ -1,7 +1,7 @@
 ---
 
-wallpaper_light_file_name: "mountain.jpg"
-wallpaper_dark_file_name: "mountain-dark.jpg"
+wallpaper_light_file_name: "mountain.jpeg"
+wallpaper_dark_file_name: "mountain-dark.jpeg"
 wallpaper_directory: "{{ lookup('env', 'HOME') }}/Pictures"
 
 user_icon_file_name: "user-icon.png"
