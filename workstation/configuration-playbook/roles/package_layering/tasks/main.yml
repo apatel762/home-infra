@@ -28,5 +28,5 @@
   become_method: sudo
   loop: "{{ packages_to_remove }}"
 
-- debug:
+- ansible.builtin.debug:
     msg: "Reboot your machine to complete the package layering changes"
