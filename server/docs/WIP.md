@@ -29,8 +29,6 @@ Also, now that I am using Fedora on my laptop, I'm more comfortable with that fa
 
 ### SELinux
 
-**EDIT:** Have just discovered that OpenSUSE prefers AppArmor to SELinux, and though you can enable SELinux, they don't have any default policies (so you'd have to manage it entirely yourself). Could either use AppArmor or go for something like Fedora CoreOS instead. If it comes down to it, I could [write my own policies](https://old.reddit.com/r/redhat/comments/uz42ue/please_suggest_a_good_zeroto_hero_selinux_training/) (_ref10_), (_ref11_).
-
 SELinux must be enabled.
 
 Thankfully, [MicroOS supports SELinux](https://en.opensuse.org/Portal:MicroOS/SELinux) **however** it is [not enabled out of the box](https://lists.opensuse.org/archives/list/selinux@lists.opensuse.org/thread/FVL5VUZDONYY7N3TXQVBUBQPRPZD3AGY/) due to some missing functionality in YaST.
@@ -128,5 +126,3 @@ Potentially could use [GeoIP blocks](https://www.ipdeny.com/ipblocks/) to restri
 7. https://www.brull.me/postfix/debian/fastmail/2016/08/16/fastmail-smtp.html
 8. old.reddit.com, 2021. ["Authelia OpenID with NextCloud"](https://old.reddit.com/r/selfhosted/comments/r4zk43/authelia_openid_with_nextcloud/)
 9. github.com, 2021. https://github.com/louislam/uptime-kuma/ issue 553
-10. Red Hat, Inc.. "[SELinux Policy Workshop](https://redhatgov.io/workshops/selinux_policy/)". *[Archived](https://web.archive.org/web/20220717142842/https://redhatgov.io/workshops/selinux_policy/)*. Retrieved July 17, 2022.
-11. Zapletal, Lukáš (July 17, 2020). "[How to write SELinux policy in 2020](https://www.youtube.com/watch?v=g2aBZrQ2eEk)". Retrieved July 17, 2022.
