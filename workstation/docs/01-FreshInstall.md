@@ -5,6 +5,8 @@ Links:
 - [Previous](../README.md)
 - [Next](./02-AcquireRepo.md)
 
+To create the disk image, I usually use the 'Fedora Media Writer' app. It can download a Fedora Silverblue image and put it onto the USB drive for you.
+
 There are some steps that must be completed manually. They only need to be completed once.
 
 1. Partition hard drives during OS installation.
