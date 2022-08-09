@@ -4,14 +4,15 @@ FROM registry.fedoraproject.org/fedora-toolbox:${FEDORA_VERSION}
 
 RUN dnf install -y \
     "@Development Tools" \
-	pandoc \
+    pandoc \
     openssl \
     openssl1.1-devel.x86_64 \
     java \
     python \
     pip \
     pipx \
-    sshpass
+    sshpass \
+    android-tools
 
 # Add the custom repo for VSCode and install it
 # https://code.visualstudio.com/docs/setup/linux#_rhel-fedora-and-centos-based-distributions
