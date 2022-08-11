@@ -161,7 +161,7 @@ standalone_applications:
     location: "{{ lookup('env', 'HOME') }}/.local/bin"
 
 # find appropriate version here: https://github.com/marcosnils/bin/releases
-bin_base_version: "0.13.1"
+bin_base_version: "0.15.1"
 cli_apps:
   - binary: exa
     namespace: "github.com/ogham/exa"
