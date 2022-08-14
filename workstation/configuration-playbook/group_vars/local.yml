@@ -151,7 +151,7 @@ standalone_applications:
     location: "{{ lookup('env', 'HOME') }}/.local/bin"
     stale_days: 180
   - url: https://raw.githubusercontent.com/xwmx/nb/6.11.2/nb
-    checksum: sha256:cc499f52323f26506b0b6c73f865baa45c35acdbef4baaf30b7412af526a6490
+    checksum: sha256:b70d774517802dd7ceb38eb27f5f027a496bc753050223ff999e29d641b9b93b
     file_name: nb
     location: "{{ lookup('env', 'HOME') }}/.local/bin"
     stale_days: 45
