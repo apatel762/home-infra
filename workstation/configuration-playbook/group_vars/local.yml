@@ -173,8 +173,6 @@ cli_apps:
     namespace: "github.com/x-motemen/ghq"
   - binary: bat
     namespace: "github.com/sharkdp/bat"
-  - binary: delta
-    namespace: "github.com/dandavison/delta"
   - binary: sk
     namespace: "github.com/lotabout/skim"
   - binary: shellcheck
