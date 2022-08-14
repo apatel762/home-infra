@@ -50,11 +50,3 @@ env/
 !*.nb-plugin
 !nb-fzf-preview
 !Containerfile
-
-# temporary?
-!files/
-!*.js
-!*.css
-!*.service
-!config-work
-!*.conf
