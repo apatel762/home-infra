@@ -4,8 +4,8 @@
 # These should be used sparingly to install stuff that needs to be
 # available system-wide and can't be used via toolboxes or Flatpak.
 
-packages_to_layer:
-  - wireguard-tools
+#packages_to_layer:
+#  - wireguard-tools
 
 #packages_to_remove:
 #  - neovim
