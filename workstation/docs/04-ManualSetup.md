@@ -63,12 +63,13 @@ Disabled extensions:
 
 Enabled extensions:
 
-- 'background-logo@fedorahosted.org'
-- 'places-menu@gnome-shell-extensions.gcampax.github.com'
-- 'blur-my-shell@aunetx'
-- 'trayIconsReloaded@selfmade.pl'
-- 'apps-menu@gnome-shell-extensions.gcampax.github.com'
-- 'screenshot-window-sizer@gnome-shell-extensions.gcampax.github.com'
+- User-installed
+    - 'blur-my-shell@aunetx'
+    - 'trayIconsReloaded@selfmade.pl'
+- System
+    - 'apps-menu@gnome-shell-extensions.gcampax.github.com'
+    - 'background-logo@fedorahosted.org'
+    - 'places-menu@gnome-shell-extensions.gcampax.github.com'
 
 ## Download `nb` notes folder
 
