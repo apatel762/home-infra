@@ -380,6 +380,9 @@ dconf_settings:
 # automatically check for updates AND stage them in the background. The
 # changes should then be picked up the next time I reboot my machine.
 #
+# Use `sudo ostree admin config-diff` to see all changes to `/etc` from
+# the base OS image.
+#
 # See `man rpm-ostreed.conf` for more info
 
 update_policy: stage
