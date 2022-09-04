@@ -186,12 +186,11 @@ pipx_apps:
   - name: poetry
   - name: ranger-fm
   - name: yt-dlp
+  - name: browserexport
   - name: toolbox-export
     install: git+https://github.com/apatel762/toolbox-export.git
   - name: cite
     install: git+https://github.com/apatel762/cite.git
-  - name: janitor
-    install: git+https://github.com/apatel762/janitor.git
 #  - name: ptpython
 #    dependencies:
 #      - requests
