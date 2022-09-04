@@ -5,6 +5,24 @@ Links:
 - [Previous](./03-AnsiblePlaybook.md)
 - Next
 
+## Note-taking
+
+Install Rust: https://doc.rust-lang.org/book/ch01-01-installation.html
+
+```bash
+curl --proto '=https' --tlsv1.3 https://sh.rustup.rs -sSf | sh
+# don't install PATH variables, they are already in the dotfiles
+```
+
+Install NoteExplorer: https://github.com/cdaven/noteexplorer
+
+```bash
+ghq get https://github.com/cdaven/noteexplorer.git
+# go to cloned repo folder
+cargo build --release
+cp -vu target/release/noteexplorer -t ~/.local/bin
+```
+
 ## Nextcloud
 
 The playbook will put an AppImage onto the machine in the Applications folder.
