@@ -191,6 +191,8 @@ pipx_apps:
     install: git+https://github.com/apatel762/toolbox-export.git
   - name: cite
     install: git+https://github.com/apatel762/cite.git
+  - name: pretty-history
+    install: git+https://github.com/apatel762/pretty-history.git
 #  - name: ptpython
 #    dependencies:
 #      - requests
