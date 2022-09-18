@@ -1,0 +1,25 @@
+# The folder inside of which we will place the entire startpage
+# folder.
+#
+# If you rename the startpage folder, don't forget to rename the
+# path that we've defined in the Chromium policy file!
+browser_startpage_folder: "{{ lookup('env', 'HOME') }}/Documents/"
+
+# The folders where we can store our custom chromium policy.
+#
+# Ordinarily, the browsers will only pick stuff up from these folders
+# if the browsers are installed to the host system directly, but thanks
+# to some clever workaround from the Flatpak maintainers (symlinks) we
+# can drop our policies into these folders and they will be brought
+# into the container sandbox for us.
+#
+# Also, it's worth noting, the JSON file approach of managing policy
+# only works on Linux. It's a bit more complex on Windows and MacOS (I
+# think).
+#
+# Refs.:
+#   * https://chromeenterprise.google/policies/
+browser_policy_folders:
+  - /etc/brave/policies/managed
+  - /etc/chromium/policies/managed
+  - /etc/opt/chrome/policies/managed

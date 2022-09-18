@@ -51,3 +51,19 @@ env/
 !nb-fzf-preview
 !Containerfile
 !yt-dlp.conf
+
+# browser homepage files
+!index.html
+!script.js
+!search.svg
+!style.css
+!test.ttf
+!test.woff
+!wave.svg
+!android-chrome-192x192.png
+!apple-touch-icon.png
+!favicon-32x32.png
+!site.webmanifest
+!android-chrome-512x512.png
+!favicon-16x16.png
+!favicon.ico

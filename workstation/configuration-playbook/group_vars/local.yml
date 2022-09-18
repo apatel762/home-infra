@@ -42,7 +42,6 @@ flatpak_apps_to_install:
     package: com.brave.Browser
     overrides:
       # remove some default filesystem access permissions
-      - { scope: user, setting: "--nofilesystem=host-etc" }
       - { scope: user, setting: "--nofilesystem=xdg-music" }
       - { scope: user, setting: "--nofilesystem=xdg-videos" }
       - { scope: user, setting: "--nofilesystem=xdg-desktop" }
