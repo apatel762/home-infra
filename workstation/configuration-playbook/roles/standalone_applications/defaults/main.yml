@@ -10,3 +10,7 @@ cli_apps: []
 pipx_apps: []
 
 desktop_entries: []
+
+# should only be used if yt-dlp is one of the
+# pipx apps
+yt_dlp_conf_dir: "{{ lookup('env', 'HOME') }}/.config/yt-dlp/config"

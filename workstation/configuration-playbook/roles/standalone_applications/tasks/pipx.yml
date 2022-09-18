@@ -5,3 +5,7 @@
     src: templates/pipx-maintain.jinja2
     dest: "{{ lookup('env','HOME') }}/.local/bin/pipx-maintain"
     mode: "u=rx,g=r,o-rwx"
+
+- name: Configure yt-dlp if we have chosen to install it
+  ansible.builtin.include_tasks: yt-dlp.yml
+  when: pipx_apps is defined and 'yt-dlp' in pipx_apps | selectattr('name', 'equalto', 'yt-dlp') | map(attribute='name')

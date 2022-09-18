@@ -1,0 +1,11 @@
+---
+
+- name: Ensure that the yt-dlp conf dir exists
+  ansible.builtin.file:
+    path: "{{ yt_dlp_conf_dir }}"
+    state: directory
+
+- name: Ensure that yt-dlp conf is in the conf dir
+  ansible.builtin.copy:
+    src: yt-dlp.conf
+    dest: "{{ yt_dlp_conf_dir }}/yt-dlp.conf"

@@ -50,3 +50,4 @@ env/
 !*.nb-plugin
 !nb-fzf-preview
 !Containerfile
+!yt-dlp.conf

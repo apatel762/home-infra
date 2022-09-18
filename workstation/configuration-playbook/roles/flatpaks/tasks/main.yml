@@ -32,7 +32,7 @@
 # Flatpak overrides
 
 - name: Ensure that Flatpak overrides are set up
-  include_tasks: overrides.yml
+  ansible.builtin.include_tasks: overrides.yml
   loop: "{{ flatpak_apps_to_install }}"
   loop_control:
     loop_var: flatpak
