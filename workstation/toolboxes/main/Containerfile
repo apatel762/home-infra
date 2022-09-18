@@ -2,6 +2,14 @@ ARG FEDORA_VERSION=36
 
 FROM registry.fedoraproject.org/fedora-toolbox:${FEDORA_VERSION}
 
+ARG FEDORA_VERSION
+ARG RPM_FUSION_FREE=https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-${FEDORA_VERSION}.noarch.rpm
+ARG RPM_FUSION_NONFREE=https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-${FEDORA_VERSION}.noarch.rpm
+
+# Add RPM Fusion repos
+RUN dnf install -y ${RPM_FUSION_FREE} \
+    && dnf install -y ${RPM_FUSION_NONFREE}
+
 RUN dnf install -y \
     "@Development Tools" \
     pandoc \
@@ -12,7 +20,8 @@ RUN dnf install -y \
     pip \
     pipx \
     sshpass \
-    android-tools
+    android-tools \
+    ffmpeg
 
 # Add the custom repo for VSCode and install it
 # https://code.visualstudio.com/docs/setup/linux#_rhel-fedora-and-centos-based-distributions
@@ -20,3 +29,4 @@ COPY repos/vscode.repo /etc/yum.repos.d/
 RUN rpm --import https://packages.microsoft.com/keys/microsoft.asc \
     && dnf check-update || true \
     && dnf install -y code
+

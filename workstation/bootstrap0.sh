@@ -496,7 +496,7 @@ function enable_ssh_service() {
 
 function install_psutil() {
     pretty_print "Installing psutil via Python" "${fg_white-}"
-    pip install psutil
+    python -m pip install psutil
     pretty_print "  psutil is now on the system"
 }
 
