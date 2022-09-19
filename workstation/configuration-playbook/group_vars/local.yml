@@ -131,6 +131,36 @@ flatpak_apps_to_remove:
   - remote: fedora
     package: org.gnome.Calendar
 
+# https://chromeenterprise.google/policies/#WebAppInstallForceList
+#
+# if we have chosen to install the 'com.brave.Browser', the playbook
+# will also install the below web apps.
+#
+# the keys in the below list are all directly taken from the schema
+# of the WebAppInstallForceList chrome policy.
+chromium_web_apps:
+  - url: https://www.fastmail.com/mail/
+    create_desktop_shortcut: true
+    default_launch_container: window
+  - url: https://github.com/
+    create_desktop_shortcut: true
+    default_launch_container: window
+  - url: https://old.reddit.com/
+    create_desktop_shortcut: true
+    default_launch_container: window
+  - url: https://www.youtube.com/
+    create_desktop_shortcut: true
+    default_launch_container: window
+  - url: https://www.google.com/maps
+    create_desktop_shortcut: true
+    default_launch_container: window
+  # - url: https://jellyfin.broadsilver.com
+  #   create_desktop_shortcut: true
+  #   default_launch_container: window
+  # - url: https://manga.broadsilver.com
+  #   create_desktop_shortcut: true
+  #   default_launch_container: window
+
 # =====================================================================
 # Standalone Applications
 #

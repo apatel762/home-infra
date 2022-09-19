@@ -5,6 +5,8 @@
     src: Homepage
     dest: "{{ browser_startpage_folder }}"
 
+# these tasks will put the policy into the system folders
+
 - name: Ensure that the browser policy directories exist
   become: yes
   become_method: sudo
@@ -28,5 +30,25 @@
     group: root
     mode: u=r,go-rwx
   loop: "{{ browser_policy_folders | default([]) }}"
+  loop_control:
+    loop_var: policy_folder
+
+# these tasks will put the policy into the flatpak folder (in userland)
+
+- name: Ensure that the flatpak browser policy directories exist
+  ansible.builtin.file:
+    path: "{{ policy_folder }}"
+    state: directory
+    mode: u=rwx,go=rx
+  loop: "{{ browser_policy_folders_flatpak | default([]) }}"
+  loop_control:
+    loop_var: policy_folder
+
+- name: Ensure that browser policy is present in the flatpak policy folders
+  ansible.builtin.template:
+    src: templates/custom_policy.json.jinja2
+    dest: "{{ policy_folder }}/flatpak_policy.json"
+    mode: u=r,go-rwx
+  loop: "{{ browser_policy_folders_flatpak | default([]) }}"
   loop_control:
     loop_var: policy_folder

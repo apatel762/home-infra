@@ -3,7 +3,7 @@
 #
 # If you rename the startpage folder, don't forget to rename the
 # path that we've defined in the Chromium policy file!
-browser_startpage_folder: "{{ lookup('env', 'HOME') }}/Documents/"
+browser_startpage_folder: "{{ lookup('env', 'HOME') }}/Documents"
 
 # The folders where we can store our custom chromium policy.
 #
@@ -23,3 +23,7 @@ browser_policy_folders:
   - /etc/brave/policies/managed
   - /etc/chromium/policies/managed
   - /etc/opt/chrome/policies/managed
+
+browser_policy_folders_flatpak:
+  - "{{ lookup('env', 'HOME') }}/.local/share/flatpak/app/com.brave.Browser/current/active/files/share/flatpak-brave"
+  - "{{ lookup('env', 'HOME') }}/.local/share/flatpak/app/com.brave.Browser/current/active/files/share/flatpak-chrome"
