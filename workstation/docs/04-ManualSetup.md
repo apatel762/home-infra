@@ -99,21 +99,6 @@ The playbook will get `nb` onto the workstation, but to actually use it, the not
 git clone git@github.com:apatel762/notes.git ~/Documents/Notes
 ```
 
-## Install PWAs via Brave
-
-I've got some apps installed as PWAs through Brave:
-
-- Jellyfin
-- Komga
-- Fastmail
-- GitHub
-- Reddit
-- YouTube
-
-This is so that I can launch these are separate apps and still have the ad-block and other stuff available.
-
-For my usual browsing, I use incognito mode so that the cookies don't stick around. Any site where I might want to sign in, I add to the desktop as a PWA.
-
 ## Restore Reddit Enhancement Suite backup
 
 Should be on Nextcloud somewhere.
