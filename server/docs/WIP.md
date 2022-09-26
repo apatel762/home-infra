@@ -10,7 +10,31 @@ Ansible for the host machines, with Ansible Vault to encrypt and version control
 
 Kubernetes manifest files for the Podman containers[^5], and may be able to use the Renovate bot to keep packages up to date, as it can apparently detect new versions of container images from manifest files[^6] (example: https://github.com/eifrach/ansible-role-assisted-installer-pod/).
 
-Remote view of system with [Cockpit](https://cockpit-project.org/). Provides a web interface that can be used to manage the system. If you configure `journald` as a logging driver for all running containers, you can then view the container logs here, which is useful because you then don't need to SSH to the system directly. This web interface should, of course, be locked down and **NOT** accessible from the wider internet.
+```yaml
+- name: Ensure that Kubernetes YAML file for pod is present on server
+  template:
+    src: "pod.j2"
+    dest: "/somewhere/on/my/server/pod.yaml"
+
+- name: Ensure that the config mapping file is present on the server
+  template:
+    src: "configmap.j2"
+    dest: "/somewhere/on/my/server/configmap.yaml"
+
+- name: Ensure that the pod is running using the provided manifest and configuration
+  containers.podman.podman_play:
+    kube_file: "/somewhere/on/my/server/pod.yaml"
+    configmap: 
+      - "/somewhere/on/my/server/configmap.yaml"
+    state: started
+```
+
+Refs.:
+
+- [pod.j2](https://github.com/eifrach/ansible-role-assisted-installer-pod/blob/ac0cca8ce1ecc7b2d433b20f3a22d980dbe63d25/templates/pod.j2)
+- [configmap.j2](https://github.com/eifrach/ansible-role-assisted-installer-pod/blob/ac0cca8ce1ecc7b2d433b20f3a22d980dbe63d25/templates/configmap.j2)
+
+Remote view of system with [Cockpit](https://cockpit-project.org/). Provides a web interface that can be used to manage the system. If you configure `journald` as a logging driver for all running containers, you can then view the container logs here, which is useful because you then don't need to SSH to the system directly. This web interface should, of course, be locked down and only be accessible from the local network (optionally with VPN) and **NOT** open to the wider internet.
 
 ### Operating System
 
