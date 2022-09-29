@@ -183,7 +183,7 @@ standalone_applications:
     checksum: sha256:b70d774517802dd7ceb38eb27f5f027a496bc753050223ff999e29d641b9b93b
     file_name: nb
     location: "{{ lookup('env', 'HOME') }}/.local/bin"
-    stale_days: 45
+    stale_days: 60
   - url: https://raw.githubusercontent.com/dylanaraps/neofetch/7.1.0/neofetch
     checksum: sha256:3dc33493e54029fb1528251552093a9f9a2894fcf94f9c3a6f809136a42348c7
     file_name: neofetch
