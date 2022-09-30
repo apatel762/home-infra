@@ -139,7 +139,7 @@ flatpak_apps_to_remove:
 # the keys in the below list are all directly taken from the schema
 # of the WebAppInstallForceList chrome policy.
 chromium_web_apps:
-  - url: https://www.fastmail.com/mail/
+  - url: https://app.fastmail.com/mail/
     create_desktop_shortcut: true
     default_launch_container: window
   - url: https://github.com/
