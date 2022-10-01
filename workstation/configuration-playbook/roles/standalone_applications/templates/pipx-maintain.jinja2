@@ -520,7 +520,7 @@ function main() {
     _check_requirements
 
     local PIPX_MAINTAIN_FILE
-    PIPX_MAINTAIN_FILE="/tmp/pipx-maintain.done"
+    PIPX_MAINTAIN_FILE="/tmp/pipx-maintain.$UID.done"
 
     if [[ ! -f "$PIPX_MAINTAIN_FILE" ]]; then
         touch "$PIPX_MAINTAIN_FILE"

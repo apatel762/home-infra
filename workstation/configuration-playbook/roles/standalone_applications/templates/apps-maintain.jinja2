@@ -535,7 +535,7 @@ function main() {
     _check_requirements
 
     local APPS_UPDATES_FILE
-    APPS_UPDATES_FILE="/tmp/apps-maintain.done"
+    APPS_UPDATES_FILE="/tmp/apps-maintain.$UID.done"
 
     if [[ ! -f "$APPS_UPDATES_FILE" ]]; then
         touch "$APPS_UPDATES_FILE"

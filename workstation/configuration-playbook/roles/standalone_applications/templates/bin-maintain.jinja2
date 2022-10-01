@@ -510,7 +510,7 @@ function main() {
     _check_requirements
 
     local BIN_MAINTAIN_FILE
-    BIN_MAINTAIN_FILE="/tmp/bin-maintain.done"
+    BIN_MAINTAIN_FILE="/tmp/bin-maintain.$UID.done"
 
     if [[ ! -f "$BIN_MAINTAIN_FILE" ]]; then
         touch "$BIN_MAINTAIN_FILE"

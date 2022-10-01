@@ -504,7 +504,7 @@ function main() {
     _check_requirements
 
     local DESKTOP_MAINTAIN_FILE
-    DESKTOP_MAINTAIN_FILE="/tmp/desktop-maintain.done"
+    DESKTOP_MAINTAIN_FILE="/tmp/desktop-maintain.$UID.done"
 
     if [[ ! -f "$DESKTOP_MAINTAIN_FILE" ]]; then
         touch "$DESKTOP_MAINTAIN_FILE"
