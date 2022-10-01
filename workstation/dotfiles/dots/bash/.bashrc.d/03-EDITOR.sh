@@ -1,15 +1,21 @@
 #!/usr/bin/env bash
 
-function _ensure_neovim_appimage_extracted() {
+function _ensure_appimage_extracted() {
+	# unpack the vars passed in to the function
+	local BINARY_NAME
+	BINARY_NAME="$1"
+	local APPIMAGE_NAME
+	APPIMAGE_NAME="$2"
+
 	local LOCAL_BIN
 	LOCAL_BIN="$HOME/.local/bin"
 	mkdir -p "$LOCAL_BIN"
 
-	local EXPECTED_NEOVIM_BINARY
-	EXPECTED_NEOVIM_BINARY="$LOCAL_BIN/nvim" 
+	local EXPECTED_BINARY
+	EXPECTED_BINARY="$LOCAL_BIN/$BINARY_NAME"
 
-	local EXPECTED_NEOVIM_APPIMAGE
-	EXPECTED_NEOVIM_APPIMAGE="$LOCAL_BIN/nvim.AppImage" 
+	local EXPECTED_APPIMAGE
+	EXPECTED_APPIMAGE="$LOCAL_BIN/$APPIMAGE_NAME"
 
 	# ensure that we re-extract the Neovim AppImage if AppImage version is
 	# different to the extracted binary. We make sure of this by deleting
@@ -20,44 +26,65 @@ function _ensure_neovim_appimage_extracted() {
 	# version mismatch checking is disabled when you are in a toolbox
 	# because we can't check the .AppImage version without having FUSE
 	# installed, and it isn't installed in a container.
-	if [ -e "$EXPECTED_NEOVIM_BINARY" ] && [ -e "$EXPECTED_NEOVIM_APPIMAGE" ] \
-		&& [ ! -f /run/.containerenv ] && [ ! -f /run/.toolboxenv ] ; then
-		local NEOVIM_APPIMAGE_VERSION
-		NEOVIM_APPIMAGE_VERSION="$("$EXPECTED_NEOVIM_APPIMAGE" --version)"
-		local NEOVIM_BINARY_VERSION
-		NEOVIM_BINARY_VERSION="$("$EXPECTED_NEOVIM_BINARY" --version)"
+	if [ -e "$EXPECTED_BINARY" ] && [ -e "$EXPECTED_APPIMAGE" ]; then
+		local APPIMAGE_VERSION
+		APPIMAGE_VERSION="$("$EXPECTED_APPIMAGE" --version)"
+		local BINARY_VERSION
+		BINARY_VERSION="$("$EXPECTED_BINARY" --version)"
 
-		if [[ "$NEOVIM_APPIMAGE_VERSION" != "$NEOVIM_BINARY_VERSION" ]]; then
-			echo "Detected mismatch between nvim.AppImage and nvim binary; deleting the binary."
-			rm -f "$EXPECTED_NEOVIM_BINARY" 
+		if [[ "$APPIMAGE_VERSION" != "$BINARY_VERSION" ]]; then
+			echo "Version mismatch between $APPIMAGE_NAME and $BINARY_NAME binary."
+			if [ ! -f /run/.containerenv ] && [ ! -f /run/.toolboxenv ]; then
+				rm -fv "$EXPECTED_BINARY"
+			else
+				echo "Cannot resolve version mismatch between $APPIMAGE_NAME and $BINARY_NAME binary from within a toolbox. Try again from a host terminal."
+				return 1
+			fi
 		fi
 	fi
 
 	# if the symlink is broken, ensure that the target is removed
 	# ...and remove the squashfs root while we're at it (if it's there)
-	if [ ! -e "$EXPECTED_NEOVIM_BINARY" ]; then
-		rm -f "$EXPECTED_NEOVIM_BINARY" 
-		rm -rf "$LOCAL_BIN/nvim-root"
+	if [ ! -e "$EXPECTED_BINARY" ]; then
+		if [ ! -f /run/.containerenv ] && [ ! -f /run/.toolboxenv ]; then
+			rm -fv "$EXPECTED_BINARY"
+			rm -rf "$LOCAL_BIN/$BINARY_NAME-root"
+		else
+			echo "Symlink between $APPIMAGE_NAME and $BINARY_NAME binary is broken, but cannot resolve from a toolbox container. Try again from a host terminal."
+			return 1
+		fi
 	fi 
 
-	if ! command -v nvim &>/dev/null \
-		&& [ -f "$EXPECTED_NEOVIM_APPIMAGE" ]; then
+	if ! command -v "$BINARY_NAME" &>/dev/null \
+		&& [ -f "$EXPECTED_APPIMAGE" ]; then
 		# if we are in here, we have the AppImage in the local bin and
-		# we DON'T have the plain Neovim binary, so here, we need to
-		# extract it from the AppImage and create a symlink
-		(
-			echo "Creating physical nvim.AppImage alias"
-			cd "$LOCAL_BIN" || return 1
-			./nvim.AppImage --appimage-extract &>/dev/null
+		# we DON'T have the binary, so here, we need to extract the binary
+		# from the AppImage and create a symlink
+		if [ ! -f /run/.containerenv ] && [ ! -f /run/.toolboxenv ]; then
+			(
+				echo "Creating physical $APPIMAGE_NAME alias"
+				cd "$LOCAL_BIN" || return 1
+				./"$APPIMAGE_NAME" --appimage-extract &>/dev/null
 
-			# rename the fs root folder
-			mv squashfs-root nvim-root
+				# rename the fs root folder
+				mv squashfs-root "$BINARY_NAME"-root
 
-			# create symlink
-			ln -s nvim-root/usr/bin/nvim nvim
-		)
+				# create symlink
+				ln -s "$BINARY_NAME"-root/usr/bin/"$BINARY_NAME" "$BINARY_NAME"
+			)
+		else
+			echo "Cannot resolve version mismatch between $APPIMAGE_NAME and $BINARY_NAME binary from within a toolbox. Try again from a host terminal."
+			return 1
+		fi
 	fi
 }
+
+# using the Neovim AppImage on my workstation, so if it's present, this
+# init script will extract the AppImage and create the relevant
+# symlinks to make it all work (even when inside of a toolbox, where
+# you can't use FUSE mounts).
+_ensure_appimage_extracted "nvim" "nvim.AppImage"
+_ensure_appimage_extracted "hx" "helix.appimage"
 
 # if we've got 'nvim' then prioritise that over the other stuff
 if command -v nvim &>/dev/null; then
@@ -66,12 +93,6 @@ if command -v nvim &>/dev/null; then
 	alias vi='vim'
 	alias vim='nvim'
 	[[ $(type -t nvim) == "alias" ]] && unalias nvim
-
-	# using the Neovim AppImage on my workstation, so if it's present, this
-	# init script will extract the AppImage and create the relevant
-	# symlinks to make it all work (even when inside of a toolbox, where
-	# you can't use FUSE mounts).
-	_ensure_neovim_appimage_extracted
 
 
 # if we've got 'vim', then use that over 'vi' to make things a little
@@ -92,4 +113,9 @@ else
 	alias vim='vi'
 	alias nvim='vi'
 
+fi
+
+if command -v hx &>/dev/null; then
+	export VISUAL=hx
+	export EDITOR=hx
 fi

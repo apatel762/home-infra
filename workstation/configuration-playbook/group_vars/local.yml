@@ -208,6 +208,8 @@ cli_apps:
     namespace: "github.com/koalaman/shellcheck"
   - binary: gum
     namespace: "github.com/charmbracelet/gum"
+  - binary: helix.appimage
+    namespace: "github.com/helix-editor/helix"
 
 # the 'install' field is used when the name of the package that you're
 # installing is different to the name/URL that you use to install it
