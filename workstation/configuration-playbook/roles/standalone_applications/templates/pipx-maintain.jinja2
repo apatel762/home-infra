@@ -482,9 +482,7 @@ function _check_requirements() {
 #   $2 would be the name of the package after it's installed
 _ensure_installed() {
 	if  [[ ! -d "{{ lookup('env','HOME') }}/.local/pipx/venvs/$2" ]]  &>/dev/null; then
-		pretty_print "  pipx install $1" "${fg_red-}"
-    else
-        pretty_print "  OK $2"
+    		pretty_print "pipx install $1" "${fg_red-}"
 	fi
 }
 
@@ -494,9 +492,8 @@ _ensure_installed() {
 #   $2 = the name of the dependency
 _ensure_injected() {
 	if  [[ -z "$("{{ lookup('env','HOME') }}/.local/pipx/venvs/$1/bin/python" -m pip freeze | grep "$2")" ]] &>/dev/null; then
-		pretty_print "    pipx inject $1 $2" "${fg_red-}"
+		pretty_print "  pipx inject $1 $2" "${fg_red-}"
     else
-        pretty_print "    OK $2"
 	fi
 }
 
@@ -525,7 +522,6 @@ function main() {
     if [[ ! -f "$PIPX_MAINTAIN_FILE" ]]; then
         touch "$PIPX_MAINTAIN_FILE"
 
-        pretty_print "pipx" "${fg_white-}"
         {% for item in pipx_apps %}
         _ensure_installed "{{ item.install | default(item.name) }}" "{{ item.name }}"
         {% if 'dependencies' in item -%}

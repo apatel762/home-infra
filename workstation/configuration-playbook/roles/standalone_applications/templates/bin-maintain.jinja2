@@ -473,10 +473,10 @@ function _check_requirements() {
 }
 
 function _show_github_api_token_setup_reminder() {
-	if [[ -z "${GITHUB_AUTH_TOKEN}" ]]; then
-        pretty_print "  GITHUB_AUTH_TOKEN not found" "${fg_yellow-}"
-        pretty_print "    https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token" "${fg_yellow-}"
-	fi
+    if [[ -z "${GITHUB_AUTH_TOKEN}" ]]; then
+        pretty_print "GITHUB_AUTH_TOKEN not found" "${fg_yellow-}"
+        pretty_print "  https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token" "${fg_yellow-}"
+    fi
 }
 
 # DESC: Check whether or not a given binary is installed
@@ -484,10 +484,8 @@ function _show_github_api_token_setup_reminder() {
 #       $2 (required): The binary namespace e.g. github.com/apatel762/appy
 function _check_installation_status() {
     if ! command -v "$1" &>/dev/null; then
-        pretty_print "  bin install $2" "${fg_red-}"
-    else
-        pretty_print "  OK $1"        
-	fi
+        pretty_print "bin install $2" "${fg_red-}"
+    fi
 }
 
 # ---------------------------------------------------------------------
@@ -515,7 +513,6 @@ function main() {
     if [[ ! -f "$BIN_MAINTAIN_FILE" ]]; then
         touch "$BIN_MAINTAIN_FILE"
 
-        pretty_print "binaries" "${fg_white-}"
         _show_github_api_token_setup_reminder
         {% for item in cli_apps %}
         _check_installation_status "{{ item.binary }}" "{{ item.namespace }}"

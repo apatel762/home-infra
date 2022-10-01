@@ -478,9 +478,7 @@ function _check_requirements() {
 function _check_desktop_entry() {
     # if file $1 doesn't exist, export $2
     if [[ ! -f "$HOME/.local/share/applications/$1" ]]; then
-        pretty_print "  toolbox-export --container main -- $2" "${fg_red-}"
-    else
-        pretty_print "  OK $1"
+        pretty_print "toolbox-export --container main -- $2" "${fg_red-}"
     fi
 }
 
@@ -509,7 +507,6 @@ function main() {
     if [[ ! -f "$DESKTOP_MAINTAIN_FILE" ]]; then
         touch "$DESKTOP_MAINTAIN_FILE"
 
-        pretty_print ".desktop" "${fg_white-}"
         {% for item in desktop_entries %}
         _check_desktop_entry "{{ item.entry }}" "{{ item.app }}"
         {% endfor %}

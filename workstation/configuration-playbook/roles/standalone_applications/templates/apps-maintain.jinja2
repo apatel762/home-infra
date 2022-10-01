@@ -487,13 +487,13 @@ function _warn_if_old() {
 	if [ ! -f "$1" ]; then
 		# sanity check, shouldn't happen if we've gotten this far, but
 		# might as well let the user know
-		pretty_print "  NOT FOUND $(basename "$1")" "${fg_red-}"
+		pretty_print "NOT FOUND $(basename "$1")" "${fg_red-}"
 	fi
 	if [[ "$2" =~ ^[0-9]+$ ]]; then
 		:
 	else
 		# sanity check again
-		pretty_print "  INVALID $(basename "$1") - cannot parse 'number of days' = $2" "${fg_red-}"
+		pretty_print "INVALID $(basename "$1") - cannot parse 'number of days' = $2" "${fg_red-}"
 	fi
 
 	local CURRENT_UNIX_TIMESTAMP
@@ -509,9 +509,7 @@ function _warn_if_old() {
 	STALE_SECONDS=$(("$2" * 24 * 60 * 60))
 
 	if [[ "$AGE_OF_FILE_IN_SECONDS" -ge "$STALE_SECONDS" ]]; then
-		pretty_print "  STALE $(basename "$1") ($(_days_from_seconds "$AGE_OF_FILE_IN_SECONDS") old)" "${fg_yellow-}"
-    else
-        pretty_print "  OK $(basename "$1")"
+    		pretty_print "$(basename "$1") ($(_days_from_seconds "$AGE_OF_FILE_IN_SECONDS") old)" "${fg_yellow-}"
 	fi
 }
 
@@ -540,7 +538,6 @@ function main() {
     if [[ ! -f "$APPS_UPDATES_FILE" ]]; then
         touch "$APPS_UPDATES_FILE"
 
-        pretty_print "stale apps" "${fg_white-}"
         {% for item in standalone_applications %}
         {% if 'stale_days' in item %}
         _warn_if_old \
