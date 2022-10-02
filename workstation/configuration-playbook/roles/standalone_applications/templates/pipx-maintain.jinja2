@@ -493,7 +493,6 @@ _ensure_installed() {
 _ensure_injected() {
 	if  [[ -z "$("{{ lookup('env','HOME') }}/.local/pipx/venvs/$1/bin/python" -m pip freeze | grep "$2")" ]] &>/dev/null; then
 		pretty_print "  pipx inject $1 $2" "${fg_red-}"
-    else
 	fi
 }
 
