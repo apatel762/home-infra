@@ -11,8 +11,6 @@ Links:
 make install
 ```
 
-**NOTE**: This creates `~/.ansible` even though Ansible is in the virtual environment. At some point I should create a `make clean` target to undo this.
-
 Before you run the playbook, check the settings in the `group_vars/local.yml` file. Your workstation will be configured using those settings. When you are happy, run the playbook.
 
 ```bash
