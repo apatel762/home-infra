@@ -495,6 +495,9 @@ function enable_ssh_service() {
 }
 
 function install_psutil() {
+    pretty_print "Ensuring that Pip is up to date" "${fg_white-}"
+    python -m ensurepip
+    python -m pip install --upgrade pip
     pretty_print "Installing psutil via Python" "${fg_white-}"
     python -m pip install psutil
     pretty_print "  psutil is now on the system"
