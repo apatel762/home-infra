@@ -84,6 +84,7 @@ Enabled extensions:
 - User-installed
     - 'blur-my-shell@aunetx'
     - 'trayIconsReloaded@selfmade.pl'
+    - 'rounded-window-corners@yilozt'
 - System
     - 'apps-menu@gnome-shell-extensions.gcampax.github.com'
     - 'background-logo@fedorahosted.org'
