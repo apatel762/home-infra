@@ -84,7 +84,6 @@ function _ensure_appimage_extracted() {
 # symlinks to make it all work (even when inside of a toolbox, where
 # you can't use FUSE mounts).
 _ensure_appimage_extracted "nvim" "nvim.AppImage"
-_ensure_appimage_extracted "hx" "helix.appimage"
 
 # if we've got 'nvim' then prioritise that over the other stuff
 if command -v nvim &>/dev/null; then
@@ -113,9 +112,4 @@ else
 	alias vim='vi'
 	alias nvim='vi'
 
-fi
-
-if command -v hx &>/dev/null; then
-	export VISUAL=hx
-	export EDITOR=hx
 fi
