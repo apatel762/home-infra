@@ -51,6 +51,11 @@ env/
 !nb-fzf-preview
 !Containerfile
 !yt-dlp.conf
+!ascii.txt
+!config.conf
+
+!nekofetch
+!jp2a
 
 # browser homepage files
 !index.html

@@ -1,0 +1,97 @@
+#!/usr/bin/env bash
+
+fail_safely() {
+	neofetch
+}
+
+trap fail_safely EXIT
+
+# $1 = name of the binary to test for existence
+function check_binary() {
+    if [[ $# -lt 1 ]]; then
+	    echo "$0: missing required argument to check_binary()!"
+	    exit 1
+    fi
+
+    if ! command -v "$1" > /dev/null 2>&1; then
+	    echo "$0: missing dependency: couldn't locate $1."
+	    exit 1
+    fi
+
+    return 0
+}
+
+check_binary podman
+check_binary jq
+check_binary curl
+check_binary wget
+check_binary neofetch
+
+readonly NEKOFETCH_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache/nekofetch}"
+mkdir -p "$NEKOFETCH_CACHE_DIR"
+
+# $@ = args for jp2a
+function _jp2a() {
+	(
+		[ "$DEBUG" = "true" ] && set -x;
+		podman run -t --rm -e COLORTERM="$COLORTERM" -v "$NEKOFETCH_CACHE_DIR":/app:Z docker.io/talinx/jp2a "$@"
+	)
+}
+
+# $1 = an array to pick something from
+function _random_array_element() {
+    local arr=("$@")
+    printf '%s\n' "${arr[RANDOM % $#]}"
+}
+
+# $1 = type
+function get_neko() {
+	# 'gasm' and 'waifu' give small images, best for neofetch
+	local VALID_TYPES=(neko gasm waifu)
+	local WANTED_TYPE
+	if [[ ! -z "$1" ]]; then
+		WANTED_TYPE="$1"
+	else
+		WANTED_TYPE="$(_random_array_element $VALID_TYPES)"
+	fi
+
+	if [[ ${VALID_TYPES[*]} != *"$WANTED_TYPE"* ]]; then
+		echo "$0: provided neko type [$WANTED_TYPE] must be one of: '${VALID_TYPES[*]}'."
+		exit 1
+	fi
+
+        local ENDPOINT="https://nekos.life/api/v2/img/$WANTED_TYPE"
+	local URL=$(curl --fail --silent --show-error --location "$ENDPOINT" | jq -r ".url");
+	if [[ "$URL" != *jpeg && "$URL" != *jpg ]]; then
+	    echo "$0: the img at '$URL' must be a .jpg; please try again."
+	    exit 1
+	fi
+
+	local NEKO_FILE_NAME="${URL##*/}"
+	local NEKO_FILE_PATH="$NEKOFETCH_CACHE_DIR/$NEKO_FILE_NAME"
+	local ASCII_FILE_NAME="$(echo $NEKO_FILE_NAME | rev | cut -f 2- -d '.' | rev)"
+	local ASCII_FILE_PATH="$NEKOFETCH_CACHE_DIR/$ASCII_FILE_NAME"
+
+	if [[ ! -f "$ASCII_FILE_PATH" ]]; then
+		if [[ ! -f "$NEKO_FILE_PATH" ]]; then
+			# the file is not cached at the moment, so we must download it
+			wget --quiet --output-document "$NEKO_FILE_PATH" "$URL"
+		fi
+
+		# now we must convert the file to ASCII and save it alongside the image
+		local ASCII_IMAGE_HEIGHT="$(($(stty size | awk '{print $1}') - 5))"
+		_jp2a --height="$ASCII_IMAGE_HEIGHT" "$NEKO_FILE_NAME" > "$ASCII_FILE_PATH"
+	fi
+
+	# remove the exit trap, because at this point, if the script
+	# fails, we want to see the failure happen without falling back to neofetch
+	trap - EXIT
+
+	(
+		[ "$DEBUG" = "true" ] && set -x;
+		neofetch --source "$ASCII_FILE_PATH"
+	)
+}
+
+get_neko "$@"
+

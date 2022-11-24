@@ -1,6 +1,14 @@
 #!/usr/bin/env bash
 
 function _ensure_appimage_extracted() {
+	if [ -f /run/.containerenv ] && [ -f /run/.toolboxenv ]; then
+		# you cannot run this function from a toolbox container
+		# because we won't be able to determine the AppImage version
+		# for comparison with the extracted binary version (FUSE
+		# mounting doesn't work within toolboxes)
+		return 1
+	fi
+
 	# unpack the vars passed in to the function
 	local BINARY_NAME
 	BINARY_NAME="$1"

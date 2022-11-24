@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+# $1 = name of the binary to test for existence
+function check_binary() {
+    if [[ $# -lt 1 ]]; then
+	    echo "$0: missing required argument to check_binary()!"
+	    exit 1
+    fi
+
+    if ! command -v "$1" > /dev/null 2>&1; then
+	    echo "$0: missing dependency: couldn't locate $1."
+	    exit 1
+    fi
+
+    return 0
+}
+
+check_binary podman
+
+(
+	set -x;
+	podman run -t --rm -e COLORTERM="$COLORTERM" -v "$(pwd)":/app docker.io/talinx/jp2a "$@"
+)
