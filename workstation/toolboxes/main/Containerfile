@@ -21,7 +21,8 @@ RUN dnf install -y \
     pipx \
     sshpass \
     android-tools \
-    ffmpeg
+    ffmpeg \
+    p7zip
 
 # Add the custom repo for VSCode and install it
 # https://code.visualstudio.com/docs/setup/linux#_rhel-fedora-and-centos-based-distributions
