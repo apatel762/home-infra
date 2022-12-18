@@ -1,6 +1,6 @@
-# Configuration
+# home-infra
 
-All of the details on how my workstation and home server infrastructure is configured.
+All the details on how my workstation and home server infrastructure is configured.
 
 Most of the configuration is done via Ansible, with some shell scripts here and there. Any manual steps are also documented.
 
@@ -8,8 +8,8 @@ Most of the configuration is done via Ansible, with some shell scripts here and 
 
 The repo is split into two main pieces: workstation and server. Documentation for each can be found in their respective folders:
 
-- [Workstation](workstation/README.md)
-- [Server](server/README.md)
+- [Workstation](docs/workstation/README.md)
+- [Server](docs/server/Server_redesign_notes.md)
 
 ## References
 

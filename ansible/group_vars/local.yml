@@ -1,0 +1,403 @@
+# =====================================================================
+# Layered packages
+#
+# These should be used sparingly to install stuff that needs to be
+# available system-wide and can't be used via toolboxes or Flatpak.
+
+#packages_to_layer:
+#  - wireguard-tools
+
+#packages_to_remove:
+#  - neovim
+
+# =====================================================================
+# Flatpaks
+#
+# All apps installed on the machine should come from here so that they
+# can easily be installed into your home dir and have their updates
+# managed by the OS.
+#
+# Helpful doco for overrides:
+# https://docs.flatpak.org/en/latest/sandbox-permissions.html
+# https://www.mankier.com/1/flatpak-override
+
+flatpak_remotes:
+  - name: flathub
+    url: https://dl.flathub.org/repo/flathub.flatpakrepo
+
+  - name: flathub-beta
+    url: https://flathub.org/beta-repo/flathub-beta.flatpakrepo
+
+flatpak_apps_to_install:
+  # for  controlling permissions on all of the Flatpaks that I
+  # install onto my system. The permissions can also be 'set into
+  # stone' here by writing them as overrides.
+  - remote: flathub
+    package: com.github.tchx84.Flatseal
+
+  # A web browser that isn't installed at the system-level, and
+  # has some sandboxing to prevent it from having access to all
+  # of my stuff.
+  - remote: flathub
+    package: com.brave.Browser
+    overrides:
+      # remove some default filesystem access permissions
+      - { scope: user, setting: "--nofilesystem=xdg-music" }
+      - { scope: user, setting: "--nofilesystem=xdg-videos" }
+      - { scope: user, setting: "--nofilesystem=xdg-desktop" }
+      # whitelist ~/Documents read-only
+      - { scope: user, setting: "--filesystem=xdg-documents:ro" }
+      - { scope: user, setting: "--filesystem=home/.local/share/applications:create" }
+      - { scope: user, setting: "--filesystem=home/.local/share/icons:create" }
+
+  # another web browser, to be used for stuff where Brave doesn't
+  # work (e.g. if the blocking/anti-fingerprinting is too strict)
+  - remote: flathub
+    package: com.microsoft.Edge
+    overrides:
+      # remove some default filesystem access permissions
+      - { scope: user, setting: "--nofilesystem=host-etc" }
+      - { scope: user, setting: "--nofilesystem=xdg-music" }
+      - { scope: user, setting: "--nofilesystem=xdg-videos" }
+      - { scope: user, setting: "--nofilesystem=xdg-desktop" }
+      # whitelist ~/Documents read-only
+      - { scope: user, setting: "--filesystem=xdg-documents:ro" }
+      - { scope: user, setting: "--filesystem=home/.local/share/applications:create" }
+      - { scope: user, setting: "--filesystem=home/.local/share/icons:create" }
+
+  # for managing GNOME extensions easily
+  - remote: flathub
+    package: com.mattjakeman.ExtensionManager
+
+  # for opening encrypted vaults
+  - remote: flathub
+    package: org.cryptomator.Cryptomator
+
+  # for opening KeePass databases (e.g. so that I can open my
+  # encrypted vaults...)
+  - remote: flathub
+    package: org.keepassxc.KeePassXC
+
+  # so that I can listen to music without having to download it
+  - remote: flathub
+    package: com.spotify.Client
+
+  # flashcards; they help me remember things
+  - remote: flathub
+    package: net.ankiweb.Anki
+
+  # for quickly spinning up VMs
+  - remote: flathub
+    package: org.gnome.Boxes
+
+  # for managing my eBooks library
+  - remote: flathub
+    package: com.calibre_ebook.calibre
+
+  # for reading eBooks
+  - remote: flathub
+    package: com.github.johnfactotum.Foliate
+
+  # watching youtube videos and keeping track of youtube
+  # subscriptions without having to sign in
+  - remote: flathub
+    package: io.freetubeapp.FreeTube
+
+  - remote: flathub
+    package: org.onlyoffice.desktopeditors
+
+  # alternative to MPV
+  - remote: flathub
+    package: io.github.celluloid_player.Celluloid
+
+flatpak_apps_to_remove:
+  - remote: fedora
+    package: org.gnome.Maps
+
+  - remote: fedora
+    package: org.gnome.Contacts
+
+  - remote: fedora
+    package: org.gnome.Calendar
+
+# https://chromeenterprise.google/policies/#WebAppInstallForceList
+#
+# if we have chosen to install the 'com.brave.Browser', the playbook
+# will also install the below web apps.
+#
+# the keys in the below list are all directly taken from the schema
+# of the WebAppInstallForceList chrome policy.
+chromium_web_apps:
+  - url: https://app.fastmail.com/mail/
+    create_desktop_shortcut: true
+    default_launch_container: window
+  - url: https://github.com/
+    create_desktop_shortcut: true
+    default_launch_container: window
+  - url: https://old.reddit.com/
+    create_desktop_shortcut: true
+    default_launch_container: window
+  - url: https://www.youtube.com/
+    create_desktop_shortcut: true
+    default_launch_container: window
+  # - url: https://jellyfin.broadsilver.com
+  #   create_desktop_shortcut: true
+  #   default_launch_container: window
+  # - url: https://manga.broadsilver.com
+  #   create_desktop_shortcut: true
+  #   default_launch_container: window
+
+# =====================================================================
+# Standalone Applications
+#
+# These are applications that can't be found as Flatpaks (or are
+# difficult to install as Flatpaks).
+#
+# Each application is fully contained in one file (realistically, this
+# means that the applications are all 'AppImage' files).
+
+standalone_applications:
+  - url: https://github.com/nextcloud/desktop/releases/download/v3.2.4/Nextcloud-3.2.4-x86_64.AppImage
+    checksum: sha256:5d0c13ba422c445c4a88cd45a1b38878daf67123552b0f4a6020a73734c47ce6
+    file_name: Nextcloud.AppImage
+  - url: https://github.com/neovim/neovim/releases/download/v0.7.2/nvim.appimage
+    checksum: sha256:33b5d020c730b6d1b5185b1306ead83b6b8f8fab0239e0580c72b5224a9658e1
+    file_name: nvim.AppImage
+    location: "{{ lookup('env', 'HOME') }}/.local/bin"
+    stale_days: 180
+  - url: https://raw.githubusercontent.com/xwmx/nb/6.11.2/nb
+    checksum: sha256:96a455f5305969a93a36a13f7b43e6b32aac26760dab2fca48df640b60efacfc
+    file_name: nb
+    location: "{{ lookup('env', 'HOME') }}/.local/bin"
+    stale_days: 60
+  - url: https://raw.githubusercontent.com/dylanaraps/neofetch/7.1.0/neofetch
+    checksum: sha256:3dc33493e54029fb1528251552093a9f9a2894fcf94f9c3a6f809136a42348c7
+    file_name: neofetch
+    location: "{{ lookup('env', 'HOME') }}/.local/bin"
+
+# find appropriate version here: https://github.com/marcosnils/bin/releases
+bin_base_version: "0.15.1"
+cli_apps:
+  - binary: exa
+    namespace: "github.com/ogham/exa"
+  - binary: rg
+    namespace: "github.com/burntsushi/ripgrep"
+  - binary: sysz
+    namespace: "github.com/joehillen/sysz"
+  - binary: ghq
+    namespace: "github.com/x-motemen/ghq"
+  - binary: bat
+    namespace: "github.com/sharkdp/bat"
+  - binary: shellcheck
+    namespace: "github.com/koalaman/shellcheck"
+  - binary: gum
+    namespace: "github.com/charmbracelet/gum"
+
+# the 'install' field is used when the name of the package that you're
+# installing is different to the name/URL that you use to install it
+pipx_apps:
+  - name: poetry
+  - name: ranger-fm
+  - name: yt-dlp
+  - name: browserexport
+  - name: toolbox-export
+    install: git+https://github.com/apatel762/toolbox-export.git
+  - name: cite
+    install: git+https://github.com/apatel762/cite.git
+  - name: pretty-history
+    install: git+https://github.com/apatel762/pretty-history.git
+#  - name: ptpython
+#    dependencies:
+#      - requests
+#      - pendulum
+
+desktop_entries:
+  - app: code
+    entry: code.desktop
+
+# =====================================================================
+# GNOME config
+#
+# https://opensource.com/article/18/5/manage-your-workstation-ansible-part-3
+#
+# Use `dconf dump /` to see all of your GNOME config. You could even
+# do something like:
+#
+#  dconf dump / > before.txt
+#  dconf dump / > after.txt
+#  diff --unified --color before.txt after.txt
+#
+# if you're not sure what changes you want to do (you would make the
+# changes manually and see what is different in the `dconf` output
+# before and after)
+
+dconf_settings:
+
+  # the apps that appear in the dock when you press the 'super' key
+  - key: /org/gnome/shell/favorite-apps
+    value: "['com.brave.Browser.desktop', 'com.spotify.Client.desktop', 'org.keepassxc.KeePassXC.desktop', 'org.cryptomator.Cryptomator.desktop', 'code.desktop', 'org.gnome.Nautilus.desktop', 'net.ankiweb.Anki.desktop']"
+
+  # ensure that the night light feature is configured how I like it
+  - key: /org/gnome/settings-daemon/plugins/color/night-light-enabled
+    value: "true"
+  - key: /org/gnome/settings-daemon/plugins/color/night-light-schedule-automatic
+    value: "true"
+  - key: /org/gnome/settings-daemon/plugins/color/night-light-temperature
+    value: "uint32 1700"
+
+  ##################
+  # custom hotkeys #
+  ##################
+
+  # hotkey to open a terminal with the 'Toolbox' profile
+  - key: /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/name
+    value: "'toolbox'"
+  - key: /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/command
+    value: "'gnome-terminal --profile=Toolbox'"
+  - key: /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/binding
+    value: "'<Primary><Alt>f'"
+
+  # hotkey to open a host terminal
+  - key: /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/name
+    value: "'terminal'"
+  - key: /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/command
+    value: "'gnome-terminal --profile=Host'"
+  - key: /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/binding
+    value: "'<Primary><Alt>t'"
+
+  # finalise custom keybindings
+  - key: /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings
+    value: "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/']"
+
+  #####################
+  # terminal profiles #
+  #####################
+
+  # colours taken from [Mayccoll/Gogh](https://github.com/Mayccoll/Gogh)
+  # host     = ( 114 ) Mona Lisa
+  # toolbox  = ( 157 ) Pixiefloss
+
+  - key: /org/gnome/terminal/legacy/profiles:/default
+    value: "'3593294f-b67f-4d64-b90e-5b7281edee75'"
+  - key: /org/gnome/terminal/legacy/profiles:/list
+    value: "['3593294f-b67f-4d64-b90e-5b7281edee75', 'c8908255-1368-4492-aa30-2cc2fbf3095a']"
+
+  ##############################
+  # terminal profile - Toolbox #
+  ##############################
+
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/allow-bold
+    value: "true"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/audible-bell
+    value: "false"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/background-color
+    value: "'#24241f1f3333'"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/background-transparency-percent
+    value: "5"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/bold-color
+    value: "'#d1d1cacae8e8'"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/bold-color-same-as-fg
+    value: "true"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/cursor-background-color
+    value: "'#d1d1cacae8e8'"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/cursor-colors-set
+    value: "true"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/cursor-foreground-color
+    value: "'#24241f1f3333'"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/custom-command
+    value: "'toolbox enter main'"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/default-size-columns
+    value: "140"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/default-size-rows
+    value: "40"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/foreground-color
+    value: "'#d1d1cacae8e8'"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/highlight-colors-set
+    value: "true"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/palette
+    value: "['#2f2f29294242', '#ffff85857f7f', '#4848b6b68585', '#e6e6c0c00000', '#aeae8181ffff', '#efef61615555', '#c2c2ffffdfdf', '#f8f8f8f8f2f2', '#757550507b7b', '#f1f156568e8e', '#5a5adbdba2a2', '#d5d5a4a42525', '#c5c5a3a3ffff', '#efef61615555', '#c2c2ffffffff', '#f8f8f8f8f0f0']"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/title
+    value: "'Toolbox'"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/title-mode
+    value: "'ignore'"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/use-custom-command
+    value: "true"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/use-system-font
+    value: "true"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/use-theme-background
+    value: "false"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/use-theme-colors
+    value: "false"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/use-theme-transparency
+    value: "false"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/use-transparent-background
+    value: "true"
+  - key: /org/gnome/terminal/legacy/profiles:/:c8908255-1368-4492-aa30-2cc2fbf3095a/visible-name
+    value: "'Toolbox'"
+
+  ###########################
+  # terminal profile - Host #
+  ###########################
+
+  - key: /org/gnome/terminal/legacy/profiles:/:3593294f-b67f-4d64-b90e-5b7281edee75/allow-bold
+    value: "true"
+  - key: /org/gnome/terminal/legacy/profiles:/:3593294f-b67f-4d64-b90e-5b7281edee75/audible-bell
+    value: "false"
+  - key: /org/gnome/terminal/legacy/profiles:/:3593294f-b67f-4d64-b90e-5b7281edee75/background-color
+    value: "'#12120b0b0d0d'"
+  - key: /org/gnome/terminal/legacy/profiles:/:3593294f-b67f-4d64-b90e-5b7281edee75/background-transparency-percent
+    value: "5"
+  - key: /org/gnome/terminal/legacy/profiles:/:3593294f-b67f-4d64-b90e-5b7281edee75/bold-color
+    value: "'#f7f7d6d66a6a'"
+  - key: /org/gnome/terminal/legacy/profiles:/:3593294f-b67f-4d64-b90e-5b7281edee75/bold-color-same-as-fg
+    value: "true"
+  - key: /org/gnome/terminal/legacy/profiles:/:3593294f-b67f-4d64-b90e-5b7281edee75/cursor-background-color
+    value: "'#f7f7d6d66a6a'"
+  - key: /org/gnome/terminal/legacy/profiles:/:3593294f-b67f-4d64-b90e-5b7281edee75/cursor-colors-set
+    value: "true"
+  - key: /org/gnome/terminal/legacy/profiles:/:3593294f-b67f-4d64-b90e-5b7281edee75/cursor-foreground-color
+    value: "'#12120b0b0d0d'"
+  - key: /org/gnome/terminal/legacy/profiles:/:3593294f-b67f-4d64-b90e-5b7281edee75/default-size-columns
+    value: "140"
+  - key: /org/gnome/terminal/legacy/profiles:/:3593294f-b67f-4d64-b90e-5b7281edee75/default-size-rows
+    value: "40"
+  - key: /org/gnome/terminal/legacy/profiles:/:3593294f-b67f-4d64-b90e-5b7281edee75/foreground-color
+    value: "'#f7f7d6d66a6a'"
+  - key: /org/gnome/terminal/legacy/profiles:/:3593294f-b67f-4d64-b90e-5b7281edee75/highlight-colors-set
+    value: "true"
+  - key: /org/gnome/terminal/legacy/profiles:/:3593294f-b67f-4d64-b90e-5b7281edee75/palette
+    value: "['#35351b1b0e0e', '#9b9b29291c1c', '#636362623232', '#c3c36e6e2828', '#51515c5c5d5d', '#9b9b1d1d2929', '#585880805656', '#f7f7d7d75c5c', '#878742422828', '#ffff43433131', '#b4b4b2b26464', '#ffff95956666', '#9e9eb2b2b4b4', '#ffff5b5b6a6a', '#8a8acdcd8f8f', '#ffffe5e59898']"
+  - key: /org/gnome/terminal/legacy/profiles:/:3593294f-b67f-4d64-b90e-5b7281edee75/title
+    value: "'Host'"
+  - key: /org/gnome/terminal/legacy/profiles:/:3593294f-b67f-4d64-b90e-5b7281edee75/title-mode
+    value: "'ignore'"
+  - key: /org/gnome/terminal/legacy/profiles:/:3593294f-b67f-4d64-b90e-5b7281edee75/use-system-font
+    value: "true"
+  - key: /org/gnome/terminal/legacy/profiles:/:3593294f-b67f-4d64-b90e-5b7281edee75/use-theme-background
+    value: "false"
+  - key: /org/gnome/terminal/legacy/profiles:/:3593294f-b67f-4d64-b90e-5b7281edee75/use-theme-colors
+    value: "false"
+  - key: /org/gnome/terminal/legacy/profiles:/:3593294f-b67f-4d64-b90e-5b7281edee75/use-theme-transparency
+    value: "false"
+  - key: /org/gnome/terminal/legacy/profiles:/:3593294f-b67f-4d64-b90e-5b7281edee75/use-transparent-background
+    value: "true"
+  - key: /org/gnome/terminal/legacy/profiles:/:3593294f-b67f-4d64-b90e-5b7281edee75/visible-name
+    value: "'Host'"
+
+# =====================================================================
+# OS updates
+#
+# https://github.com/j1mc/ansible-silverblue
+#
+# Manage the rpm-ostreed.conf settings; this is where I configure the
+# automatic staging of updates, because I want the system to
+# automatically check for updates AND stage them in the background. The
+# changes should then be picked up the next time I reboot my machine.
+#
+# Use `sudo ostree admin config-diff` to see all changes to `/etc` from
+# the base OS image.
+#
+# See `man rpm-ostreed.conf` for more info
+
+update_policy: stage
+idle_timeout: '60'

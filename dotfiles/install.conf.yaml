@@ -1,0 +1,44 @@
+- clean:
+    - '~'
+    - ~/.bashrc.d
+    - ~/.config
+    - ~/.config/nvim
+    - ~/.config/neofetch
+    - ~/Documents/Notes/.plugins
+    - ~/.local/bin
+
+- create:
+    - ~/.bashrc.d
+    - ~/.config
+    - ~/.config/nvim
+    - ~/.config/neofetch
+    - ~/Documents/Notes/.plugins
+    - ~/.local/bin
+
+- link:
+    # nvimrc
+    ~/.config/nvim/init.vim: dots/nvim/init.vim
+
+    # neofetch
+    ~/.config/neofetch/:
+      glob: true
+      path: dots/neofetch/*
+
+    # git config
+    ~/.gitconfig: dots/git/.gitconfig
+
+    # nb (note taking app) config
+    ~/.nbrc: dots/nb/.nbrc
+
+    # bash config
+    ~/.bashrc: dots/bash/.bashrc
+    ~/.bashrc.d/:
+      glob: true
+      path: dots/bash/.bashrc.d/*
+
+    # custom scripts
+    ~/.local/bin/nekofetch: dots/bin/nekofetch
+    ~/.local/bin/jp2a: dots/bin/jp2a
+
+    # other
+    ~/.config/.inputrc: dots/other/.inputrc

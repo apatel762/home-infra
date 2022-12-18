@@ -1,0 +1,44 @@
+---
+
+- name: Ensure that all required Flatpak remotes are present
+  community.general.flatpak_remote:
+    name: "{{ item.name }}"
+    state: present
+    method: user
+    flatpakrepo_url: "{{ item.url }}"
+  loop: "{{ flatpak_remotes }}"
+  loop_control:
+    label: "{{ item.name }}"
+
+- name: Ensure that all unwanted Flatpak apps are absent
+  community.general.flatpak:
+    remote: "{{ item.remote }}"
+    name: "{{ item.package }}"
+    state: absent
+  loop: "{{ flatpak_apps_to_remove }}"
+  loop_control:
+    label: "{{ item.package }}"
+
+- name: Ensure that all required Flatpak apps are present
+  community.general.flatpak:
+    remote: "{{ item.remote }}"
+    name: "{{ item.package }}"
+    state: present
+    method: user
+  loop: "{{ flatpak_apps_to_install }}"
+  loop_control:
+    label: "{{ item.package }}"
+
+# Flatpak overrides
+
+- name: Ensure that Flatpak overrides are set up
+  ansible.builtin.include_tasks: overrides.yml
+  loop: "{{ flatpak_apps_to_install }}"
+  loop_control:
+    loop_var: flatpak
+    label: "{{ flatpak.package }}"
+
+- name: Configure Brave Browser if we have chosen to install it
+  ansible.builtin.include_role:
+    name: ws_configure_brave
+  when: flatpak_apps_to_install is defined and 'com.brave.Browser' in flatpak_apps_to_install | selectattr('package', 'equalto', 'com.brave.Browser') | map(attribute='package')

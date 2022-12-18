@@ -1,0 +1,11 @@
+---
+
+- name: Ensure that GNOME dconf settings are applied
+  hosts: local
+  any_errors_fatal: yes
+  pre_tasks:
+    - name: Ensure that psutil is installed so that we can manipulate dconf settings programmatically
+      ansible.builtin.pip:
+        name: psutil
+  roles:
+    - ws_dconf_settings

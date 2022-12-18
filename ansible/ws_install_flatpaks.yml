@@ -1,0 +1,7 @@
+---
+
+- name: Ensure that preferred Flatpak apps are installed and configured
+  hosts: local
+  any_errors_fatal: yes
+  roles:
+    - ws_install_flatpaks
