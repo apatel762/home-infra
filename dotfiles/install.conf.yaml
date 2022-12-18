@@ -4,7 +4,6 @@
     - ~/.config
     - ~/.config/nvim
     - ~/.config/neofetch
-    - ~/Documents/Notes/.plugins
     - ~/.local/bin
 
 - create:
@@ -12,7 +11,6 @@
     - ~/.config
     - ~/.config/nvim
     - ~/.config/neofetch
-    - ~/Documents/Notes/.plugins
     - ~/.local/bin
 
 - link:
