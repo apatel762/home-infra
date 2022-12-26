@@ -399,5 +399,4 @@ dconf_settings:
 #
 # See `man rpm-ostreed.conf` for more info
 
-update_policy: stage
-idle_timeout: '60'
+# Using the default vars, so no need to add anything here.

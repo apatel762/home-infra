@@ -2,4 +2,4 @@
 
 source "$(dirname "${BASH_SOURCE[0]}")/_common.sh"
 
-playbook ws_os_updates.yml "ws"
+playbook zz_ostree_automatic_updates.yml "ws"
