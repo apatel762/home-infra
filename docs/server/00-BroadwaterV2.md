@@ -39,6 +39,7 @@ Refs.:
 
 - [pod.j2](https://github.com/eifrach/ansible-role-assisted-installer-pod/blob/ac0cca8ce1ecc7b2d433b20f3a22d980dbe63d25/templates/pod.j2)
 - [configmap.j2](https://github.com/eifrach/ansible-role-assisted-installer-pod/blob/ac0cca8ce1ecc7b2d433b20f3a22d980dbe63d25/templates/configmap.j2)
+- [Translate a Docker Compose file into Kubernetes resources](https://kubernetes.io/docs/tasks/configure-pod-container/translate-compose-kubernetes/)
 
 ### Operating System
 
