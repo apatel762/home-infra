@@ -1,5 +1,5 @@
-sudo_password
-vault_password
+sudo_password*
+vault_password*
 
 
 secring.*

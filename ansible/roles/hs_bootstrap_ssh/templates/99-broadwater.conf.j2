@@ -1,0 +1,21 @@
+# Ensure that we are using the newer SSH protocol
+Protocol 2
+
+# We should only be connecting using keys, not passwords.
+# And we shouldn't ever connect to the root user (it's disabled
+# anyway, but disabling it here as well just to make sure).
+PermitRootLogin no
+PermitEmptyPasswords no
+PasswordAuthentication no
+
+# TODO: fix firewall issues that happen when this is un-commented
+# Change the default SSH port
+#Port {{ ssh_port }}
+
+# Only allow the admin user to SSH
+# All other users should be locked off.
+AllowUsers admin
+
+# Don't allow users to run graphical apps
+# over SSH
+X11Forwarding no

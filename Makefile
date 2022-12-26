@@ -6,7 +6,7 @@ clean:
 	#@rm -rf $(HOME)/.ansible
 
 install:
-	@./ansible/scripts/install.sh
+	@./ansible/scripts/_install.sh
 
 workstation:
 	./ansible/scripts/ws_dconf_settings.sh

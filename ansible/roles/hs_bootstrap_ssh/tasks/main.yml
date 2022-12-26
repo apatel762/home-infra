@@ -1,0 +1,57 @@
+---
+
+- name: Ensure that the admin group exists
+  become: yes
+  become_method: sudo
+  ansible.builtin.group:
+    name: admin
+    state: present
+
+- name: Ensure that a local admin user exists
+  become: yes
+  become_method: sudo
+  ansible.builtin.user:
+    name: admin
+    group: admin
+    shell: /bin/bash
+    home: /home/admin
+    create_home: yes
+    state: present
+
+- name: Ensure that my SSH public key is authorized for this user
+  become: yes
+  become_method: sudo
+  ansible.builtin.authorized_key:
+    user: admin
+    key: "{{ lookup('file', 'ssh.pub') }}"
+    state: present
+
+- name: Ensure that the admin group is allowed unrestricted sudo access
+  become: yes
+  become_method: sudo
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers
+    state: present
+    regexp: '^%admin ALL='
+    line: '%admin ALL=(ALL) NOPASSWD: ALL'
+    validate: /usr/sbin/visudo -cf %s
+
+- name: Ensure that hardened SSH configuration is included
+  become: yes
+  become_method: sudo
+  ansible.builtin.template:
+    src: templates/99-broadwater.conf.j2
+    dest: /etc/ssh/sshd_config.d/99-broadwater.conf
+    owner: root
+    group: root
+    mode: u=r,go-rwx
+  notify: "reload sshd"
+
+- name: Ensure that sshd is allowed to listen on TCP port {{ ssh_port }}
+  become: yes
+  become_method: sudo
+  community.general.seport:
+    ports: "{{ ssh_port }}"
+    proto: tcp
+    setype: ssh_port_t
+    state: present
