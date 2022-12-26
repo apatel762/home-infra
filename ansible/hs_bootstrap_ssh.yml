@@ -1,0 +1,7 @@
+---
+
+- name: Ensure that SSH is setup and hardened on the remote server
+  hosts: home
+  any_errors_fatal: yes
+  roles:
+    - hs_bootstrap_ssh

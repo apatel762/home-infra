@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-source "$(dirname "${BASH_SOURCE[0]}")/common.sh"
+source "$(dirname "${BASH_SOURCE[0]}")/_common.sh"
 
-playbook ws_dconf_settings.yml
+playbook ws_dconf_settings.yml "ws"

@@ -1,0 +1,9 @@
+---
+
+- name: Ensure that the SSH service is reloaded
+  become: yes
+  become_method: sudo
+  ansible.builtin.service:
+    name: sshd
+    state: reloaded
+  listen: "reload sshd"

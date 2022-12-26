@@ -4,7 +4,11 @@
 set -e
 
 usage() {
-    echo "Usage: $0 name_of_playbook.yml"
+    echo "Usage: $0 playbook env"
+    echo "  playbook:  the name of the playbook file (something.yml)"
+    echo "       env:  the environment"
+    echo "               ws = workstation"
+    echo "               hs = server"
 }
 
 ROOTDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -129,24 +133,31 @@ Please create $2 with strict permissions and re-run this script." "${fg_yellow-}
 }
 
 function await_ostree_idle() {
-    if [ -f "$ROOTDIR/await-ostree-idle.sh" ]; then
+    if [ -f "$ROOTDIR/_await-ostree-idle.sh" ]; then
         ensure_password_file "ssh" "$PASSWORD_FILE_FOR_SUDO"
-        sshpass -f "$PASSWORD_FILE_FOR_SUDO" ssh ::1 bash < "$ROOTDIR/await-ostree-idle.sh"
+        sshpass -f "$PASSWORD_FILE_FOR_SUDO" ssh ::1 bash < "$ROOTDIR/_await-ostree-idle.sh"
     else
-        script_exit "Could not find '$ROOTDIR/await-ostree-idle.sh'. Are you running this script via the Makefile?" 1
+        script_exit "Could not find '$ROOTDIR/_await-ostree-idle.sh'. Are you running this script via the Makefile?" 1
     fi
 }
 
 # args: $1 = the playbook file
+#       $2 = the environment (workstation or server)
 function playbook() {
     if [ -z "$1" ]; then
         usage;
         script_exit "Argument 'playbook' is required." 1
     fi
+    if [ -z "$2" ]; then
+        usage;
+        script_exit "Argument 'env' is required." 1
+    fi
     local PLAYBOOK
     PLAYBOOK="$1"
+    local ENV
+    ENV="$2"
 
-    ensure_password_file "ssh" "$PASSWORD_FILE_FOR_SUDO"
+    ensure_password_file "ssh" "$PASSWORD_FILE_FOR_SUDO"_"$ENV"
     ensure_password_file "ansible-vault" "$PASSWORD_FILE_FOR_VAULT"
 
     cd "$ROOTDIR/../.."
@@ -158,11 +169,12 @@ function playbook() {
 
     source venv/bin/activate
 
-    # TODO: this only supports one set of credentials... won't work with the server playbooks
+    # TODO: construct the args one at a time just above this line and use them all at once
+    #    see https://linuxhandbook.com/bash-arrays/
     time ansible-playbook \
         --diff \
-        --become-password-file "$PASSWORD_FILE_FOR_SUDO" \
-        --connection-password-file "$PASSWORD_FILE_FOR_SUDO" \
+        --become-password-file "$PASSWORD_FILE_FOR_SUDO"_"$ENV" \
+        --connection-password-file "$PASSWORD_FILE_FOR_SUDO"_"$ENV" \
         --vault-password-file "$PASSWORD_FILE_FOR_VAULT" \
         --inventory hosts.ini \
         ansible/"$PLAYBOOK"
