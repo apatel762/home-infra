@@ -39,7 +39,14 @@ Refs.:
 
 - [pod.j2](https://github.com/eifrach/ansible-role-assisted-installer-pod/blob/ac0cca8ce1ecc7b2d433b20f3a22d980dbe63d25/templates/pod.j2)
 - [configmap.j2](https://github.com/eifrach/ansible-role-assisted-installer-pod/blob/ac0cca8ce1ecc7b2d433b20f3a22d980dbe63d25/templates/configmap.j2)
+
+References on Kubernetes:
+
 - [Translate a Docker Compose file into Kubernetes resources](https://kubernetes.io/docs/tasks/configure-pod-container/translate-compose-kubernetes/)
+- [Migrate a Docker Compose workflow to Kubernetes](https://www.digitalocean.com/community/tutorials/how-to-migrate-a-docker-compose-workflow-to-kubernetes)
+- [Understanding Kubernetes Objects](https://kubernetes.io/docs/concepts/overview/working-with-objects/kubernetes-objects/)
+  - [Pods](https://kubernetes.io/docs/concepts/workloads/pods/)
+  - [ConfigMaps](https://kubernetes.io/docs/concepts/configuration/configmap/)
 
 ### Operating System
 
