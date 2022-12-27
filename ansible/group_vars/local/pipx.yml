@@ -1,0 +1,17 @@
+# the 'install' field is used when the name of the package that you're
+# installing is different to the name/URL that you use to install it
+pipx_apps:
+  - name: poetry
+  - name: ranger-fm
+  - name: yt-dlp
+  - name: browserexport
+  - name: toolbox-export
+    install: git+https://github.com/apatel762/toolbox-export.git
+  - name: cite
+    install: git+https://github.com/apatel762/cite.git
+  - name: pretty-history
+    install: git+https://github.com/apatel762/pretty-history.git
+#  - name: ptpython
+#    dependencies:
+#      - requests
+#      - pendulum

@@ -1,0 +1,10 @@
+---
+
+- name: Ensure that ostree update configuration has been applied
+  hosts: ostree
+  # usually we would set this to 'yes', but we want to overlook connection
+  # failures, since we're targeting workstation & server at the same time
+  # here (and the server may be turned off... energy crisis innit...)
+  any_errors_fatal: no
+  roles:
+    - ostree_automatic_updates
