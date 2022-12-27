@@ -1,7 +1,15 @@
 ---
 
 - name: Ensure that SSH is setup and hardened on the remote server
-  hosts: home
+  # 'all' is okay here, but only because we are checking and enforcing
+  # a user-provided limit before we start run the Ansible role.
+  hosts: all
   any_errors_fatal: yes
+  pre_tasks:
+    - name: Ensure that the user has provided a target host group (or groups)
+      ansible.builtin.fail:
+        msg: "You must use -l or --limit - when you really want to use all hosts, use -l 'all'"
+      when: ansible_limit is not defined
+      run_once: yes
   roles:
     - hs_bootstrap_ssh

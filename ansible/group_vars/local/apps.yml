@@ -1,0 +1,49 @@
+# =====================================================================
+# Standalone Applications
+#
+# These are applications that can't be found as Flatpaks (or are
+# difficult to install as Flatpaks).
+#
+# Each application is fully contained in one file (realistically, this
+# means that the applications are all 'AppImage' files).
+
+standalone_applications:
+  - url: https://github.com/nextcloud/desktop/releases/download/v3.2.4/Nextcloud-3.2.4-x86_64.AppImage
+    checksum: sha256:5d0c13ba422c445c4a88cd45a1b38878daf67123552b0f4a6020a73734c47ce6
+    file_name: Nextcloud.AppImage
+  - url: https://github.com/neovim/neovim/releases/download/v0.8.1/nvim.appimage
+    checksum: sha256:25658f3db59fac398bc28b7ff7984ed1becdf9a3e98b3e4e226c236c35107054
+    file_name: nvim.AppImage
+    location: "{{ lookup('env', 'HOME') }}/.local/bin"
+    stale_days: 180
+  - url: https://raw.githubusercontent.com/xwmx/nb/7.2.0/nb
+    checksum: sha256:08fe0b86a6aac95c9f56536b9011b2ce5fc486c7d248eca7d89233d4414e3f0a
+    file_name: nb
+    location: "{{ lookup('env', 'HOME') }}/.local/bin"
+    stale_days: 60
+  - url: https://raw.githubusercontent.com/dylanaraps/neofetch/7.1.0/neofetch
+    checksum: sha256:3dc33493e54029fb1528251552093a9f9a2894fcf94f9c3a6f809136a42348c7
+    file_name: neofetch
+    location: "{{ lookup('env', 'HOME') }}/.local/bin"
+
+# find appropriate version here: https://github.com/marcosnils/bin/releases
+bin_base_version: "0.15.1"
+cli_apps:
+  - binary: exa
+    namespace: "github.com/ogham/exa"
+  - binary: rg
+    namespace: "github.com/burntsushi/ripgrep"
+  - binary: sysz
+    namespace: "github.com/joehillen/sysz"
+  - binary: ghq
+    namespace: "github.com/x-motemen/ghq"
+  - binary: bat
+    namespace: "github.com/sharkdp/bat"
+  - binary: shellcheck
+    namespace: "github.com/koalaman/shellcheck"
+  - binary: gum
+    namespace: "github.com/charmbracelet/gum"
+  - binary: kompose
+    namespace: "github.com/kubernetes/kompose"
+  - binary: obsidian-export.bin
+    namespace: "github.com/zoni/obsidian-export"

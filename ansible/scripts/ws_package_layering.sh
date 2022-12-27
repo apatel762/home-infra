@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 
+# shellcheck source=/dev/null
 source "$(dirname "${BASH_SOURCE[0]}")/_common.sh"
 
-# if something else is using ostree, we should wait for that to complete before
-# running our package layering playbook
-await_ostree_idle
-
-playbook ws_package_layering.yml "ws"
+playbook ws_package_layering.yml "$@"

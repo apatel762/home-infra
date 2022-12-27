@@ -1,0 +1,109 @@
+# =====================================================================
+# Flatpaks
+#
+# All apps installed on the machine should come from here so that they
+# can easily be installed into your home dir and have their updates
+# managed by the OS.
+#
+# Helpful doco for overrides:
+# https://docs.flatpak.org/en/latest/sandbox-permissions.html
+# https://www.mankier.com/1/flatpak-override
+
+flatpak_remotes:
+  - name: flathub
+    url: https://dl.flathub.org/repo/flathub.flatpakrepo
+
+  - name: flathub-beta
+    url: https://flathub.org/beta-repo/flathub-beta.flatpakrepo
+
+flatpak_apps_to_install:
+  # for  controlling permissions on all of the Flatpaks that I
+  # install onto my system. The permissions can also be 'set into
+  # stone' here by writing them as overrides.
+  - remote: flathub
+    package: com.github.tchx84.Flatseal
+
+  # A web browser that isn't installed at the system-level, and
+  # has some sandboxing to prevent it from having access to all
+  # of my stuff.
+  - remote: flathub
+    package: com.brave.Browser
+    overrides:
+      # remove some default filesystem access permissions
+      - { scope: user, setting: "--nofilesystem=xdg-music" }
+      - { scope: user, setting: "--nofilesystem=xdg-videos" }
+      - { scope: user, setting: "--nofilesystem=xdg-desktop" }
+      # whitelist ~/Documents read-only
+      - { scope: user, setting: "--filesystem=xdg-documents:ro" }
+      - { scope: user, setting: "--filesystem=home/.local/share/applications:create" }
+      - { scope: user, setting: "--filesystem=home/.local/share/icons:create" }
+
+  # another web browser, to be used for stuff where Brave doesn't
+  # work (e.g. if the blocking/anti-fingerprinting is too strict)
+  - remote: flathub
+    package: com.microsoft.Edge
+    overrides:
+      # remove some default filesystem access permissions
+      - { scope: user, setting: "--nofilesystem=host-etc" }
+      - { scope: user, setting: "--nofilesystem=xdg-music" }
+      - { scope: user, setting: "--nofilesystem=xdg-videos" }
+      - { scope: user, setting: "--nofilesystem=xdg-desktop" }
+      # whitelist ~/Documents read-only
+      - { scope: user, setting: "--filesystem=xdg-documents:ro" }
+      - { scope: user, setting: "--filesystem=home/.local/share/applications:create" }
+      - { scope: user, setting: "--filesystem=home/.local/share/icons:create" }
+
+  # for managing GNOME extensions easily
+  - remote: flathub
+    package: com.mattjakeman.ExtensionManager
+
+  # for opening encrypted vaults
+  - remote: flathub
+    package: org.cryptomator.Cryptomator
+
+  # for opening KeePass databases (e.g. so that I can open my
+  # encrypted vaults...)
+  - remote: flathub
+    package: org.keepassxc.KeePassXC
+
+  # so that I can listen to music without having to download it
+  - remote: flathub
+    package: com.spotify.Client
+
+  # flashcards; they help me remember things
+  - remote: flathub
+    package: net.ankiweb.Anki
+
+  # for quickly spinning up VMs
+  - remote: flathub
+    package: org.gnome.Boxes
+
+  # for managing my eBooks library
+  - remote: flathub
+    package: com.calibre_ebook.calibre
+
+  # for reading eBooks
+  - remote: flathub
+    package: com.github.johnfactotum.Foliate
+
+  # watching youtube videos and keeping track of youtube
+  # subscriptions without having to sign in
+  - remote: flathub
+    package: io.freetubeapp.FreeTube
+
+  - remote: flathub
+    package: org.onlyoffice.desktopeditors
+
+  # alternative to MPV
+  - remote: flathub
+    package: io.github.celluloid_player.Celluloid
+
+flatpak_apps_to_remove:
+  - remote: fedora
+    package: org.gnome.Maps
+
+  - remote: fedora
+    package: org.gnome.Contacts
+
+  - remote: fedora
+    package: org.gnome.Calendar

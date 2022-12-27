@@ -1,0 +1,7 @@
+{
+    "recommendations": [
+        "timonwong.shellcheck",
+        "lunuan.kubernetes-templates",
+        "foxundermoon.shell-format"
+    ]
+}

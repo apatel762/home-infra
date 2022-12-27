@@ -3,17 +3,8 @@
 # Exit immediately if a command exits with a non-zero status.
 set -e
 
-usage() {
-    echo "Usage: $0 playbook env"
-    echo "  playbook:  the name of the playbook file (something.yml)"
-    echo "       env:  the environment"
-    echo "               ws = workstation"
-    echo "               hs = server"
-}
-
 ROOTDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-PASSWORD_FILE_FOR_SUDO="$ROOTDIR/../secrets/sudo_password"
 PASSWORD_FILE_FOR_VAULT="$ROOTDIR/../secrets/vault_password"
 
 # desc: Handler for unexpected errors
@@ -32,28 +23,6 @@ function script_trap_err() {
     # Validate any provided exit code
     if [[ ${1-} =~ ^[0-9]+$ ]]; then
         exit_code="$1"
-    fi
-
-    # Restore original file output descriptors
-    if [[ -n ${script_output-} ]]; then
-        exec 1>&3 2>&4
-    fi
-
-    # Print basic debugging information
-    printf '%b\n' "$ta_none"
-    printf '***** Abnormal termination of script *****\n'
-    printf 'Script Path:            %s\n' "$script_path"
-    printf 'Script Parameters:      %s\n' "$script_params"
-    printf 'Script Exit Code:       %s\n' "$exit_code"
-
-    # Print the script log if we have it. It's possible we may not if we
-    # failed before we even called cron_init(). This can happen if bad
-    # parameters were passed to the script so we bailed out very early.
-    if [[ -n ${script_output-} ]]; then
-        # shellcheck disable=SC2312
-        printf 'Script Output:\n\n%s' "$(cat "$script_output")"
-    else
-        printf 'Script Output:          None (failed before log init)\n'
     fi
 
     # Exit with failure status
@@ -104,11 +73,12 @@ function pretty_print() {
         if [[ -n ${2-} ]]; then
             printf '%b' "$2"
         else
-            printf '%b' "$fg_green"
+            printf '%b' "$(tput setaf 2 2>/dev/null || true)"
         fi
     fi
 
     # Print message & reset text attributes
+    local -r ta_none="$(tput sgr0 2>/dev/null || true)"
     if [[ -n ${3-} ]]; then
         printf '%s%b' "$1" "$ta_none"
     else
@@ -116,68 +86,57 @@ function pretty_print() {
     fi
 }
 
-# desc: Ensure that we have the requested password file
-# args: $1 (required): The program that we want the password file for
-#       $2 (required): The expected location of the password file
-function ensure_password_file() {
+# desc: Ensure that we have the requested secret written to a file
+# args: $1 (required): The program that we want the secret for
+#       $2 (required): The expected location of the file containing the secret
+function _check_for_secret() {
     if [[ ! -f "$2" ]]; then
-        pretty_print "The expected $1 password file doesn't exist. Please do the following:
+        pretty_print "The expected secret [$1] doesn't exist. You can create it following the below instructions:
 
     $EDITOR $2
     chmod u=r,go-rwx $2
+" "$(tput setaf 3 2> /dev/null || true)" # yellow
 
-Please create $2 with strict permissions and re-run this script." "${fg_yellow-}"
-
-        script_exit "Exiting..." 1
+        return 1
     fi
+
+    return 0
 }
 
-function await_ostree_idle() {
-    if [ -f "$ROOTDIR/_await-ostree-idle.sh" ]; then
-        ensure_password_file "ssh" "$PASSWORD_FILE_FOR_SUDO"
-        sshpass -f "$PASSWORD_FILE_FOR_SUDO" ssh ::1 bash < "$ROOTDIR/_await-ostree-idle.sh"
-    else
-        script_exit "Could not find '$ROOTDIR/_await-ostree-idle.sh'. Are you running this script via the Makefile?" 1
-    fi
-}
-
-# args: $1 = the playbook file
-#       $2 = the environment (workstation or server)
-function playbook() {
-    if [ -z "$1" ]; then
-        usage;
-        script_exit "Argument 'playbook' is required." 1
-    fi
-    if [ -z "$2" ]; then
-        usage;
-        script_exit "Argument 'env' is required." 1
-    fi
-    local PLAYBOOK
-    PLAYBOOK="$1"
-    local ENV
-    ENV="$2"
-
-    ensure_password_file "ssh" "$PASSWORD_FILE_FOR_SUDO"_"$ENV"
-    ensure_password_file "ansible-vault" "$PASSWORD_FILE_FOR_VAULT"
-
-    cd "$ROOTDIR/../.."
-
+function _check_venv() {
     # ensure that the python venv exists before trying to run the playbook
     if [ ! -d "venv" ]; then
         script_exit "Could not find the Python venv, please run 'make install' and try again." 1
     fi
+}
 
+# args: $1 (required) = the playbook file
+#       $@ (optional) = args to pass to the ansible-playbook command
+function playbook() {
+    if [ -z "$1" ]; then
+        script_exit "Argument 1: 'playbook' is required." 1
+    fi
+    local -r PLAYBOOK="$1"
+    shift
+
+    _check_venv
+
+    cd "$ROOTDIR/../.."
+    # shellcheck source=/dev/null
     source venv/bin/activate
 
-    # TODO: construct the args one at a time just above this line and use them all at once
-    #    see https://linuxhandbook.com/bash-arrays/
-    time ansible-playbook \
-        --diff \
-        --become-password-file "$PASSWORD_FILE_FOR_SUDO"_"$ENV" \
-        --connection-password-file "$PASSWORD_FILE_FOR_SUDO"_"$ENV" \
-        --vault-password-file "$PASSWORD_FILE_FOR_VAULT" \
-        --inventory hosts.ini \
-        ansible/"$PLAYBOOK"
+    local ARGS=()
+    IFS=" " read -r -a ARGS <<<"$*" # include user-provided params
+    ARGS+=("--diff")
+    if _check_for_secret "ansible-vault" "$PASSWORD_FILE_FOR_VAULT"; then
+        ARGS+=("--vault-password-file" "$PASSWORD_FILE_FOR_VAULT")
+    else
+        ARGS+=("--ask-vault-password")
+    fi
+    ARGS+=("--inventory" "hosts.ini")
+
+    printf 'Running ansible-playbook w/ args:\n  %s' "${ARGS[*]}"
+    time ansible-playbook "${ARGS[@]}" "ansible/$PLAYBOOK"
 }
 
 # desc: show a yes or no prompt with the given message (abort if the user doesn't type "y")
@@ -190,14 +149,14 @@ function yes_no() {
     MESSAGE="$1"
 
     echo "$MESSAGE"
-    read -p "Do you want to proceed? y/[n]: " yn
+    read -r -p "Do you want to proceed? y/[n]: " yn
 
     case $yn in
-        [yY][eE][sS]|[yY])
-            :
-            ;;
-        *)
-            script_exit "Aborting..." 0
-            ;;
+    [yY][eE][sS] | [yY])
+        :
+        ;;
+    *)
+        script_exit "Aborting..." 0
+        ;;
     esac
 }
