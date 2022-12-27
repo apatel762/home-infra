@@ -35,15 +35,22 @@ My server is called 'Broadwater', so this design is going over what I'm going to
     state: started
 ```
 
-Refs.:
+References for above template files:
 
 - [pod.j2](https://github.com/eifrach/ansible-role-assisted-installer-pod/blob/ac0cca8ce1ecc7b2d433b20f3a22d980dbe63d25/templates/pod.j2)
 - [configmap.j2](https://github.com/eifrach/ansible-role-assisted-installer-pod/blob/ac0cca8ce1ecc7b2d433b20f3a22d980dbe63d25/templates/configmap.j2)
 
+References on Podman:
+
+- [Podman Compose](https://www.jwillikers.com/podman-compose)
+- [Translate Docker Compose to Kubernetes with Podman](https://www.jwillikers.com/translate-docker-compose-to-kubernetes-with-podman)
+  - Involves manually creating a `podman` pod.
+  - ...and then turning that into a Kubernetes pod definition.
+- [Automatically update Podman containers](https://www.jwillikers.com/automatically-update-podman-containers)
+- [Podman Pod as a Systemd service](https://www.jwillikers.com/a-podman-pod-as-a-systemd-service)
+
 References on Kubernetes:
 
-- [Translate a Docker Compose file into Kubernetes resources](https://kubernetes.io/docs/tasks/configure-pod-container/translate-compose-kubernetes/)
-- [Migrate a Docker Compose workflow to Kubernetes](https://www.digitalocean.com/community/tutorials/how-to-migrate-a-docker-compose-workflow-to-kubernetes)
 - [Understanding Kubernetes Objects](https://kubernetes.io/docs/concepts/overview/working-with-objects/kubernetes-objects/)
   - [Pods](https://kubernetes.io/docs/concepts/workloads/pods/)
   - [ConfigMaps](https://kubernetes.io/docs/concepts/configuration/configmap/)
