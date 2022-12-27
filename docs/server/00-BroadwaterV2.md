@@ -54,6 +54,7 @@ References on Kubernetes:
 - [Understanding Kubernetes Objects](https://kubernetes.io/docs/concepts/overview/working-with-objects/kubernetes-objects/)
   - [Pods](https://kubernetes.io/docs/concepts/workloads/pods/)
   - [ConfigMaps](https://kubernetes.io/docs/concepts/configuration/configmap/)
+- [Kubernetes API reference v1.19, Pod v1 core](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/#pod-v1-core)
 
 ### Operating System
 
