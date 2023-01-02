@@ -1,10 +1,3 @@
-# The folder inside of which we will place the entire startpage
-# folder.
-#
-# If you rename the startpage folder, don't forget to rename the
-# path that we've defined in the Chromium policy file!
-browser_startpage_folder: "{{ lookup('env', 'HOME') }}/Documents"
-
 # When reading Flatpak manifest files or installation scripts, you might
 # see a "/app" folder referenced often. This variable points to the
 # location of that folder on the host system.

@@ -1,10 +1,5 @@
 ---
 
-- name: Ensure that all startpage files are in the startpage folder
-  ansible.posix.synchronize:
-    src: Homepage
-    dest: "{{ browser_startpage_folder }}"
-
 # these tasks will put the policy into the system folders
 
 - name: Ensure that the browser policy directories exist
