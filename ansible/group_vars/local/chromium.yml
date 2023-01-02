@@ -1,8 +1,8 @@
 # https://chromeenterprise.google/policies/#WebAppInstallForceList
 #
 # if we have chosen to install the 'com.brave.Browser', the playbook
-# will also install the below web apps.
-#
+# will also include the below policy
+
 # the keys in the below list are all directly taken from the schema
 # of the WebAppInstallForceList chrome policy.
 
@@ -19,3 +19,22 @@ chromium_web_apps:
   - url: https://www.youtube.com/
     create_desktop_shortcut: true
     default_launch_container: window
+
+# https://chromeenterprise.google/policies/#ExtensionInstallForcelist
+#
+# the keys in this list are taking from the extension force install
+# list
+#
+# you can optionally provide a semi-colon separated "update" URL which
+# points to an Update Manifest XML document (for self-hosted Chrome
+# extensions), but by default, the Chrome Web Store's update URL is used
+#
+# you can get the ID of an extension by installing it manually, and
+# visiting 'chrome://extensions' (and enabling developer mode)
+
+chromium_extensions:
+  - "fhcgjolkccmbidfldomjliifgaodjagh"  # Cookie AutoDelete
+  - "immpkjjlgappgfkkfieppnmlhakdmaab"  # Imagus
+  - "kbmfpngjjgdllneeigpgjifpgocmfgmb"  # Reddit Enhancement Suite
+  - "mnjggcdmjocbbbhaepdhchncahnbgone"  # SponsorBlock for YouTube
+  - "dhdgffkkebhmkfjojejmpbldmpobfkfo"  # Tampermonkey

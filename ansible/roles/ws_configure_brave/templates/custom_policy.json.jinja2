@@ -2,5 +2,8 @@
 {% if chromium_web_apps is defined and chromium_web_apps | length > 1 %}
   "WebAppInstallForceList": {{ chromium_web_apps | to_nice_json(indent=2) }},
 {% endif %}
+{% if chromium_extensions is defined and chromium_extensions | length > 1 %}
+  "ExtensionInstallForcelist": {{ chromium_extensions | to_nice_json(indent=2) }},
+{% endif %}
   "HomepageIsNewTabPage": true
 }
