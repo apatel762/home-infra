@@ -4,6 +4,8 @@ pipx_apps:
   - name: poetry
   - name: ranger-fm
   - name: yt-dlp
+    dependencies:
+      - secretstorage
   - name: browserexport
   - name: toolbox-export
     install: git+https://github.com/apatel762/toolbox-export.git
