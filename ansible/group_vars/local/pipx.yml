@@ -13,7 +13,8 @@ pipx_apps:
     install: git+https://github.com/apatel762/cite.git
   - name: pretty-history
     install: git+https://github.com/apatel762/pretty-history.git
-#  - name: ptpython
-#    dependencies:
-#      - requests
-#      - pendulum
+
+  # these two are needed to build and install the cloze overlapper
+  # Anki add-on (https://github.com/glutanimate/cloze-overlapper)
+  - name: aab
+  - name: pyqt5
