@@ -33,8 +33,12 @@ chromium_web_apps:
 # visiting 'chrome://extensions' (and enabling developer mode)
 
 chromium_extensions:
-  - "fhcgjolkccmbidfldomjliifgaodjagh"  # Cookie AutoDelete
   - "immpkjjlgappgfkkfieppnmlhakdmaab"  # Imagus
-  - "kbmfpngjjgdllneeigpgjifpgocmfgmb"  # Reddit Enhancement Suite
-  - "mnjggcdmjocbbbhaepdhchncahnbgone"  # SponsorBlock for YouTube
-  - "dhdgffkkebhmkfjojejmpbldmpobfkfo"  # Tampermonkey
+
+# other stuff (not ideal for management because the settings are
+# reset each time the browser is updated... due to the way that
+# Flatpak works)
+# - "kbmfpngjjgdllneeigpgjifpgocmfgmb"  # Reddit Enhancement Suite
+# - "dhdgffkkebhmkfjojejmpbldmpobfkfo"  # Tampermonkey
+# - "fhcgjolkccmbidfldomjliifgaodjagh"  # Cookie AutoDelete
+# - "mnjggcdmjocbbbhaepdhchncahnbgone"  # SponsorBlock for YouTube
