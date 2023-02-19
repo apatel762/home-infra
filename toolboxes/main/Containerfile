@@ -23,7 +23,8 @@ RUN dnf install -y \
     android-tools \
     ffmpeg \
     p7zip \
-    borgbackup
+    borgbackup \
+    pinentry
 
 # Add the custom repo for VSCode and install it
 # https://code.visualstudio.com/docs/setup/linux#_rhel-fedora-and-centos-based-distributions
