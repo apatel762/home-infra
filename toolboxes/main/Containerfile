@@ -24,7 +24,8 @@ RUN dnf install -y \
     ffmpeg \
     p7zip \
     borgbackup \
-    pinentry
+    pinentry \
+    tmux
 
 # Add the custom repo for VSCode and install it
 # https://code.visualstudio.com/docs/setup/linux#_rhel-fedora-and-centos-based-distributions
