@@ -7,12 +7,11 @@ pipx_apps:
     dependencies:
       - secretstorage
   - name: browserexport
+  - name: pretty-history
   - name: toolbox-export
     install: git+https://github.com/apatel762/toolbox-export.git
   - name: cite
     install: git+https://github.com/apatel762/cite.git
-  - name: pretty-history
-    install: git+https://github.com/apatel762/pretty-history.git
 
   # these two are needed to build and install the cloze overlapper
   # Anki add-on (https://github.com/glutanimate/cloze-overlapper)
