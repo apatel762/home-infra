@@ -1,19 +1,22 @@
 [user]
-    email = relay-git-1LKQ1GqLp0Nn4@aspatel.com
-    name = Arjun Patel
+	email = relay-git-1LKQ1GqLp0Nn4@aspatel.com
+	name = Arjun Patel
+	signingkey = AD9664F629BBF5F9D02D96F9EABEC5029FBBDCD0
+[commit]
+	gpgsign = true
 
 [init]
-    defaultBranch = master
+	defaultBranch = master
 
 [color]
-    ui = auto
+	ui = auto
 
 [alias]
-    # Fancy looking commit log
-    lg = log --all --graph --decorate --oneline
-    last = log --all --graph --decorate --oneline -10
+	# Fancy looking commit log
+	lg = log --all --graph --decorate --oneline
+	last = log --all --graph --decorate --oneline -10
 
 # taken from: https://github.com/x-motemen/ghq
 
 [ghq]
-    root = ~/Documents/Projects
+	root = ~/Documents/Projects
