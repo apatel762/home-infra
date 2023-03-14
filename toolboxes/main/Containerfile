@@ -25,7 +25,10 @@ RUN dnf install -y \
     p7zip \
     borgbackup \
     pinentry \
-    tmux
+    pinentry-gnome3 \
+    tmux \
+    rpmdevtools \
+    rpmlint
 
 # Add the custom repo for VSCode and install it
 # https://code.visualstudio.com/docs/setup/linux#_rhel-fedora-and-centos-based-distributions

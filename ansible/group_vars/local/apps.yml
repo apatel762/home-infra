@@ -16,8 +16,8 @@ standalone_applications:
     file_name: nvim.AppImage
     location: "{{ lookup('env', 'HOME') }}/.local/bin"
     stale_days: 180
-  - url: https://raw.githubusercontent.com/xwmx/nb/7.2.0/nb
-    checksum: sha256:08fe0b86a6aac95c9f56536b9011b2ce5fc486c7d248eca7d89233d4414e3f0a
+  - url: https://raw.githubusercontent.com/xwmx/nb/7.4.1/nb
+    checksum: sha256:f5a02e7afd46997c4a2189b08b44659f79cfea1db12c2a3e4b816c9844c860b1
     file_name: nb
     location: "{{ lookup('env', 'HOME') }}/.local/bin"
     stale_days: 60
