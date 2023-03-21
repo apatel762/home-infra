@@ -47,3 +47,7 @@ cli_apps:
     namespace: "github.com/kubernetes/kompose"
   - binary: obsidian-export.bin
     namespace: "github.com/zoni/obsidian-export"
+  - binary: pagefind
+    namespace: "github.com/cloudcannon/pagefind"
+  - binary: zola
+    namespace: "github.com/getzola/zola"
