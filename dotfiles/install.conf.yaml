@@ -23,10 +23,10 @@
       path: dots/neofetch/*
 
     # git config
-    ~/.gitconfig: dots/git/.gitconfig
+    ~/.config/git/config: dots/git/.gitconfig
 
     # nb (note taking app) config
-    ~/.nbrc: dots/nb/.nbrc
+    ~/.config/nbrc: dots/nb/.nbrc
 
     # bash config
     ~/.bashrc: dots/bash/.bashrc

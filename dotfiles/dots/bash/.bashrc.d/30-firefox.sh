@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 function __cd_to_firefox_profile_dir() {
     if ! command -v find &>/dev/null; then
         echo "cannot find firefox directory - please install `find`"

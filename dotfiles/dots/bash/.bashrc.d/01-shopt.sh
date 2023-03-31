@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # append to history instead of deleting
 shopt -s histappend
 

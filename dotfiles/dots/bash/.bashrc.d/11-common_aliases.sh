@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # refresh bash
 alias bp='echo "source ~/.bashrc" && source ~/.bashrc'
 

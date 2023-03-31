@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # Adding things to PATH, but only if they exist
 # https://superuser.com/a/39995
 # https://web.archive.org/web/20200930183945/https://superuser.com/questions/39751/add-directory-to-path-if-its-not-already-there

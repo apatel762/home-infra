@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 export INPUTRC="$HOME/.config/.inputrc"
 if [ -f "$INPUTRC" ] ; then
     # ensure that the current INPUTRC is used in the terminal sesh

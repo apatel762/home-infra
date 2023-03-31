@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # Ensure that the fzf bin is in PATH (or else we will end up installing
 # it below when we don't need to
 command -v ghq &>/dev/null \

@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 HISTCONTROL=ignoreboth
 HISTSIZE=-1
 HISTFILESIZE=-1
