@@ -82,10 +82,6 @@ flatpak_apps_to_install:
   - remote: flathub
     package: com.calibre_ebook.calibre
 
-  # for reading eBooks
-  - remote: flathub
-    package: com.github.johnfactotum.Foliate
-
   # watching youtube videos and keeping track of youtube
   # subscriptions without having to sign in
   - remote: flathub
