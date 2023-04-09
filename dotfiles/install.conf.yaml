@@ -2,26 +2,12 @@
     - '~'
     - ~/.bashrc.d
     - ~/.config
-    - ~/.config/nvim
-    - ~/.config/neofetch
-    - ~/.local/bin
 
 - create:
     - ~/.bashrc.d
     - ~/.config
-    - ~/.config/nvim
-    - ~/.config/neofetch
-    - ~/.local/bin
 
 - link:
-    # nvimrc
-    ~/.config/nvim/init.vim: dots/nvim/init.vim
-
-    # neofetch
-    ~/.config/neofetch/:
-      glob: true
-      path: dots/neofetch/*
-
     # git config
     ~/.config/git/config: dots/git/.gitconfig
 
@@ -33,10 +19,6 @@
     ~/.bashrc.d/:
       glob: true
       path: dots/bash/.bashrc.d/*
-
-    # custom scripts
-    ~/.local/bin/nekofetch: dots/bin/nekofetch
-    ~/.local/bin/jp2a: dots/bin/jp2a
 
     # other
     ~/.config/.inputrc: dots/other/.inputrc
