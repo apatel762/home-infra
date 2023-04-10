@@ -37,3 +37,4 @@ RUN rpm --import https://packages.microsoft.com/keys/microsoft.asc \
     && dnf check-update || true \
     && dnf install -y code
 
+RUN mkdir -p /overlays
