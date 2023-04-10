@@ -2,6 +2,8 @@
     - '~'
     - ~/.bashrc.d
     - ~/.config
+    - ~/.config/git
+    - ~/.local/share/gnupg
 
 - create:
     - ~/.bashrc.d
@@ -9,16 +11,17 @@
 
 - link:
     # git config
-    ~/.config/git/config: dots/git/.gitconfig
+    ~/.config/git/config: files/git/.gitconfig
 
     # nb (note taking app) config
-    ~/.config/nbrc: dots/nb/.nbrc
+    ~/.config/nbrc: files/nb/.nbrc
 
     # bash config
-    ~/.bashrc: dots/bash/.bashrc
+    ~/.bashrc: files/bash/.bashrc
     ~/.bashrc.d/:
       glob: true
-      path: dots/bash/.bashrc.d/*
+      path: files/bash/.bashrc.d/*
 
     # other
-    ~/.config/.inputrc: dots/other/.inputrc
+    ~/.config/.inputrc: files/other/.inputrc
+    ~/.local/share/gnupg/gpg.conf: files/gpg.conf
