@@ -28,7 +28,9 @@ RUN dnf install -y \
     pinentry-gnome3 \
     tmux \
     rpmdevtools \
-    rpmlint
+    rpmlint \
+    g++ \
+    go
 
 # Add the custom repo for VSCode and install it
 # https://code.visualstudio.com/docs/setup/linux#_rhel-fedora-and-centos-based-distributions
