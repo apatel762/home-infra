@@ -8,9 +8,6 @@
 # means that the applications are all 'AppImage' files).
 
 standalone_applications:
-  - url: https://github.com/nextcloud/desktop/releases/download/v3.2.4/Nextcloud-3.2.4-x86_64.AppImage
-    checksum: sha256:5d0c13ba422c445c4a88cd45a1b38878daf67123552b0f4a6020a73734c47ce6
-    file_name: Nextcloud.AppImage
   - url: https://github.com/neovim/neovim/releases/download/v0.9.0/nvim.appimage
     checksum: sha256:0e1e6d53c6c8055de23bdb33f60bb64af0baf11390669c1b40ecbbf2c7a34547
     file_name: nvim.AppImage
